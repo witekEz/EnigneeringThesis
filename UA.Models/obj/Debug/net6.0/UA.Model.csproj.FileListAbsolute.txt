@@ -1,0 +1,12 @@
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\bin\Debug\net6.0\UA.Model.deps.json
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\bin\Debug\net6.0\UA.Model.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\bin\Debug\net6.0\UA.Model.pdb
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\UA.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\UA.Model.AssemblyInfoInputs.cache
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\UA.Model.AssemblyInfo.cs
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\UA.Model.csproj.CoreCompileInputs.cache
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\UA.Model.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\refint\UA.Model.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\UA.Model.pdb
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\ref\UA.Model.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.Models\obj\Debug\net6.0\UA.Model.sourcelink.json
