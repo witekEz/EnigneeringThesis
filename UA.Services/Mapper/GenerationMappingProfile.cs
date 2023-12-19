@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UA.Model.DTOs;
 using UA.Model.Entities;
 using UA.Model.DTOs.Create;
+using UA.Model.DTOs.Update;
 
 namespace UA.Services.Mapper
 {
@@ -42,7 +43,21 @@ namespace UA.Services.Mapper
             CreateMap<CreateOptionalEquipmentDTO, OptionalEquipment>();
             CreateMap<CreateSuspensionDTO, Suspension>();
 
-            
+            //From UpdateDTO => Entity
+            CreateMap<UpdateGenerationDTO, Generation>();
+            CreateMap<UpdateBodyColourDTO, BodyColour>();
+            CreateMap<UpdateBodyTypeDTO, BodyType>();
+            CreateMap<UpdateBrakeDTO, Brake>();
+            CreateMap<UpdateBrandDTO, Brand>();
+            CreateMap<UpdateDetailedInfoDTO, DetailedInfo>();
+            CreateMap<UpdateDrivetrainDTO, Drivetrain>();
+            CreateMap<UpdateEngineDTO, Engine>();
+            CreateMap<UpdateGearboxDTO, Gearbox>();
+            CreateMap<UpdateModelDTO, Model.Entities.Model>();
+            CreateMap<UpdateOptionalEquipmentDTO, OptionalEquipment>();
+            CreateMap<UpdateSuspensionDTO, Suspension>();
+
+
         }
     }
 }

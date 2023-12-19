@@ -7,6 +7,7 @@ using UA.Model.DTOs;
 using UA.Model.Entities;
 using UA.Model.DTOs.Create;
 using UA.Services.Interfaces;
+using UA.Model.DTOs.Update;
 
 namespace UA.WebAPI.Controllers
 {
@@ -58,6 +59,20 @@ namespace UA.WebAPI.Controllers
             }
 
             return Ok(generation);
+        }
+        [HttpPut("{id}")]
+        public ActionResult Update([FromBody]UpdateGenerationDTO dto, [FromRoute]int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var isUpdated = _generationService.Update(dto,id);
+            if (!isUpdated)
+            {
+                return NotFound();
+            }
+            return Ok();
         }
     }
 }

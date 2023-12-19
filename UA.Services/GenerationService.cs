@@ -10,6 +10,7 @@ using UA.Model.DTOs;
 using UA.Model.Entities;
 using UA.Model.DTOs.Create;
 using UA.Services.Interfaces;
+using UA.Model.DTOs.Update;
 
 namespace UA.Services
 {
@@ -80,6 +81,17 @@ namespace UA.Services
             _dbContext.Generations.Add(generation);
             _dbContext.SaveChanges();
             return generation.Id;
+        }
+
+        public bool Update(UpdateGenerationDTO dto, int id)
+        {
+            var generation = _dbContext.Generations.FirstOrDefault(g => g.Id == id);
+            if (generation is null) return false;
+            generation= _mapper.Map(dto,generation);
+            //generation.Name = dto.Name;
+            //_dbContext.Entry(generation).CurrentValues.SetValues(dto);
+            _dbContext.SaveChanges();
+            return true;
         }
     }
 }
