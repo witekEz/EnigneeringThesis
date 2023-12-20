@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+y6bxLcZDytwqnA6/VQWJoZe7E0Vk7BJSSKEb2Ssnf5YXMnyVSVxRUDfQ39Z5JAuR47WEYLDrbjkXYa2b5C5WA==",
+  "dgSpecHash": "SQGFGpxACNMD98t5tk61VKnRtshG2ktkRdor/N/yNWyANCe825vySdXrglbsUejpJQpCTuqVThBw5si4FhGoWw==",
   "success": true,
   "projectFilePath": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.Services\\UA.Services.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\MrRobot\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",

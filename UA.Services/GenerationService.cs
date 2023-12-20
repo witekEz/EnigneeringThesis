@@ -11,6 +11,7 @@ using UA.Model.Entities;
 using UA.Model.DTOs.Create;
 using UA.Services.Interfaces;
 using UA.Model.DTOs.Update;
+using Microsoft.Extensions.Logging;
 
 namespace UA.Services
 {
@@ -18,14 +19,19 @@ namespace UA.Services
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-        public GenerationService(ApplicationDbContext dbContext, IMapper mapper)
+        private readonly ILogger<GenerationService> _logger;
+        public GenerationService(ApplicationDbContext dbContext, IMapper mapper, ILogger<GenerationService> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
         public bool Delete(int id)
         {
-            var generation=_dbContext.Generations.FirstOrDefault(g=>g.Id==id);
+            _logger.LogError($"Generation with ID: {id} DELETE action invoked");
+            var generation=_dbContext
+                .Generations
+                .FirstOrDefault(g=>g.Id==id);
 
             if (generation is null) return false; 
 
@@ -36,6 +42,7 @@ namespace UA.Services
 
         public GenerationDTO GetById(int id)
         {
+            _logger.LogError($"Generation with ID:{id} GET action invoked");
             var generation = _dbContext.Generations
                .Include(b => b.BodyTypes)
                .Include(b => b.Drivetrains)
@@ -57,6 +64,7 @@ namespace UA.Services
         }
         public IEnumerable<GenerationDTO> GetAll()
         {
+            _logger.LogError($"Generations GET action invoked");
             var generations = _dbContext
                 .Generations
                 .Include(b => b.BodyTypes)
@@ -77,6 +85,7 @@ namespace UA.Services
         }
         public int Create(CreateGenerationDTO dto)
         {
+            _logger.LogError($"Generation object: {dto} POST action invoked");
             var generation = _mapper.Map<Generation>(dto);
             _dbContext.Generations.Add(generation);
             _dbContext.SaveChanges();
@@ -85,6 +94,7 @@ namespace UA.Services
 
         public bool Update(UpdateGenerationDTO dto, int id)
         {
+            _logger.LogError($"Generation with ID: {id} UPDATE action invoked");
             var generation = _dbContext.Generations.FirstOrDefault(g => g.Id == id);
             if (generation is null) return false;
             generation= _mapper.Map(dto,generation);
