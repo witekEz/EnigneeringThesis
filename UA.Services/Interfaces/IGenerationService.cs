@@ -14,7 +14,7 @@ namespace UA.Services.Interfaces
         GenerationDTO GetById(int id);
         IEnumerable<GenerationDTO> GetAll();
         int Create(CreateGenerationDTO dto);
-        bool Update(UpdateGenerationDTO dto, int id);
-        bool Delete(int id);
+        void Update(UpdateGenerationDTO dto, int id);
+        void Delete(int id);
     }
 }

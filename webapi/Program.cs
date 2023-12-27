@@ -39,6 +39,7 @@ try
 
     //Middleware
     builder.Services.AddScoped<ErrorHandlingMiddleware>();
+    builder.Services.AddScoped<RequestTimeMiddleware>();
 
     //Buildier
     var app = builder.Build();
@@ -50,6 +51,7 @@ try
     // Configure the HTTP request pipeline.
 
     app.UseMiddleware<ErrorHandlingMiddleware>();
+    app.UseMiddleware<RequestTimeMiddleware>();
 
     if (app.Environment.IsDevelopment())
     {

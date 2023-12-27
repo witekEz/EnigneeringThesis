@@ -24,21 +24,16 @@ namespace UA.WebAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute]int id)
         {
-            var isDeleted= _generationService.Delete(id);
-            if (isDeleted)
-            {
-                return NoContent();
-            }
-            return NotFound();
+            _generationService.Delete(id);
+            
+            return NoContent();
 
         }
 
         [HttpPost]
         public ActionResult CreateGeneration([FromBody]CreateGenerationDTO dto)
         {
-            if (!ModelState.IsValid){
-                return BadRequest(ModelState);
-            }
+           
             var id=_generationService.Create(dto);
             return Created($"api/generations/{id}", null);
         }
@@ -53,25 +48,13 @@ namespace UA.WebAPI.Controllers
         {
             var generation = _generationService.GetById(id);
 
-            if(generation is null)
-            {
-                return NotFound();
-            }
-
             return Ok(generation);
         }
         [HttpPut("{id}")]
         public ActionResult Update([FromBody]UpdateGenerationDTO dto, [FromRoute]int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var isUpdated = _generationService.Update(dto,id);
-            if (!isUpdated)
-            {
-                return NotFound();
-            }
+             _generationService.Update(dto,id);
+            
             return Ok();
         }
     }

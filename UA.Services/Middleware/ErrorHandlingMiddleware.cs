@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UA.Services.Middleware.Exceptions;
 
 namespace UA.Services.Middleware
 {
@@ -18,9 +19,14 @@ namespace UA.Services.Middleware
             {
                 await next.Invoke(context);
             }
-            catch (Exception ex)
+            catch(NotFoundException notFoundException)
             {
-                _logger.LogError(ex, ex.Message);
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(notFoundException.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsync("Something went wrong!");
             }

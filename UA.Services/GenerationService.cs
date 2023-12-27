@@ -12,6 +12,7 @@ using UA.Model.DTOs.Create;
 using UA.Services.Interfaces;
 using UA.Model.DTOs.Update;
 using Microsoft.Extensions.Logging;
+using UA.Services.Middleware.Exceptions;
 
 namespace UA.Services
 {
@@ -26,18 +27,18 @@ namespace UA.Services
             _mapper = mapper;
             _logger = logger;
         }
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             _logger.LogError($"Generation with ID: {id} DELETE action invoked");
             var generation=_dbContext
                 .Generations
                 .FirstOrDefault(g=>g.Id==id);
 
-            if (generation is null) return false; 
+            if (generation is null) 
+                throw new NotFoundException("Generation not found");
 
             _dbContext.Generations.Remove(generation);
             _dbContext.SaveChanges();
-            return true;
         }
 
         public GenerationDTO GetById(int id)
@@ -57,7 +58,8 @@ namespace UA.Services
                .Include(b => b.Model.Brand)
                .FirstOrDefault(p => p.Id == id);
 
-            if (generation is null) { return null; }
+            if (generation is null) 
+                throw new NotFoundException("Generation not found");
 
             var generationDTO = _mapper.Map<GenerationDTO>(generation);
             return generationDTO;
@@ -92,16 +94,15 @@ namespace UA.Services
             return generation.Id;
         }
 
-        public bool Update(UpdateGenerationDTO dto, int id)
+        public void Update(UpdateGenerationDTO dto, int id)
         {
             _logger.LogError($"Generation with ID: {id} UPDATE action invoked");
             var generation = _dbContext.Generations.FirstOrDefault(g => g.Id == id);
-            if (generation is null) return false;
+            if (generation is null) throw new NotFoundException("Generation not found");
             generation= _mapper.Map(dto,generation);
             //generation.Name = dto.Name;
             //_dbContext.Entry(generation).CurrentValues.SetValues(dto);
             _dbContext.SaveChanges();
-            return true;
         }
     }
 }
