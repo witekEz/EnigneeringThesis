@@ -13,6 +13,6 @@ namespace UA.Model.DTOs.Create
         [MaxLength(10)]
         public string Name { get; set; } = null!;
         [Required]
-        public CreateBrandDTO Brand { get; set; } = null!;
+        public int BrandId { get; set; }
     }
 }

@@ -36,6 +36,11 @@ try
     //AutoMapper
     builder.Services.AddAutoMapper(typeof(GenerationMappingProfile));
     builder.Services.AddScoped<IGenerationService, GenerationService>();
+    builder.Services.AddScoped<IBrandService, BrandService>();
+    builder.Services.AddScoped<IModelService, ModelService>();
+    builder.Services.AddScoped<IHomeService, HomeService>();
+    builder.Services.AddScoped<IBodyTypeService, BodyTypeService>();
+    builder.Services.AddScoped<IDrivetrainService, DrivetrainService>();
 
     //Middleware
     builder.Services.AddScoped<ErrorHandlingMiddleware>();

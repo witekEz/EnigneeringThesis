@@ -21,6 +21,6 @@ namespace UA.Model.DTOs
         public List<GearboxDTO> Gearboxes { get; set; } = null!;
         public DetailedInfoDTO? DeatiledInfo { get; set; }
         public OptionalEquipmentDTO? OptionalEquipment { get; set; }
-        public ModelDTO Model { get; set; } = null!;
+        public int ModelId { get; set; }
     }
 }

@@ -16,7 +16,7 @@ using UA.Services.Middleware.Exceptions;
 
 namespace UA.Services
 {
-    public class GenerationService:IGenerationService
+    public class GenerationService : IGenerationService
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -27,23 +27,30 @@ namespace UA.Services
             _mapper = mapper;
             _logger = logger;
         }
-        public void Delete(int id)
+        public void DeleteById(int modelId, int generationId)
         {
-            _logger.LogError($"Generation with ID: {id} DELETE action invoked");
-            var generation=_dbContext
-                .Generations
-                .FirstOrDefault(g=>g.Id==id);
-
-            if (generation is null) 
+            _logger.LogError($"Generation with ID: {generationId} DELETE action invoked");
+            var model = _dbContext
+                .Models
+                .FirstOrDefault(g => g.Id == modelId);
+            if (model is null)
+                throw new NotFoundException("Model not found");
+            var generation = _dbContext.Generations.FirstOrDefault(m => m.Id == generationId);
+            if (generation is null || generation.ModelId != modelId)
+            {
                 throw new NotFoundException("Generation not found");
-
+            }
             _dbContext.Generations.Remove(generation);
             _dbContext.SaveChanges();
         }
 
-        public GenerationDTO GetById(int id)
+        public GenerationDTO GetById(int modelId, int generationId)
         {
-            _logger.LogError($"Generation with ID:{id} GET action invoked");
+            _logger.LogError($"Generation with ID:{generationId} GET action invoked");
+            var model = _dbContext.Models.FirstOrDefault(m => m.Id == modelId);
+            if (model is null)
+                throw new NotFoundException("Model not found");
+
             var generation = _dbContext.Generations
                .Include(b => b.BodyTypes)
                .Include(b => b.Drivetrains)
@@ -56,42 +63,36 @@ namespace UA.Services
                .Include(b => b.OptionalEquipment)
                .Include(b => b.Model)
                .Include(b => b.Model.Brand)
-               .FirstOrDefault(p => p.Id == id);
+               .FirstOrDefault(p => p.Id == generationId);
 
-            if (generation is null) 
+            if (generation is null|| generation.ModelId != modelId) 
                 throw new NotFoundException("Generation not found");
+           
 
             var generationDTO = _mapper.Map<GenerationDTO>(generation);
             return generationDTO;
         }
-        public IEnumerable<GenerationDTO> GetAll()
+        public List<GenerationDTO> GetAll(int modelId)
         {
             _logger.LogError($"Generations GET action invoked");
-            var generations = _dbContext
-                .Generations
-                .Include(b => b.BodyTypes)
-                .Include(b => b.Drivetrains)
-                .Include(b => b.Engines)
-                .Include(b => b.Gearboxes)
-                .Include(b => b.DeatiledInfo)
-                .Include(b => b.DeatiledInfo.Suspensions)
-                .Include(b => b.DeatiledInfo.BodyColours)
-                .Include(b => b.DeatiledInfo.Brakes)
-                .Include(b => b.OptionalEquipment)
-                .Include(b => b.Model)
-                .Include(b => b.Model.Brand)
-                .ToList();
+            var model = _dbContext.Models.Include(g=>g.Generations).FirstOrDefault(m => m.Id == modelId);
+            if (model is null)
+                throw new NotFoundException("Model not found");
 
-            var generationsDTOs = _mapper.Map<List<GenerationDTO>>(generations);
+            var generationsDTOs = _mapper.Map<List<GenerationDTO>>(model.Generations);
             return generationsDTOs;
         }
-        public int Create(CreateGenerationDTO dto)
+        public int Create(int modelId, CreateGenerationDTO dto)
         {
             _logger.LogError($"Generation object: {dto} POST action invoked");
-            var generation = _mapper.Map<Generation>(dto);
-            _dbContext.Generations.Add(generation);
+            var model = _dbContext.Models.FirstOrDefault(n => n.Id == modelId);
+            if (model == null) { 
+                throw new NotFoundException("Model not found"); }
+            var generationEntity = _mapper.Map<Generation>(dto);
+            generationEntity.ModelId = modelId;
+            _dbContext.Generations.Add(generationEntity);
             _dbContext.SaveChanges();
-            return generation.Id;
+            return generationEntity.Id;
         }
 
         public void Update(UpdateGenerationDTO dto, int id)

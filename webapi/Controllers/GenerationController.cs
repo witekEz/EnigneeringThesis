@@ -11,42 +11,39 @@ using UA.Model.DTOs.Update;
 
 namespace UA.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/model/{modelId}/generation")]
     [ApiController]
-    public class GenerationsController : ControllerBase
+    public class GenerationController : ControllerBase
     {
         private readonly IGenerationService _generationService;
-        public GenerationsController(IGenerationService generationService) 
+        public GenerationController(IGenerationService generationService) 
         {
            _generationService = generationService;
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute]int id)
+        public ActionResult Delete([FromRoute]int modelId,[FromRoute]int id)
         {
-            _generationService.Delete(id);
-            
+            _generationService.DeleteById(modelId, id);
             return NoContent();
-
         }
 
         [HttpPost]
-        public ActionResult CreateGeneration([FromBody]CreateGenerationDTO dto)
+        public ActionResult Create([FromRoute]int modelId,[FromBody]CreateGenerationDTO dto)
         {
-           
-            var id=_generationService.Create(dto);
-            return Created($"api/generations/{id}", null);
+            var id=_generationService.Create(modelId,dto);
+            return Created($"api/brand/model/{modelId}/generation/{id}", null);
         }
         [HttpGet]
-        public ActionResult<IEnumerable<GenerationDTO>> GetAll()
+        public ActionResult<List<GenerationDTO>> Get([FromRoute] int modelId)
         {
-            var generationsDTOs = _generationService.GetAll();
+            var generationsDTOs = _generationService.GetAll(modelId);
             return Ok(generationsDTOs);
         }
-        [HttpGet("{id}")]
-        public ActionResult<GenerationDTO> Get([FromRoute]int id)
+        [HttpGet("{generationId}")]
+        public ActionResult<GenerationDTO> Get([FromRoute] int modelId,[FromRoute]int generationId)
         {
-            var generation = _generationService.GetById(id);
+            var generation = _generationService.GetById(modelId,generationId);
 
             return Ok(generation);
         }

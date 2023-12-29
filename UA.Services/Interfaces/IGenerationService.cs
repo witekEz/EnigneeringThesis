@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IGenerationService
     {
-        GenerationDTO GetById(int id);
-        IEnumerable<GenerationDTO> GetAll();
-        int Create(CreateGenerationDTO dto);
+        GenerationDTO GetById(int modelId,int generationId);
+        List<GenerationDTO> GetAll(int modelId);
+        int Create(int modelId,CreateGenerationDTO dto);
         void Update(UpdateGenerationDTO dto, int id);
-        void Delete(int id);
+        void DeleteById(int modelId,int generationId);
     }
 }
