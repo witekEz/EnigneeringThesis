@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UA.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,29 +17,12 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Colour = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ColourCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Colour = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ColourCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BodyColours", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BodyTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Segment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberOfDoors = table.Column<int>(type: "int", nullable: false),
-                    NumberOfSeats = table.Column<int>(type: "int", nullable: false),
-                    TrunkCapacity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BodyTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +31,7 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,25 +44,11 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Brands", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DeatiledInfos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductionStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ProductionEndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeatiledInfos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,7 +57,7 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,7 +70,7 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Version = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Version = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     Capacity = table.Column<double>(type: "float", nullable: false),
                     HorsePower = table.Column<int>(type: "int", nullable: false),
                     Torque = table.Column<int>(type: "int", nullable: false),
@@ -116,19 +85,32 @@ namespace UA.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GearBoxes",
+                name: "Gearboxes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     NumberOfGears = table.Column<int>(type: "int", nullable: false),
                     TypeOfGearbox = table.Column<int>(type: "int", nullable: false),
                     Rate = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GearBoxes", x => x.Id);
+                    table.PrimaryKey("PK_Gearboxes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,7 +119,7 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Type = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -165,73 +147,26 @@ namespace UA.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BodyColourDetailedInfo",
+                name: "Users",
                 columns: table => new
                 {
-                    BodyColoursId = table.Column<int>(type: "int", nullable: false),
-                    DeatiledInfosId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NickName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BodyColourDetailedInfo", x => new { x.BodyColoursId, x.DeatiledInfosId });
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BodyColourDetailedInfo_BodyColours_BodyColoursId",
-                        column: x => x.BodyColoursId,
-                        principalTable: "BodyColours",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BodyColourDetailedInfo_DeatiledInfos_DeatiledInfosId",
-                        column: x => x.DeatiledInfosId,
-                        principalTable: "DeatiledInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BrakeDetailedInfo",
-                columns: table => new
-                {
-                    BrakesId = table.Column<int>(type: "int", nullable: false),
-                    DetailedInfosId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BrakeDetailedInfo", x => new { x.BrakesId, x.DetailedInfosId });
-                    table.ForeignKey(
-                        name: "FK_BrakeDetailedInfo_Brakes_BrakesId",
-                        column: x => x.BrakesId,
-                        principalTable: "Brakes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BrakeDetailedInfo_DeatiledInfos_DetailedInfosId",
-                        column: x => x.DetailedInfosId,
-                        principalTable: "DeatiledInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DetailedInfoSuspension",
-                columns: table => new
-                {
-                    DetailedInfosId = table.Column<int>(type: "int", nullable: false),
-                    SuspensionsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DetailedInfoSuspension", x => new { x.DetailedInfosId, x.SuspensionsId });
-                    table.ForeignKey(
-                        name: "FK_DetailedInfoSuspension_DeatiledInfos_DetailedInfosId",
-                        column: x => x.DetailedInfosId,
-                        principalTable: "DeatiledInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DetailedInfoSuspension_Suspensions_SuspensionsId",
-                        column: x => x.SuspensionsId,
-                        principalTable: "Suspensions",
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -242,23 +177,16 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     MinPrice = table.Column<double>(type: "float", nullable: false),
                     MaxPrice = table.Column<double>(type: "float", nullable: false),
                     Rate = table.Column<double>(type: "float", nullable: false),
-                    DeatiledInfoId = table.Column<int>(type: "int", nullable: false),
                     ModelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Generations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Generations_DeatiledInfos_DeatiledInfoId",
-                        column: x => x.DeatiledInfoId,
-                        principalTable: "DeatiledInfos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Generations_Models_ModelId",
                         column: x => x.ModelId,
@@ -268,24 +196,45 @@ namespace UA.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BodyTypeGeneration",
+                name: "BodyTypes",
                 columns: table => new
                 {
-                    BodyTypesId = table.Column<int>(type: "int", nullable: false),
-                    GenerationsId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Segment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumberOfDoors = table.Column<int>(type: "int", nullable: false),
+                    NumberOfSeats = table.Column<int>(type: "int", nullable: false),
+                    TrunkCapacity = table.Column<int>(type: "int", nullable: false),
+                    GenerationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BodyTypeGeneration", x => new { x.BodyTypesId, x.GenerationsId });
+                    table.PrimaryKey("PK_BodyTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BodyTypeGeneration_BodyTypes_BodyTypesId",
-                        column: x => x.BodyTypesId,
-                        principalTable: "BodyTypes",
+                        name: "FK_BodyTypes_Generations_GenerationId",
+                        column: x => x.GenerationId,
+                        principalTable: "Generations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeatiledInfos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductionStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProductionEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GenerationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeatiledInfos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BodyTypeGeneration_Generations_GenerationsId",
-                        column: x => x.GenerationsId,
+                        name: "FK_DeatiledInfos_Generations_GenerationId",
+                        column: x => x.GenerationId,
                         principalTable: "Generations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -350,9 +299,9 @@ namespace UA.DAL.Migrations
                 {
                     table.PrimaryKey("PK_GearboxGeneration", x => new { x.GearboxesId, x.GenerationsId });
                     table.ForeignKey(
-                        name: "FK_GearboxGeneration_GearBoxes_GearboxesId",
+                        name: "FK_GearboxGeneration_Gearboxes_GearboxesId",
                         column: x => x.GearboxesId,
-                        principalTable: "GearBoxes",
+                        principalTable: "Gearboxes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -388,20 +337,98 @@ namespace UA.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_BodyColourDetailedInfo_DeatiledInfosId",
-                table: "BodyColourDetailedInfo",
-                column: "DeatiledInfosId");
+            migrationBuilder.CreateTable(
+                name: "BodyColourDetailedInfo",
+                columns: table => new
+                {
+                    BodyColoursId = table.Column<int>(type: "int", nullable: false),
+                    DetailedInfosId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BodyColourDetailedInfo", x => new { x.BodyColoursId, x.DetailedInfosId });
+                    table.ForeignKey(
+                        name: "FK_BodyColourDetailedInfo_BodyColours_BodyColoursId",
+                        column: x => x.BodyColoursId,
+                        principalTable: "BodyColours",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BodyColourDetailedInfo_DeatiledInfos_DetailedInfosId",
+                        column: x => x.DetailedInfosId,
+                        principalTable: "DeatiledInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BrakeDetailedInfo",
+                columns: table => new
+                {
+                    BrakesId = table.Column<int>(type: "int", nullable: false),
+                    DetailedInfosId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BrakeDetailedInfo", x => new { x.BrakesId, x.DetailedInfosId });
+                    table.ForeignKey(
+                        name: "FK_BrakeDetailedInfo_Brakes_BrakesId",
+                        column: x => x.BrakesId,
+                        principalTable: "Brakes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BrakeDetailedInfo_DeatiledInfos_DetailedInfosId",
+                        column: x => x.DetailedInfosId,
+                        principalTable: "DeatiledInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DetailedInfoSuspension",
+                columns: table => new
+                {
+                    DetailedInfosId = table.Column<int>(type: "int", nullable: false),
+                    SuspensionsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetailedInfoSuspension", x => new { x.DetailedInfosId, x.SuspensionsId });
+                    table.ForeignKey(
+                        name: "FK_DetailedInfoSuspension_DeatiledInfos_DetailedInfosId",
+                        column: x => x.DetailedInfosId,
+                        principalTable: "DeatiledInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DetailedInfoSuspension_Suspensions_SuspensionsId",
+                        column: x => x.SuspensionsId,
+                        principalTable: "Suspensions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BodyTypeGeneration_GenerationsId",
-                table: "BodyTypeGeneration",
-                column: "GenerationsId");
+                name: "IX_BodyColourDetailedInfo_DetailedInfosId",
+                table: "BodyColourDetailedInfo",
+                column: "DetailedInfosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BodyTypes_GenerationId",
+                table: "BodyTypes",
+                column: "GenerationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BrakeDetailedInfo_DetailedInfosId",
                 table: "BrakeDetailedInfo",
                 column: "DetailedInfosId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeatiledInfos_GenerationId",
+                table: "DeatiledInfos",
+                column: "GenerationId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetailedInfoSuspension_SuspensionsId",
@@ -424,11 +451,6 @@ namespace UA.DAL.Migrations
                 column: "GenerationsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Generations_DeatiledInfoId",
-                table: "Generations",
-                column: "DeatiledInfoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Generations_ModelId",
                 table: "Generations",
                 column: "ModelId");
@@ -443,6 +465,11 @@ namespace UA.DAL.Migrations
                 table: "OptionalEquipments",
                 column: "GenerationId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
         }
 
         /// <inheritdoc />
@@ -452,7 +479,7 @@ namespace UA.DAL.Migrations
                 name: "BodyColourDetailedInfo");
 
             migrationBuilder.DropTable(
-                name: "BodyTypeGeneration");
+                name: "BodyTypes");
 
             migrationBuilder.DropTable(
                 name: "BrakeDetailedInfo");
@@ -473,13 +500,16 @@ namespace UA.DAL.Migrations
                 name: "OptionalEquipments");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "BodyColours");
 
             migrationBuilder.DropTable(
-                name: "BodyTypes");
+                name: "Brakes");
 
             migrationBuilder.DropTable(
-                name: "Brakes");
+                name: "DeatiledInfos");
 
             migrationBuilder.DropTable(
                 name: "Suspensions");
@@ -491,13 +521,13 @@ namespace UA.DAL.Migrations
                 name: "Engines");
 
             migrationBuilder.DropTable(
-                name: "GearBoxes");
+                name: "Gearboxes");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Generations");
-
-            migrationBuilder.DropTable(
-                name: "DeatiledInfos");
 
             migrationBuilder.DropTable(
                 name: "Models");

@@ -11,6 +11,7 @@ namespace UA.Model.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public List<GenerationDTO>? Generations { get; set; }
+        public BrandDTO Brand { get; set; } = null!;
+        //public List<GenerationDTO>? Generations { get; set; }
     }
 }

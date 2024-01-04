@@ -8,6 +8,15 @@ using NLog;
 using NLog.Web;
 using System;
 using UA.Services.Middleware;
+using Microsoft.AspNetCore.Identity;
+using UA.Model.Entities.Authentication;
+using FluentValidation;
+using UA.Model.DTOs;
+using UA.Services.Validators;
+using FluentValidation.AspNetCore;
+using UA.WebAPI;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("Project starting...");
@@ -16,12 +25,34 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     //NLog Setup
-    //builder.Logging.ClearProviders();
+    builder.Logging.ClearProviders();
     builder.Host.UseNLog();
+
+    //Authentication
+    var authenticationSettings = new AuthenticationSettings();
+    builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
+    builder.Services.AddSingleton(authenticationSettings);
+    builder.Services.AddAuthentication(option =>
+    {
+        option.DefaultAuthenticateScheme = "Bearer";
+        option.DefaultScheme = "Bearer";
+        option.DefaultChallengeScheme = "Bearer";
+    }).AddJwtBearer(cfg =>
+    {
+        cfg.RequireHttpsMetadata = false;
+        cfg.SaveToken = true;
+        cfg.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = authenticationSettings.JwtIssuer,
+            ValidAudience = authenticationSettings.JwtIssuer,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
+        };
+    });
 
     // Add services to the container.
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers();//.AddFluentValidation();
+    builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
     //Connection to database
     var connectionString = builder.Configuration.GetConnectionString("ConnectionString");
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -41,6 +72,17 @@ try
     builder.Services.AddScoped<IHomeService, HomeService>();
     builder.Services.AddScoped<IBodyTypeService, BodyTypeService>();
     builder.Services.AddScoped<IDrivetrainService, DrivetrainService>();
+    builder.Services.AddScoped<IEngineService, EngineService>();
+    builder.Services.AddScoped<IGearboxService, GearboxService>();
+    builder.Services.AddScoped<IAccountService, AccountService>();
+    builder.Services.AddScoped<IDetailedInfoService, DetailedInfoService>();
+    builder.Services.AddScoped<ISuspensionService, SuspensionService>();
+    builder.Services.AddScoped<IBrakeService, BrakeService>();
+    builder.Services.AddScoped<IBodyColourService, BodyColourService>();
+    builder.Services.AddScoped<IOptionalEquipmentService, OptionalEquipmentService>();
+
+    builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+    builder.Services.AddScoped<IValidator<RegisterUserDTO>,RegisterUserDtoValidator>();
 
     //Middleware
     builder.Services.AddScoped<ErrorHandlingMiddleware>();
@@ -57,6 +99,7 @@ try
 
     app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseMiddleware<RequestTimeMiddleware>();
+    app.UseAuthentication();
 
     if (app.Environment.IsDevelopment())
     {

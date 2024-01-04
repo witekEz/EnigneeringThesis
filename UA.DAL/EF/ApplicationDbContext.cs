@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.Model.Entities;
+using UA.Model.Entities.Authentication;
 
 namespace UA.DAL.EF
 {
@@ -21,10 +22,13 @@ namespace UA.DAL.EF
         public DbSet<Suspension> Suspensions { get; set; }
         public DbSet<OptionalEquipment> OptionalEquipments { get; set; }
         public DbSet<Engine> Engines { get; set; }
-        public DbSet<Gearbox> GearBoxes { get; set; }
+        public DbSet<Gearbox> Gearboxes { get; set; }
         public DbSet<BodyType> BodyTypes { get; set; }
         public DbSet<Brake> Brakes { get; set; }
-        
+        //Authentication
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

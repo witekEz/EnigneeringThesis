@@ -19,8 +19,8 @@ namespace UA.Model.DTOs
         public List<DrivetrainDTO> Drivetrains { get; set; } = null!;
         public List<EngineDTO> Engines { get; set; } = null!;
         public List<GearboxDTO> Gearboxes { get; set; } = null!;
-        public DetailedInfoDTO? DeatiledInfo { get; set; }
+        public DetailedInfoDTO? DetailedInfo { get; set; }
         public OptionalEquipmentDTO? OptionalEquipment { get; set; }
-        public int ModelId { get; set; }
+        public ModelDTO Model { get; set; } = null!;
     }
 }

@@ -11,21 +11,19 @@ namespace UA.Model.Entities
     {
         //Primary Key
         public int Id { get; set; }
-        //Navigation Properties
+        //Properties
         public string Category { get; set; } = null!;
         public string Name { get; set; } = null!;
-        public virtual List<BodyType> BodyTypes { get; set; } = null!;
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
         public double Rate { get; set; }
+        //Navigation Properties
+        public virtual List<BodyType> BodyTypes { get; set; } = null!;
         public virtual List<Drivetrain> Drivetrains { get; set; }= null!;
         public virtual List<Engine> Engines { get; set; } = null!;
         public virtual List<Gearbox> Gearboxes { get; set; }=null!;
-        public virtual DetailedInfo? DeatiledInfo { get; set; }
+        public virtual DetailedInfo? DetailedInfo { get; set; }
         public virtual OptionalEquipment? OptionalEquipment { get; set; }
         public virtual Model Model { get; set; } = null!;
-        //Foreign Keys
-        public int DeatiledInfoId { get; set; }
-        public int ModelId { get; set; }
     }
 }

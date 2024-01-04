@@ -15,6 +15,6 @@ namespace UA.Services.Interfaces
         List<GenerationDTO> GetAll(int modelId);
         int Create(int modelId,CreateGenerationDTO dto);
         void Update(UpdateGenerationDTO dto, int id);
-        void DeleteById(int modelId,int generationId);
+        void Delete(int modelId,int generationId);
     }
 }

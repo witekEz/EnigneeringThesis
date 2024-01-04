@@ -13,11 +13,15 @@ namespace UA.Model.Entities
     {
         //Primary Key
         public int Id { get; set; }
-        //Navigation Properties
-        public virtual List<Suspension>? Suspensions { get; set; }
+        //Properties
         public DateTime ProductionStartDate { get; set; }
         public DateTime ProductionEndDate { get; set; }
+        //Navigation Properties
         public virtual List<BodyColour>? BodyColours { get; set; }
         public virtual List<Brake>? Brakes { get; set; }
+        public virtual List<Suspension>? Suspensions { get; set; }
+        public virtual Generation Generation { get; set; } = null!;
+        //Foreign Key 
+        public int GenerationId { get; set; }
     }
 }

@@ -11,6 +11,5 @@ namespace UA.Model.DTOs.Update
     {
         [MaxLength(10)]
         public string Name { get; set; } = null!;
-        public UpdateBrandDTO Brand { get; set; } = null!;
     }
 }

@@ -8,6 +8,7 @@ using UA.Model.Entities;
 using UA.Model.DTOs.Create;
 using UA.Services.Interfaces;
 using UA.Model.DTOs.Update;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UA.WebAPI.Controllers
 {
@@ -22,32 +23,37 @@ namespace UA.WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete([FromRoute]int modelId,[FromRoute]int id)
         {
-            _generationService.DeleteById(modelId, id);
+            _generationService.Delete(modelId, id);
             return NoContent();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Create([FromRoute]int modelId,[FromBody]CreateGenerationDTO dto)
         {
             var id=_generationService.Create(modelId,dto);
             return Created($"api/brand/model/{modelId}/generation/{id}", null);
         }
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<List<GenerationDTO>> Get([FromRoute] int modelId)
         {
             var generationsDTOs = _generationService.GetAll(modelId);
             return Ok(generationsDTOs);
         }
-        [HttpGet("{generationId}")]
-        public ActionResult<GenerationDTO> Get([FromRoute] int modelId,[FromRoute]int generationId)
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public ActionResult<GenerationDTO> Get([FromRoute] int modelId,[FromRoute]int id)
         {
-            var generation = _generationService.GetById(modelId,generationId);
+            var generation = _generationService.GetById(modelId,id);
 
             return Ok(generation);
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Update([FromBody]UpdateGenerationDTO dto, [FromRoute]int id)
         {
              _generationService.Update(dto,id);

@@ -7,9 +7,10 @@ namespace UA.Model.Entities
     {
         //Primary Key
         public int Id { get; set; }
-        //Navigation Properties
+        //Properties
         public string Colour { get; set; } = null!;
         public string ?ColourCode { get; set; }
-        public virtual List<DetailedInfo>? DeatiledInfos { get; set; }
+        //Navigation properties
+        public virtual List<DetailedInfo>? DetailedInfos { get; set; }
     }
 }

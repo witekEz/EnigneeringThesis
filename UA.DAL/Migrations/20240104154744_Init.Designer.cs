@@ -12,8 +12,8 @@ using UA.DAL.EF;
 namespace UA.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231210105406_ConstraintsOnAppDbContext")]
-    partial class ConstraintsOnAppDbContext
+    [Migration("20240104154744_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,29 +30,14 @@ namespace UA.DAL.Migrations
                     b.Property<int>("BodyColoursId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeatiledInfosId")
+                    b.Property<int>("DetailedInfosId")
                         .HasColumnType("int");
 
-                    b.HasKey("BodyColoursId", "DeatiledInfosId");
+                    b.HasKey("BodyColoursId", "DetailedInfosId");
 
-                    b.HasIndex("DeatiledInfosId");
+                    b.HasIndex("DetailedInfosId");
 
                     b.ToTable("BodyColourDetailedInfo");
-                });
-
-            modelBuilder.Entity("BodyTypeGeneration", b =>
-                {
-                    b.Property<int>("BodyTypesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenerationsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BodyTypesId", "GenerationsId");
-
-                    b.HasIndex("GenerationsId");
-
-                    b.ToTable("BodyTypeGeneration");
                 });
 
             modelBuilder.Entity("BrakeDetailedInfo", b =>
@@ -130,6 +115,62 @@ namespace UA.DAL.Migrations
                     b.ToTable("GearboxGeneration");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Authentication.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Authentication.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NickName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.BodyColour", b =>
                 {
                     b.Property<int>("Id")
@@ -160,6 +201,9 @@ namespace UA.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -178,6 +222,8 @@ namespace UA.DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GenerationId");
 
                     b.ToTable("BodyTypes");
                 });
@@ -226,6 +272,9 @@ namespace UA.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ProductionEndDate")
                         .HasColumnType("datetime2");
 
@@ -233,6 +282,9 @@ namespace UA.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GenerationId")
+                        .IsUnique();
 
                     b.ToTable("DeatiledInfos");
                 });
@@ -318,7 +370,7 @@ namespace UA.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GearBoxes");
+                    b.ToTable("Gearboxes");
                 });
 
             modelBuilder.Entity("UA.Model.Entities.Generation", b =>
@@ -333,9 +385,6 @@ namespace UA.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("DeatiledInfoId")
-                        .HasColumnType("int");
 
                     b.Property<double>("MaxPrice")
                         .HasColumnType("float");
@@ -355,8 +404,6 @@ namespace UA.DAL.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DeatiledInfoId");
 
                     b.HasIndex("ModelId");
 
@@ -450,22 +497,7 @@ namespace UA.DAL.Migrations
 
                     b.HasOne("UA.Model.Entities.DetailedInfo", null)
                         .WithMany()
-                        .HasForeignKey("DeatiledInfosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BodyTypeGeneration", b =>
-                {
-                    b.HasOne("UA.Model.Entities.BodyType", null)
-                        .WithMany()
-                        .HasForeignKey("BodyTypesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UA.Model.Entities.Generation", null)
-                        .WithMany()
-                        .HasForeignKey("GenerationsId")
+                        .HasForeignKey("DetailedInfosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -545,21 +577,46 @@ namespace UA.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("UA.Model.Entities.Generation", b =>
+            modelBuilder.Entity("UA.Model.Entities.Authentication.User", b =>
                 {
-                    b.HasOne("UA.Model.Entities.DetailedInfo", "DeatiledInfo")
+                    b.HasOne("UA.Model.Entities.Authentication.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("DeatiledInfoId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.BodyType", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Generation", "Generation")
+                        .WithMany("BodyTypes")
+                        .HasForeignKey("GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Generation");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.DetailedInfo", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Generation", "Generation")
+                        .WithOne("DetailedInfo")
+                        .HasForeignKey("UA.Model.Entities.DetailedInfo", "GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Generation");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Generation", b =>
+                {
                     b.HasOne("UA.Model.Entities.Model", "Model")
                         .WithMany("Generations")
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DeatiledInfo");
 
                     b.Navigation("Model");
                 });
@@ -593,6 +650,10 @@ namespace UA.DAL.Migrations
 
             modelBuilder.Entity("UA.Model.Entities.Generation", b =>
                 {
+                    b.Navigation("BodyTypes");
+
+                    b.Navigation("DetailedInfo");
+
                     b.Navigation("OptionalEquipment");
                 });
 

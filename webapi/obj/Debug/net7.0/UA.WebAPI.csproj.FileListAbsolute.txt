@@ -87,3 +87,7 @@ C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\NLog.dll
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\NLog.Extensions.Logging.dll
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\NLog.Web.AspNetCore.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\FluentValidation.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

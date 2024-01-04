@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
 using UA.Model.Entities;
+using UA.Model.Entities.Authentication;
 using UA.Model.Entities.Enums;
 
 namespace UA.Services.Seeders
@@ -17,36 +19,140 @@ namespace UA.Services.Seeders
         {
             _dbContext = dbContext;
         }
-        public void Seed()
+        public void Seed() 
         {
             if (_dbContext.Database.CanConnect())
             {
-                if(!_dbContext.Generations.Any())
+                if(!_dbContext.Roles.Any())
+                {
+                    var roles = GetRoles();
+                    _dbContext.Roles.AddRange(roles);
+                    _dbContext.SaveChanges();
+                }
+                //if(!_dbContext.BodyTypes.Any())
+                //{
+                //    var bodyTypes=GetBodyTypes();
+                //    _dbContext.BodyTypes.AddRange(bodyTypes);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.Drivetrains.Any())
+                //{
+                //    var drivetrains = GetDrivetrains();
+                //    _dbContext.Drivetrains.AddRange(drivetrains);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.Engines.Any())
+                //{
+                //    var engines = GetEngines();
+                //    _dbContext.Engines.AddRange(engines);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.GearBoxes.Any())
+                //{
+                //    var gearboxes = GetGearboxes();
+                //    _dbContext.GearBoxes.AddRange(gearboxes);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.Suspensions.Any())
+                //{
+                //    var suspensions = GetSuspensions();
+                //    _dbContext.Suspensions.AddRange(suspensions);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.BodyColours.Any())
+                //{
+                //    var bodyColours = GetBodyColours();
+                //    _dbContext.BodyColours.AddRange(bodyColours);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.Brands.Any())
+                //{
+                //    var brands = GetBrands();
+                //    _dbContext.Brands.AddRange(brands);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.Brakes.Any())
+                //{
+                //    var brakes = GetBrakes();
+                //    _dbContext.Brakes.AddRange(brakes);
+                //    _dbContext.SaveChanges();
+                //}
+                //if (!_dbContext.Models.Any())
+                //{
+                //    var models = GetModels();
+                //    _dbContext.Models.AddRange(models);
+                //    _dbContext.SaveChanges();
+                //}
+                if (!_dbContext.Generations.Any())
                 {
                     var modelGenerations = GetModelGenerations();
                     _dbContext.Generations.AddRange(modelGenerations);
                     _dbContext.SaveChanges();
                 }
+
             }
         }
-        public IEnumerable<Generation> GetModelGenerations()
+        private IEnumerable<Role> GetRoles()
         {
-            BodyType bodyTypeCombi = new BodyType()
+            var roles = new List<Role>()
             {
-                Name = "Combi",
-                Segment = "D",
-                NumberOfDoors = 5,
-                NumberOfSeats = 5,
-                TrunkCapacity = 1250,
+                new Role()
+                {
+                    Name = "User",
+                },
+                new Role()
+                {
+                    Name = "SuperUser",
+                },
+                new Role()
+                {
+                    Name = "Admin",
+                }
             };
-            BodyType bodyTypeSedan = new BodyType()
+            return roles;
+        }
+        private IEnumerable<BodyType> GetBodyTypes()
+        {
+            var roles = new List<BodyType>() 
             {
-                Name = "Sedan",
-                Segment = "D",
-                NumberOfDoors = 5,
-                NumberOfSeats = 5,
+                new BodyType()
+                {
+                    Name = "Combi",
+                    Segment = "D",
+                    NumberOfDoors = 5,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 1250,
+                },
+                new BodyType()
+                {
+                    Name = "Sedan",
+                    Segment = "D",
+                    NumberOfDoors = 5,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 700,
+                },
+                new BodyType()
+                {
+                    Name = "Combi",
+                    Segment = "D",
+                    NumberOfDoors = 5,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 1250,
+                },
+                new BodyType()
+                {
+                    Name = "Sedan",
+                    Segment = "D",
+                    NumberOfDoors = 5,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 700,
+                }
             };
-            List<Drivetrain> drivetrains = new List<Drivetrain>()
+            return roles;
+        }
+        private IEnumerable<Drivetrain> GetDrivetrains()
+        {
+            var drivetrains = new List<Drivetrain>()
             {
                 new Drivetrain()
                 {
@@ -61,9 +167,13 @@ namespace UA.Services.Seeders
                      Type="RearWheelDrive"
                 }
             };
-            List<Engine> engines = new List<Engine>()
+            return drivetrains;
+        }
+        private IEnumerable<Engine> GetEngines()
+        {
+            var engines = new List<Engine>()
             {
-                 new Engine()
+               new Engine()
                  {
                      Version="TDI",
                      Capacity=2.5,
@@ -95,11 +205,15 @@ namespace UA.Services.Seeders
                        FuelConsumptionCity=10,
                        FuelConsumptionSuburban=8.0,
                        Rate=5
-                  },
+                  }
             };
-            List<Gearbox> gerboxes = new List<Gearbox>()
+            return engines;
+        }
+        private IEnumerable<Gearbox> GetGearboxes()
+        {
+            var gearboxes = new List<Gearbox>()
             {
-                new Gearbox()
+               new Gearbox()
                 {
                     Name="ZF",
                     NumberOfGears=5,
@@ -112,7 +226,11 @@ namespace UA.Services.Seeders
                     TypeOfGearbox=TypeOfGearboxEnum.Autmatic
                 }
             };
-            List<Suspension> suspensions = new List<Suspension>()
+            return gearboxes;
+        }
+        private IEnumerable<Suspension> GetSuspensions()
+        {
+            var suspensions = new List<Suspension>()
             {
                 new Suspension()
                 {
@@ -123,7 +241,11 @@ namespace UA.Services.Seeders
                     Type="two-shovel suspension"
                 }
             };
-            List<BodyColour> bodyColours = new List<BodyColour>
+            return suspensions;
+        }
+        private IEnumerable<BodyColour> GetBodyColours()
+        {
+            var bodycolours = new List<BodyColour>()
             {
                 new BodyColour()
                 {
@@ -301,9 +423,13 @@ namespace UA.Services.Seeders
                     ColourCode="LY1U"
                 }
             };
-            List<Brake> brakes = new List<Brake>()
+            return bodycolours;
+        }
+        private IEnumerable<Brake> GetBrakes()
+        {
+            var brakes = new List<Brake>()
             {
-                new Brake()
+               new Brake()
                 {
                     Type="Ceramic"
                 },
@@ -314,53 +440,65 @@ namespace UA.Services.Seeders
                 new Brake()
                 {
                     Type="Drum"
-                },
+                }
             };
-            Brand brand = new Brand()
+            return brakes;
+        }
+        private IEnumerable<Brand> GetBrands()
+        {
+            var brands = new List<Brand>()
             {
-                Name = "AUDI"
+                new Brand()
+                {
+                    Name = "AUDI",      
+                }    
             };
-            Model.Entities.Model model = new Model.Entities.Model()
+            return brands;
+        }
+        private IEnumerable<Model.Entities.Model> GetModels()
+        {
+            var models = new List<Model.Entities.Model>()
             {
-                Brand = brand,
-                Name="A4"
-                
+                new Model.Entities.Model()
+                {
+                    Name="A4",
+                    Brand=GetBrands().First()
+                }
             };
+            return models;
+        }
+        private IEnumerable<Generation> GetModelGenerations()
+        {
+            var bodyTypes = GetBodyTypes().ToList();
+            //var bodytypes2 = GetBodyTypes().TakeLast(2).ToList();
+            var drivetrains = GetDrivetrains().ToList();
+            var engines = GetEngines().ToList();
+            //var engines2 = GetEngines().Skip(1).ToList();
+            var gearboxes = GetGearboxes().ToList();
+            var suspensions = GetSuspensions().ToList();
+            var bodyColours= GetBodyColours().ToList();
+            var brakes = GetBrakes().ToList();
+            var model = GetModels().ToList().First();
             var generations = new List<Generation>()
             {
                 new Generation()
                 {
                     Category="Family",
                     Name = "B6",
-                    BodyTypes = new List<BodyType>()
-                    {
-                        bodyTypeCombi,bodyTypeSedan
-                    },
+                    BodyTypes = bodyTypes.Take(2).ToList(),
                     MinPrice=7000,
                     MaxPrice=30000,
                     Rate=5.0,
-                    Drivetrains=new List<Drivetrain>()
+                    Drivetrains=drivetrains,
+                    Engines=engines.Take(2).ToList(),
+                    Gearboxes=gearboxes,
+                    DetailedInfo=new DetailedInfo()
                     {
-                        drivetrains[0], drivetrains[1]
-                    },
-                    Engines=new List<Engine>()
-                    {
-                       engines[0], engines[1]
-                    },
-                    Gearboxes=new List<Gearbox>()
-                    {
-                        gerboxes[0] , gerboxes[1]
-                    },
-                    DeatiledInfo=new DetailedInfo()
-                    {
-                        Suspensions=new List<Suspension>()
-                        {
-                            suspensions[0] , suspensions[1]
-                        },
+                        Suspensions=suspensions.Skip(1).ToList(),                       
                         ProductionStartDate=new DateTime(2001,01,01),
                         ProductionEndDate=new DateTime(2004,12,31),
                         BodyColours=bodyColours,
-                        Brakes=brakes
+                        Brakes=brakes,
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -371,40 +509,26 @@ namespace UA.Services.Seeders
                         ESP=true,
                         ASR=true
                     },
-                    Model=model
+                    Model=model,
                 },
                 new Generation()
                 {
                     Category="Family",
                     Name = "B7",
-                    BodyTypes=new List<BodyType>()
-                    {
-                        bodyTypeCombi,bodyTypeSedan
-                    },
+                    BodyTypes = bodyTypes.TakeLast(2).ToList(),
                     MinPrice=10000,
                     MaxPrice=25000,
-                    Drivetrains=new List<Drivetrain>()
+                    Rate=4.3,
+                    Drivetrains=drivetrains,
+                    Engines=engines.Skip(1).ToList(),
+                    Gearboxes=gearboxes,
+                    DetailedInfo=new DetailedInfo()
                     {
-                       drivetrains[0], drivetrains[1]
-                    },
-                    Engines=new List<Engine>()
-                    {
-                        engines[0], engines[2]
-                    },
-                    Gearboxes=new List<Gearbox>()
-                    {
-                        gerboxes[0],gerboxes[1]
-                    },
-                    DeatiledInfo=new DetailedInfo()
-                    {
-                        Suspensions=new List<Suspension>()
-                        {
-                            suspensions[0],suspensions[1]
-                        },
+                        Suspensions=suspensions,
                         ProductionStartDate=new DateTime(2004,01,01),
                         ProductionEndDate=new DateTime(2007,12,31),
                         BodyColours=bodyColours,
-                        Brakes=brakes
+                        Brakes=brakes,
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -415,7 +539,7 @@ namespace UA.Services.Seeders
                         ESP=true,
                         ASR=true
                     },
-                    Model=model
+                    Model=model,
                 }
             };
             return generations;
