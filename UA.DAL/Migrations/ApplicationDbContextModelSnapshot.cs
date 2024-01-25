@@ -407,6 +407,27 @@ namespace UA.DAL.Migrations
                     b.ToTable("Generations");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.GenerationImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ImageGUID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenerationId");
+
+                    b.ToTable("GenerationImages");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.Model", b =>
                 {
                     b.Property<int>("Id")
@@ -618,6 +639,17 @@ namespace UA.DAL.Migrations
                     b.Navigation("Model");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.GenerationImage", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Generation", "Generation")
+                        .WithMany("GenerationImages")
+                        .HasForeignKey("GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Generation");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.Model", b =>
                 {
                     b.HasOne("UA.Model.Entities.Brand", "Brand")
@@ -650,6 +682,8 @@ namespace UA.DAL.Migrations
                     b.Navigation("BodyTypes");
 
                     b.Navigation("DetailedInfo");
+
+                    b.Navigation("GenerationImages");
 
                     b.Navigation("OptionalEquipment");
                 });

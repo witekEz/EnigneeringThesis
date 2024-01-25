@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.Model.DTOs;
+using UA.Model.Queries;
 
 namespace UA.Services.Interfaces
 {
     public interface IHomeService
     {
-        List<GenerationDTO> GetAll();
+        PageResult<GenerationDTO> GetAll(GenerationQuery query);
         GenerationDTO GetById(int id);
     }
 }

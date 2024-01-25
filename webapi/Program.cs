@@ -17,6 +17,7 @@ using FluentValidation.AspNetCore;
 using UA.WebAPI;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using UA.Model.Queries;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("Project starting...");
@@ -80,23 +81,38 @@ try
     builder.Services.AddScoped<IBrakeService, BrakeService>();
     builder.Services.AddScoped<IBodyColourService, BodyColourService>();
     builder.Services.AddScoped<IOptionalEquipmentService, OptionalEquipmentService>();
+    builder.Services.AddScoped<IGenerationImageService, GenerationImageService>();
 
+    //Validator
     builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
     builder.Services.AddScoped<IValidator<RegisterUserDTO>,RegisterUserDtoValidator>();
+    builder.Services.AddScoped<IValidator<GenerationQuery>, GenerationQueryValidator>();
 
     //Middleware
     builder.Services.AddScoped<ErrorHandlingMiddleware>();
     builder.Services.AddScoped<RequestTimeMiddleware>();
 
+    //CORS
+    var allowedOrigins = builder.Configuration["AllowedOrigins"];
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("Client", builder =>
+            builder.AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins("https://localhost:5173")
+        );
+    });
+    
     //Buildier
     var app = builder.Build();
 
-
+    app.UseCors("Client");
+    app.UseStaticFiles();
     var scope = app.Services.CreateScope();
     var seeder = scope.ServiceProvider.GetRequiredService<GenerationSeeder>();
     seeder.Seed();
     // Configure the HTTP request pipeline.
-
+    
     app.UseMiddleware<ErrorHandlingMiddleware>();
     app.UseMiddleware<RequestTimeMiddleware>();
     app.UseAuthentication();

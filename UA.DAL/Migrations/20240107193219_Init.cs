@@ -313,6 +313,26 @@ namespace UA.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GenerationImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageGUID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GenerationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GenerationImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GenerationImages_Generations_GenerationId",
+                        column: x => x.GenerationId,
+                        principalTable: "Generations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OptionalEquipments",
                 columns: table => new
                 {
@@ -451,6 +471,11 @@ namespace UA.DAL.Migrations
                 column: "GenerationsId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GenerationImages_GenerationId",
+                table: "GenerationImages",
+                column: "GenerationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Generations_ModelId",
                 table: "Generations",
                 column: "ModelId");
@@ -495,6 +520,9 @@ namespace UA.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "GearboxGeneration");
+
+            migrationBuilder.DropTable(
+                name: "GenerationImages");
 
             migrationBuilder.DropTable(
                 name: "OptionalEquipments");

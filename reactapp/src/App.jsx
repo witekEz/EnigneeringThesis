@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import  Header  from './components/Header';
-import Nav from './components/Nav';
+import Navigation from './components/Navigation';
 
 export default function App(){
     return(
         <>
             <Header/>
-            <Nav/>
+            <Navigation/>
         </>
     )
 }

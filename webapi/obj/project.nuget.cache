@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "480CqzVAzcMbduxzjqlXJMTe+ZpK4Xh2tnBPOG6/ZWBz+kTC532RrJiVq/T0Edx35UOlvFseR5DdgVM23pwT7w==",
+  "dgSpecHash": "RNCm/AqnoH2ZatfVjoPsb0zv/hAMqaAPX7QxD32lr4x3bL5gkJgPWx1gn1HPsX37dFkFMThJds6fW9aLEAdl5A==",
   "success": true,
   "projectFilePath": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\webapi\\UA.WebAPI.csproj",
   "expectedPackageFiles": [
@@ -29,6 +29,7 @@
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.aspnetcore.identity\\2.2.0\\microsoft.aspnetcore.identity.2.2.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.13\\microsoft.aspnetcore.openapi.7.0.13.nupkg.sha512",
+    "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.aspnetcore.staticfiles\\2.2.0\\microsoft.aspnetcore.staticfiles.2.2.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -76,6 +77,7 @@
     "C:\\Users\\MrRobot\\.nuget\\packages\\nlog\\5.2.7\\nlog.5.2.7.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\nlog.extensions.logging\\5.3.7\\nlog.extensions.logging.5.3.7.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\nlog.web.aspnetcore\\5.3.7\\nlog.web.aspnetcore.5.3.7.nupkg.sha512",
+    "C:\\Users\\MrRobot\\.nuget\\packages\\sixlabors.imagesharp\\3.1.2\\sixlabors.imagesharp.3.1.2.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\MrRobot\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",

@@ -29,60 +29,6 @@ namespace UA.Services.Seeders
                     _dbContext.Roles.AddRange(roles);
                     _dbContext.SaveChanges();
                 }
-                //if(!_dbContext.BodyTypes.Any())
-                //{
-                //    var bodyTypes=GetBodyTypes();
-                //    _dbContext.BodyTypes.AddRange(bodyTypes);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.Drivetrains.Any())
-                //{
-                //    var drivetrains = GetDrivetrains();
-                //    _dbContext.Drivetrains.AddRange(drivetrains);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.Engines.Any())
-                //{
-                //    var engines = GetEngines();
-                //    _dbContext.Engines.AddRange(engines);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.GearBoxes.Any())
-                //{
-                //    var gearboxes = GetGearboxes();
-                //    _dbContext.GearBoxes.AddRange(gearboxes);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.Suspensions.Any())
-                //{
-                //    var suspensions = GetSuspensions();
-                //    _dbContext.Suspensions.AddRange(suspensions);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.BodyColours.Any())
-                //{
-                //    var bodyColours = GetBodyColours();
-                //    _dbContext.BodyColours.AddRange(bodyColours);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.Brands.Any())
-                //{
-                //    var brands = GetBrands();
-                //    _dbContext.Brands.AddRange(brands);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.Brakes.Any())
-                //{
-                //    var brakes = GetBrakes();
-                //    _dbContext.Brakes.AddRange(brakes);
-                //    _dbContext.SaveChanges();
-                //}
-                //if (!_dbContext.Models.Any())
-                //{
-                //    var models = GetModels();
-                //    _dbContext.Models.AddRange(models);
-                //    _dbContext.SaveChanges();
-                //}
                 if (!_dbContext.Generations.Any())
                 {
                     var modelGenerations = GetModelGenerations();
@@ -141,11 +87,19 @@ namespace UA.Services.Seeders
                 },
                 new BodyType()
                 {
-                    Name = "Sedan",
+                    Name = "Coupe",
                     Segment = "D",
-                    NumberOfDoors = 5,
+                    NumberOfDoors = 3,
                     NumberOfSeats = 5,
-                    TrunkCapacity = 700,
+                    TrunkCapacity = 450,
+                },
+                new BodyType()
+                {
+                    Name = "Hatchback",
+                    Segment = "D",
+                    NumberOfDoors = 3,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 500,
                 }
             };
             return roles;
@@ -173,9 +127,9 @@ namespace UA.Services.Seeders
         {
             var engines = new List<Engine>()
             {
-               new Engine()
-                 {
-                     Version="TDI",
+                  new Engine()
+                  {
+                     Version="2.5 TDI",
                      Capacity=2.5,
                      HorsePower=180,
                      Torque=400,
@@ -183,10 +137,10 @@ namespace UA.Services.Seeders
                      FuelConsumptionCity=9.5,
                      FuelConsumptionSuburban=6.5,
                      Rate=5
-                 },
-                 new Engine()
-                 {
-                     Version="TDI",
+                  },
+                  new Engine()
+                  {
+                     Version="1.9 TDI",
                      Capacity=1.9,
                      HorsePower=130,
                      Torque=350,
@@ -194,17 +148,61 @@ namespace UA.Services.Seeders
                      FuelConsumptionCity=8.2,
                      FuelConsumptionSuburban=6.0,
                      Rate=5
-                 },
+                  },
                   new Engine()
                   {
-                       Version="TFSI",
-                       Capacity=2.0,
-                       HorsePower=110,
-                       Torque=300,
-                       Type=TypeEnum.Petrol,
-                       FuelConsumptionCity=10,
-                       FuelConsumptionSuburban=8.0,
-                       Rate=5
+                     Version="2.0 FSI",
+                     Capacity=2.0,
+                     HorsePower=110,
+                     Torque=300,
+                     Type=TypeEnum.Petrol,
+                     FuelConsumptionCity=10,
+                     FuelConsumptionSuburban=8.0,
+                     Rate=5
+                  },
+                  new Engine()
+                  {
+                     Version="528i",
+                     Capacity=2.8,
+                     HorsePower=245,
+                     Torque=350,
+                     Type=TypeEnum.Petrol,
+                     FuelConsumptionCity=12,
+                     FuelConsumptionSuburban=7.0,
+                     Rate=5
+                  },
+                  new Engine()
+                  {
+                     Version="530i",
+                     Capacity=3.0,
+                     HorsePower=272,
+                     Torque=310,
+                     Type=TypeEnum.Petrol,
+                     FuelConsumptionCity=15,
+                     FuelConsumptionSuburban=7.4,
+                     Rate=5
+                  },
+                  new Engine()
+                  {
+                     Version="1.6",
+                     Capacity=1.6,
+                     HorsePower=101,
+                     Torque=145,
+                     Type=TypeEnum.Petrol,
+                     FuelConsumptionCity=8.2,
+                     FuelConsumptionSuburban=8.0,
+                     Rate=5
+                  },
+                  new Engine()
+                  {
+                     Version="1.9 TDI PD 150",
+                     Capacity=1.9,
+                     HorsePower=150,
+                     Torque=320,
+                     Type=TypeEnum.Diesel,
+                     FuelConsumptionCity=10.2,
+                     FuelConsumptionSuburban=8.0,
+                     Rate=5
                   }
             };
             return engines;
@@ -214,17 +212,23 @@ namespace UA.Services.Seeders
             var gearboxes = new List<Gearbox>()
             {
                new Gearbox()
-                {
+               {
                     Name="ZF",
                     NumberOfGears=5,
                     TypeOfGearbox=TypeOfGearboxEnum.Manual
-                },
-                new Gearbox()
-                {
+               },
+               new Gearbox()
+               {
                     Name="ZF",
                     NumberOfGears=8,
                     TypeOfGearbox=TypeOfGearboxEnum.Autmatic
-                }
+               },
+               new Gearbox()
+               {
+                    Name="ZF",
+                    NumberOfGears=6,
+                    TypeOfGearbox=TypeOfGearboxEnum.Manual
+               }
             };
             return gearboxes;
         }
@@ -234,12 +238,36 @@ namespace UA.Services.Seeders
             {
                 new Suspension()
                 {
-                    Type="four-shovel suspension"
+                    Type="Four-shovel suspension"
                 },
                 new Suspension()
                 {
-                    Type="two-shovel suspension"
-                }
+                    Type="Two-shovel suspension"
+                },
+                new Suspension()
+                {
+                    Type="Pneumatic"
+                },
+                new Suspension()
+                {
+                    Type="Multi-link"
+                },
+                new Suspension()
+                {
+                    Type="McPherson"
+                },
+                new Suspension()
+                {
+                    Type="Torsion beam"
+                },
+                new Suspension()
+                {
+                    Type="Torsion bar beam"
+                },
+                new Suspension()
+                {
+                    Type="Hydropneumatics"
+                },
             };
             return suspensions;
         }
@@ -451,7 +479,15 @@ namespace UA.Services.Seeders
                 new Brand()
                 {
                     Name = "AUDI",      
-                }    
+                },
+                new Brand()
+                {
+                    Name = "BMW",
+                },
+                new Brand()
+                {
+                    Name = "Volkswagen",
+                }
             };
             return brands;
         }
@@ -463,13 +499,23 @@ namespace UA.Services.Seeders
                 {
                     Name="A4",
                     Brand=GetBrands().First()
+                },
+                new Model.Entities.Model()
+                {
+                    Name="5 SERIES",
+                    Brand=GetBrands().Skip(1).First()
+                },
+                new Model.Entities.Model()
+                {
+                    Name="GOLF",
+                    Brand=GetBrands().Last()
                 }
             };
             return models;
         }
         private IEnumerable<Generation> GetModelGenerations()
         {
-            var bodyTypes = GetBodyTypes().ToList();
+            var bodyTypes = GetBodyTypes();
             //var bodytypes2 = GetBodyTypes().TakeLast(2).ToList();
             var drivetrains = GetDrivetrains().ToList();
             var engines = GetEngines().ToList();
@@ -478,7 +524,9 @@ namespace UA.Services.Seeders
             var suspensions = GetSuspensions().ToList();
             var bodyColours= GetBodyColours().ToList();
             var brakes = GetBrakes().ToList();
-            var model = GetModels().ToList().First();
+            var modelAudi = GetModels().ToList().First();
+            var modelBMW = GetModels().ToList().Skip(1).First();
+            var modelVW = GetModels().ToList().Last();
             var generations = new List<Generation>()
             {
                 new Generation()
@@ -494,7 +542,7 @@ namespace UA.Services.Seeders
                     Gearboxes=gearboxes,
                     DetailedInfo=new DetailedInfo()
                     {
-                        Suspensions=suspensions.Skip(1).ToList(),                       
+                        Suspensions=suspensions.Skip(1).ToList(),
                         ProductionStartDate=new DateTime(2001,01,01),
                         ProductionEndDate=new DateTime(2004,12,31),
                         BodyColours=bodyColours,
@@ -509,7 +557,7 @@ namespace UA.Services.Seeders
                         ESP=true,
                         ASR=true
                     },
-                    Model=model,
+                    Model=modelAudi,
                 },
                 new Generation()
                 {
@@ -539,7 +587,187 @@ namespace UA.Services.Seeders
                         ESP=true,
                         ASR=true
                     },
-                    Model=model,
+                    Model=modelAudi,
+                },
+                new Generation()
+                {
+                    Category="Family",
+                    Name = "F10",
+                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    MinPrice=50000,
+                    MaxPrice=95000,
+                    Rate=5.0,
+                    Drivetrains=drivetrains,
+                    Engines=engines.Skip(3).SkipLast(2).ToList(),
+                    Gearboxes=gearboxes.TakeLast(2).ToList(),
+                    DetailedInfo=new DetailedInfo()
+                    {
+                        Suspensions=suspensions.TakeLast(6).ToList(),
+                        ProductionStartDate=new DateTime(2007,01,01),
+                        ProductionEndDate=new DateTime(2012,12,31),
+                        BodyColours=bodyColours,
+                        Brakes=brakes,
+                    },
+                    OptionalEquipment=new OptionalEquipment()
+                    {
+                        RearAxleSteering=true,
+                        StandardTailPipes=false,
+                        Rooftop=true,
+                        ABS=true,
+                        ESP=true,
+                        ASR=false
+                    },
+                    Model=modelBMW,
+                },
+                new Generation()
+                {
+                    Category="Family",
+                    Name = "F11",
+                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    MinPrice=50000,
+                    MaxPrice=95000,
+                    Rate=5.0,
+                    Drivetrains=drivetrains,
+                    Engines=engines.Skip(3).SkipLast(2).ToList(),
+                    Gearboxes=gearboxes.TakeLast(2).ToList(),
+                    DetailedInfo=new DetailedInfo()
+                    {
+                        Suspensions=suspensions.TakeLast(6).ToList(),
+                        ProductionStartDate=new DateTime(2007,01,01),
+                        ProductionEndDate=new DateTime(2012,12,31),
+                        BodyColours=bodyColours,
+                        Brakes=brakes,
+                    },
+                    OptionalEquipment=new OptionalEquipment()
+                    {
+                        RearAxleSteering=true,
+                        StandardTailPipes=false,
+                        Rooftop=true,
+                        ABS=true,
+                        ESP=false,
+                        ASR=true
+                    },
+                    Model=modelBMW,
+                },
+                new Generation()
+                {
+                    Category="Family",
+                    Name = "E39",
+                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    MinPrice=50000,
+                    MaxPrice=95000,
+                    Rate=5.0,
+                    Drivetrains=drivetrains,
+                    Engines=engines.Skip(3).SkipLast(2).ToList(),
+                    Gearboxes=gearboxes.TakeLast(2).ToList(),
+                    DetailedInfo=new DetailedInfo()
+                    {
+                        Suspensions=suspensions.TakeLast(6).ToList(),
+                        ProductionStartDate=new DateTime(2007,01,01),
+                        ProductionEndDate=new DateTime(2012,12,31),
+                        BodyColours=bodyColours,
+                        Brakes=brakes,
+                    },
+                    OptionalEquipment=new OptionalEquipment()
+                    {
+                        RearAxleSteering=true,
+                        StandardTailPipes=false,
+                        Rooftop=true,
+                        ABS=true,
+                        ESP=false,
+                        ASR=true
+                    },
+                    Model=modelBMW,
+                },
+                new Generation()
+                {
+                    Category="Family",
+                    Name = "E34",
+                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    MinPrice=50000,
+                    MaxPrice=95000,
+                    Rate=5.0,
+                    Drivetrains=drivetrains,
+                    Engines=engines.Skip(3).SkipLast(2).ToList(),
+                    Gearboxes=gearboxes.TakeLast(2).ToList(),
+                    DetailedInfo=new DetailedInfo()
+                    {
+                        Suspensions=suspensions.TakeLast(6).ToList(),
+                        ProductionStartDate=new DateTime(2007,01,01),
+                        ProductionEndDate=new DateTime(2012,12,31),
+                        BodyColours=bodyColours,
+                        Brakes=brakes,
+                    },
+                    OptionalEquipment=new OptionalEquipment()
+                    {
+                        RearAxleSteering=true,
+                        StandardTailPipes=false,
+                        Rooftop=true,
+                        ABS=true,
+                        ESP=false,
+                        ASR=true
+                    },
+                    Model=modelBMW,
+                },
+                new Generation()
+                {
+                    Category="Family",
+                    Name = "IV",
+                    BodyTypes = bodyTypes.TakeLast(1).ToList(),
+                    MinPrice=35000,
+                    MaxPrice=50000,
+                    Rate=4.0,
+                    Drivetrains=drivetrains.Take(4).ToList(),
+                    Engines=engines.TakeLast(2).ToList(),
+                    Gearboxes=gearboxes.Take(2).ToList(),
+                    DetailedInfo=new DetailedInfo()
+                    {
+                        Suspensions=suspensions.Take(6).ToList(),
+                        ProductionStartDate=new DateTime(2004,01,01),
+                        ProductionEndDate=new DateTime(2008,12,31),
+                        BodyColours=bodyColours,
+                        Brakes=brakes,
+                    },
+                    OptionalEquipment=new OptionalEquipment()
+                    {
+                        RearAxleSteering=true,
+                        StandardTailPipes=true,
+                        Rooftop=true,
+                        ABS=true,
+                        ESP=true,
+                        ASR=true
+                    },
+                    Model=modelVW,
+                },
+                new Generation()
+                {
+                    Category="Family",
+                    Name = "V",
+                    BodyTypes = bodyTypes.TakeLast(1).ToList(),
+                    MinPrice=45000,
+                    MaxPrice=65000,
+                    Rate=4.0,
+                    Drivetrains=drivetrains.Take(4).ToList(),
+                    Engines=engines.TakeLast(2).ToList(),
+                    Gearboxes=gearboxes.Take(2).ToList(),
+                    DetailedInfo=new DetailedInfo()
+                    {
+                        Suspensions=suspensions.Take(6).ToList(),
+                        ProductionStartDate=new DateTime(2008,01,01),
+                        ProductionEndDate=new DateTime(2012,12,31),
+                        BodyColours=bodyColours,
+                        Brakes=brakes,
+                    },
+                    OptionalEquipment=new OptionalEquipment()
+                    {
+                        RearAxleSteering=true,
+                        StandardTailPipes=true,
+                        Rooftop=true,
+                        ABS=true,
+                        ESP=true,
+                        ASR=true
+                    },
+                    Model=modelVW,
                 }
             };
             return generations;

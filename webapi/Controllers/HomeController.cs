@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UA.Model.DTOs;
+using UA.Model.Queries;
 using UA.Services.Interfaces;
 
 namespace UA.WebAPI.Controllers
@@ -16,9 +17,9 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         
-        public ActionResult<List<GenerationDTO>> Get()
+        public ActionResult<PageResult<GenerationDTO>> Get([FromQuery]GenerationQuery query)
         {
-            var generations=_homeService.GetAll();
+            var generations=_homeService.GetAll(query);
             return Ok(generations);
         }
         [HttpGet("{id}")]

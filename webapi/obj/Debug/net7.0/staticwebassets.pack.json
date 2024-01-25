@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\webapi\\wwwroot\\images\\143d0c9c-4d79-43ca-aca4-39f54112356f.jpg",
+      "PackagePath": "staticwebassets\\images\\143d0c9c-4d79-43ca-aca4-39f54112356f.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\webapi\\wwwroot\\images\\2483b5f8-8e13-45ee-b154-faf2e6ab8b04.jpg",
+      "PackagePath": "staticwebassets\\images\\2483b5f8-8e13-45ee-b154-faf2e6ab8b04.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\webapi\\wwwroot\\images\\265603d7-4227-42e6-86a7-8ca49b049464.jpg",
+      "PackagePath": "staticwebassets\\images\\265603d7-4227-42e6-86a7-8ca49b049464.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\webapi\\wwwroot\\images\\4a2ffbd7-29be-4812-8de9-f8b75bc39c59.jpg",
+      "PackagePath": "staticwebassets\\images\\4a2ffbd7-29be-4812-8de9-f8b75bc39c59.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\webapi\\wwwroot\\images\\bd1ccd00-8c58-4221-8e27-e813f33a2470.jpg",
+      "PackagePath": "staticwebassets\\images\\bd1ccd00-8c58-4221-8e27-e813f33a2470.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.UA.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.UA.WebAPI.props",
+      "PackagePath": "build\\UA.WebAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.UA.WebAPI.props",
+      "PackagePath": "buildMultiTargeting\\UA.WebAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.UA.WebAPI.props",
+      "PackagePath": "buildTransitive\\UA.WebAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

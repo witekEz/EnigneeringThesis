@@ -13,6 +13,7 @@ using UA.Services.Interfaces;
 using UA.Model.DTOs.Update;
 using Microsoft.Extensions.Logging;
 using UA.Services.Middleware.Exceptions;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace UA.Services
 {
@@ -51,6 +52,7 @@ namespace UA.Services
                 throw new NotFoundException("Model not found");
 
             var generation = _dbContext.Generations
+               .Include(b => b.GenerationImages)
                .Include(b => b.BodyTypes)
                .Include(b => b.Drivetrains)
                .Include(b => b.Engines)
@@ -67,8 +69,26 @@ namespace UA.Services
             if (generation == null|| generation.Model.Id != modelId) 
                 throw new NotFoundException("Generation not found");
            
-
+            
             var generationDTO = _mapper.Map<GenerationDTO>(generation);
+            generationDTO.Images = new List<GenerationImageDTO>() { };
+            if (generation.GenerationImages!=null)
+            {
+                for (int i = 0; i < generation.GenerationImages.Count; i++)
+                {
+                    var imageDTO=new GenerationImageDTO()
+                    {
+                        Id= generation.GenerationImages[i].Id,
+                        Image = this.GetImage(generation.GenerationImages[i].ImageGUID),
+                    };
+                    if (!imageDTO.Image.SequenceEqual(new byte[0]))
+                    {
+                        generationDTO.Images.Add(imageDTO);
+                    }
+                    
+                }
+            }
+           
             return generationDTO;
         }
         public List<GenerationDTO> GetAll(int modelId)
@@ -112,6 +132,21 @@ namespace UA.Services
             generation.MinPrice = dto.MaxPrice;
             generation.Rate = dto.Rate;
             _dbContext.SaveChanges();
+        }
+        private byte[] GetImage(Guid name)
+        {
+            byte[] bytes = new byte[0];
+            var rootPath = Directory.GetCurrentDirectory();
+            var imagesFolder = Path.Combine(rootPath, "wwwroot", "images");
+            var fileName = name.ToString() + ".jpg";
+            var filePath = $"{imagesFolder}/{fileName}";
+            var fileExsist= System.IO.File.Exists(filePath);
+            if (!fileExsist)
+            {
+               return bytes;
+            }
+            var fileContent=System.IO.File.ReadAllBytes(filePath);
+            return fileContent;
         }
     }
 }

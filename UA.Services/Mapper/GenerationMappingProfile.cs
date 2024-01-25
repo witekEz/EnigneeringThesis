@@ -42,6 +42,7 @@ namespace UA.Services.Mapper
             CreateMap<CreateModelDTO, Model.Entities.Model >();
             CreateMap<CreateOptionalEquipmentDTO, OptionalEquipment>();
             CreateMap<CreateSuspensionDTO, Suspension>();
+            CreateMap<CreateGenerationImageDTO, GenerationImage>();
 
             //From UpdateDTO => Entity
             CreateMap<UpdateGenerationDTO, Generation>();

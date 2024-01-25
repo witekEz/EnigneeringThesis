@@ -16,6 +16,7 @@ namespace UA.Model.DTOs
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
         public double Rate { get; set; }
+        public List<GenerationImageDTO> ?Images {get;set;}
         public List<DrivetrainDTO> Drivetrains { get; set; } = null!;
         public List<EngineDTO> Engines { get; set; } = null!;
         public List<GearboxDTO> Gearboxes { get; set; } = null!;

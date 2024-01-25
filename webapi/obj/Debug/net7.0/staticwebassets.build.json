@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "wspdVX4r11L+YVl8lyP/ebhSWf58Xo/OxY32YTA3xlM=",
+  "Hash": "i4iqJql1LYoAN2kgit+/Vg8wbMghYmtu5eYD8sxkkTw=",
   "Source": "UA.WebAPI",
   "BasePath": "_content/UA.WebAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "UA.WebAPI\\wwwroot",
+      "Source": "UA.WebAPI",
+      "ContentRoot": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\webapi\\wwwroot\\",
+      "BasePath": "_content/UA.WebAPI",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

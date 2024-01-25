@@ -25,6 +25,7 @@ namespace UA.DAL.EF
         public DbSet<Gearbox> Gearboxes { get; set; }
         public DbSet<BodyType> BodyTypes { get; set; }
         public DbSet<Brake> Brakes { get; set; }
+        public DbSet<GenerationImage> GenerationImages { get; set; }
         //Authentication
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

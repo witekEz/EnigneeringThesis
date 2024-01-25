@@ -91,3 +91,5 @@ C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\UA.WebAPI.staticwebassets.runtime.json
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\webapi\bin\Debug\net7.0\SixLabors.ImageSharp.dll

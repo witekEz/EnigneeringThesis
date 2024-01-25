@@ -18,6 +18,7 @@ namespace UA.Model.Entities
         public double MaxPrice { get; set; }
         public double Rate { get; set; }
         //Navigation Properties
+        public virtual List<GenerationImage> ?GenerationImages { get; set; }
         public virtual List<BodyType> BodyTypes { get; set; } = null!;
         public virtual List<Drivetrain> Drivetrains { get; set; }= null!;
         public virtual List<Engine> Engines { get; set; } = null!;
