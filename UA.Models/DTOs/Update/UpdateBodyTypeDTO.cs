@@ -9,11 +9,7 @@ namespace UA.Model.DTOs.Update
 {
     public class UpdateBodyTypeDTO
     {
-        [MaxLength(30)]
+        [MaxLength(20)]
         public string Name { get; set; } = null!;
-        public string? Segment { get; set; }
-        public int NumberOfDoors { get; set; }
-        public int NumberOfSeats { get; set; }
-        public int TrunkCapacity { get; set; }
     }
 }

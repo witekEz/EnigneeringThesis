@@ -168,6 +168,41 @@ namespace UA.DAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Body", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BodyTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfDoors")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfSeats")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Segment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TrunkCapacity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BodyTypeId");
+
+                    b.HasIndex("GenerationId");
+
+                    b.ToTable("Bodies");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.BodyColour", b =>
                 {
                     b.Property<int>("Id")
@@ -198,29 +233,12 @@ namespace UA.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("GenerationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("NumberOfDoors")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfSeats")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Segment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TrunkCapacity")
-                        .HasColumnType("int");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GenerationId");
 
                     b.ToTable("BodyTypes");
                 });
@@ -259,6 +277,24 @@ namespace UA.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("UA.Model.Entities.DetailedInfo", b =>
@@ -378,10 +414,8 @@ namespace UA.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<double>("MaxPrice")
                         .HasColumnType("float");
@@ -401,6 +435,8 @@ namespace UA.DAL.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ModelId");
 
@@ -606,13 +642,21 @@ namespace UA.DAL.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("UA.Model.Entities.BodyType", b =>
+            modelBuilder.Entity("UA.Model.Entities.Body", b =>
                 {
+                    b.HasOne("UA.Model.Entities.BodyType", "BodyType")
+                        .WithMany("Bodies")
+                        .HasForeignKey("BodyTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("UA.Model.Entities.Generation", "Generation")
-                        .WithMany("BodyTypes")
+                        .WithMany("Bodies")
                         .HasForeignKey("GenerationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BodyType");
 
                     b.Navigation("Generation");
                 });
@@ -630,11 +674,19 @@ namespace UA.DAL.Migrations
 
             modelBuilder.Entity("UA.Model.Entities.Generation", b =>
                 {
+                    b.HasOne("UA.Model.Entities.Category", "Category")
+                        .WithMany("Generations")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("UA.Model.Entities.Model", "Model")
                         .WithMany("Generations")
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Model");
                 });
@@ -672,14 +724,24 @@ namespace UA.DAL.Migrations
                     b.Navigation("Generation");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.BodyType", b =>
+                {
+                    b.Navigation("Bodies");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.Brand", b =>
                 {
                     b.Navigation("Models");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Category", b =>
+                {
+                    b.Navigation("Generations");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.Generation", b =>
                 {
-                    b.Navigation("BodyTypes");
+                    b.Navigation("Bodies");
 
                     b.Navigation("DetailedInfo");
 

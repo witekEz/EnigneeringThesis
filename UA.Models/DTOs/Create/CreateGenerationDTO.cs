@@ -10,13 +10,12 @@ namespace UA.Model.DTOs.Create
     public class CreateGenerationDTO
     {
         [Required]
-        [MaxLength(20)]
-        public string Category { get; set; } = null!;
+        public CreateCategoryDTO Category { get; set; } = null!;
         [Required]
         [MaxLength(20)]
         public string Name { get; set; } = null!;
         [Required]
-        public List<CreateBodyTypeDTO> BodyTypes { get; set; } = null!;
+        public List<CreateBodyDTO> BodyTypes { get; set; } = null!;
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
         public double Rate { get; set; }

@@ -30,6 +30,7 @@ namespace UA.Services
                 .Generations
                 .Include(b => b.GenerationImages)
                 .Include(b=>b.Model)
+                .Include(b=>b.Category)
                 .Include(b => b.Model.Brand)
                 .Where(o => query.Search == null ||
                         (o.Name.ToLower().Contains(query.Search.ToLower()) ||
@@ -95,7 +96,8 @@ namespace UA.Services
             var generation=_dbContext
                 .Generations
                 .Include(b => b.GenerationImages)
-                .Include(b => b.BodyTypes)
+                .Include(b => b.Bodies)
+                .Include(b=>b.Category)
                 .Include(b => b.Drivetrains)
                 .Include(b => b.Engines)
                 .Include(b => b.Gearboxes)

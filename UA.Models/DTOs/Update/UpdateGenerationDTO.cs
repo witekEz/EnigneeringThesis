@@ -10,8 +10,6 @@ namespace UA.Model.DTOs.Update
     public class UpdateGenerationDTO
     {
         [MaxLength(20)]
-        public string ?Category { get; set; }
-        [MaxLength(20)]
         public string ?Name { get; set; }
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }

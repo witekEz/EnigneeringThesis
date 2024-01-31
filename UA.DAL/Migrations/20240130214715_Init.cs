@@ -26,6 +26,19 @@ namespace UA.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BodyTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BodyTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Brakes",
                 columns: table => new
                 {
@@ -49,6 +62,19 @@ namespace UA.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Brands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -177,16 +203,22 @@ namespace UA.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Category = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     MinPrice = table.Column<double>(type: "float", nullable: false),
                     MaxPrice = table.Column<double>(type: "float", nullable: false),
                     Rate = table.Column<double>(type: "float", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     ModelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Generations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Generations_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Generations_Models_ModelId",
                         column: x => x.ModelId,
@@ -196,23 +228,29 @@ namespace UA.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BodyTypes",
+                name: "Bodies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Segment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumberOfDoors = table.Column<int>(type: "int", nullable: false),
                     NumberOfSeats = table.Column<int>(type: "int", nullable: false),
                     TrunkCapacity = table.Column<int>(type: "int", nullable: false),
-                    GenerationId = table.Column<int>(type: "int", nullable: false)
+                    GenerationId = table.Column<int>(type: "int", nullable: false),
+                    BodyTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BodyTypes", x => x.Id);
+                    table.PrimaryKey("PK_Bodies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BodyTypes_Generations_GenerationId",
+                        name: "FK_Bodies_BodyTypes_BodyTypeId",
+                        column: x => x.BodyTypeId,
+                        principalTable: "BodyTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bodies_Generations_GenerationId",
                         column: x => x.GenerationId,
                         principalTable: "Generations",
                         principalColumn: "Id",
@@ -430,14 +468,19 @@ namespace UA.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bodies_BodyTypeId",
+                table: "Bodies",
+                column: "BodyTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bodies_GenerationId",
+                table: "Bodies",
+                column: "GenerationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BodyColourDetailedInfo_DetailedInfosId",
                 table: "BodyColourDetailedInfo",
                 column: "DetailedInfosId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BodyTypes_GenerationId",
-                table: "BodyTypes",
-                column: "GenerationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BrakeDetailedInfo_DetailedInfosId",
@@ -476,6 +519,11 @@ namespace UA.DAL.Migrations
                 column: "GenerationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Generations_CategoryId",
+                table: "Generations",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Generations_ModelId",
                 table: "Generations",
                 column: "ModelId");
@@ -501,10 +549,10 @@ namespace UA.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BodyColourDetailedInfo");
+                name: "Bodies");
 
             migrationBuilder.DropTable(
-                name: "BodyTypes");
+                name: "BodyColourDetailedInfo");
 
             migrationBuilder.DropTable(
                 name: "BrakeDetailedInfo");
@@ -529,6 +577,9 @@ namespace UA.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "BodyTypes");
 
             migrationBuilder.DropTable(
                 name: "BodyColours");
@@ -556,6 +607,9 @@ namespace UA.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Generations");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Models");

@@ -53,7 +53,8 @@ namespace UA.Services
 
             var generation = _dbContext.Generations
                .Include(b => b.GenerationImages)
-               .Include(b => b.BodyTypes)
+               .Include(b => b.Category)
+               .Include(b => b.Bodies)
                .Include(b => b.Drivetrains)
                .Include(b => b.Engines)
                .Include(b => b.Gearboxes)
@@ -127,7 +128,7 @@ namespace UA.Services
             if (generation == null) 
                 throw new NotFoundException("Generation not found");
             
-            generation.Category = dto.Category;
+            
             generation.Name = dto.Name;
             generation.MinPrice = dto.MaxPrice;
             generation.Rate = dto.Rate;

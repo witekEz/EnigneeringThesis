@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace UA.Model.Entities
 {
@@ -6,16 +10,9 @@ namespace UA.Model.Entities
     {
         //Primary Key
         public int Id { get; set; }
-        //Properties
+        //Property
         public string Name { get; set; } = null!;
-        public string? Segment { get; set; }
-        public int NumberOfDoors { get; set; }
-        public int NumberOfSeats { get; set; }
-        public int TrunkCapacity { get; set; }
-        //Navigation Properties
-        public virtual Generation Generation { get; set; } = null!;
-        //Foreign Key
-        public int GenerationId { get; set; }
-
+        //Navigation Property
+        public virtual List<Body> ?Bodies { get; set; }
     }
 }

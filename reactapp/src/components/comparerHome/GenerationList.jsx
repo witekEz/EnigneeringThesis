@@ -18,7 +18,7 @@ const GenerationList = ({ generations, title }) => {
                                 <Card.Text>
                                     Model: {generation.model.name} <br></br>
                                     Generacja: {generation.name} <br></br>
-                                    Kategoria: {generation.category} <br></br>
+                                    Kategoria: {generation.category.name} <br></br>
                                     Minimalna cena: {generation.minPrice} <br></br>
                                     Ocena: {generation.rate} <br></br>
                                 </Card.Text>

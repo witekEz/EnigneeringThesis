@@ -18,7 +18,8 @@ namespace UA.Services.Mapper
             //From Entity => DTO
             CreateMap<Generation,GenerationDTO>();
             CreateMap<BodyColour,BodyColourDTO>();
-            CreateMap<BodyType,BodyTypeDTO>();
+            CreateMap<Body,BodyDTO>();
+            CreateMap<BodyType, BodyTypeDTO>();
             CreateMap<Brake,BrakeDTO>();
             CreateMap<Brand,BrandDTO >();
             CreateMap<DetailedInfo,DetailedInfoDTO>();
@@ -28,10 +29,12 @@ namespace UA.Services.Mapper
             CreateMap<Model.Entities.Model,ModelDTO >();
             CreateMap<OptionalEquipment,OptionalEquipmentDTO>();
             CreateMap<Suspension,SuspensionDTO>();
+            CreateMap<Category, CategoryDTO>();
 
             //From CreateDTO => Entity
             CreateMap<CreateGenerationDTO, Generation>();
             CreateMap<CreateBodyColourDTO, BodyColour>();
+            CreateMap<CreateBodyDTO, Body>();
             CreateMap<CreateBodyTypeDTO, BodyType>();
             CreateMap<CreateBrakeDTO, Brake>();
             CreateMap<CreateBrandDTO, Brand>();
@@ -43,10 +46,12 @@ namespace UA.Services.Mapper
             CreateMap<CreateOptionalEquipmentDTO, OptionalEquipment>();
             CreateMap<CreateSuspensionDTO, Suspension>();
             CreateMap<CreateGenerationImageDTO, GenerationImage>();
+            CreateMap<CreateCategoryDTO, Category>();
 
             //From UpdateDTO => Entity
             CreateMap<UpdateGenerationDTO, Generation>();
             CreateMap<UpdateBodyColourDTO, BodyColour>();
+            CreateMap<UpdateBodyDTO, Body>();
             CreateMap<UpdateBodyTypeDTO, BodyType>();
             CreateMap<UpdateBrakeDTO, Brake>();
             CreateMap<UpdateBrandDTO, Brand>();
@@ -57,6 +62,7 @@ namespace UA.Services.Mapper
             CreateMap<UpdateModelDTO, Model.Entities.Model>();
             CreateMap<UpdateOptionalEquipmentDTO, OptionalEquipment>();
             CreateMap<UpdateSuspensionDTO, Suspension>();
+            CreateMap<UpdateCategoryDTO, Category>();
 
 
         }

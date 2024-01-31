@@ -11,8 +11,9 @@ namespace UA.Model.Entities
         //Primary Key
         public int Id { get; set; }
 
-        //Navigation Properties
+        //Properties
         public string Type { get; set; } = null!;
+        //Navigation Properties
         public virtual List<Generation>? Generations { get; set; }
         
     }

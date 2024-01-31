@@ -11,8 +11,8 @@ namespace UA.DAL.EF
 {
     public class ApplicationDbContext:DbContext
     {
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Model.Entities.Model> Models { get; set; }
         public DbSet<Generation> Generations { get; set; }
@@ -26,6 +26,9 @@ namespace UA.DAL.EF
         public DbSet<BodyType> BodyTypes { get; set; }
         public DbSet<Brake> Brakes { get; set; }
         public DbSet<GenerationImage> GenerationImages { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Body> Bodies { get; set; }
+
         //Authentication
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -44,7 +47,7 @@ namespace UA.DAL.EF
             //BodyType
             modelBuilder.Entity<BodyType>()
                 .Property(p=>p.Name) 
-                .HasMaxLength(30);
+                .HasMaxLength(20);
             //Brake
             modelBuilder.Entity<Brake>()
                 .Property(p => p.Type)
@@ -69,9 +72,6 @@ namespace UA.DAL.EF
             modelBuilder.Entity<Generation>()
                 .Property(p => p.Name)
                 .HasMaxLength(10);
-            modelBuilder.Entity<Generation>()
-                .Property(p => p.Category)
-                .HasMaxLength(20);
             //Model
             modelBuilder.Entity<Generation>()
                 .Property(p => p.Name)
@@ -80,6 +80,10 @@ namespace UA.DAL.EF
             modelBuilder.Entity<Suspension>()
                 .Property(p => p.Type)
                 .HasMaxLength(40);
+            //Category
+            modelBuilder.Entity<Category>()
+                .Property(p => p.Name)
+                .HasMaxLength(20);
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

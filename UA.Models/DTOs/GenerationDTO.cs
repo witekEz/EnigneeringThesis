@@ -10,9 +10,9 @@ namespace UA.Model.DTOs
     public class GenerationDTO
     {
         public int Id { get; set; }
-        public string Category { get; set; } = null!;
+        public CategoryDTO Category { get; set; } = null!;
         public string Name { get; set; } = null!;
-        public List<BodyTypeDTO> BodyTypes { get; set; } = null!;
+        public List<BodyDTO> BodyTypes { get; set; } = null!;
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
         public double Rate { get; set; }

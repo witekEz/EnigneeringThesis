@@ -71,7 +71,7 @@ try
     builder.Services.AddScoped<IBrandService, BrandService>();
     builder.Services.AddScoped<IModelService, ModelService>();
     builder.Services.AddScoped<IHomeService, HomeService>();
-    builder.Services.AddScoped<IBodyTypeService, BodyTypeService>();
+    builder.Services.AddScoped<IBodyService, BodyService>();
     builder.Services.AddScoped<IDrivetrainService, DrivetrainService>();
     builder.Services.AddScoped<IEngineService, EngineService>();
     builder.Services.AddScoped<IGearboxService, GearboxService>();
@@ -82,6 +82,8 @@ try
     builder.Services.AddScoped<IBodyColourService, BodyColourService>();
     builder.Services.AddScoped<IOptionalEquipmentService, OptionalEquipmentService>();
     builder.Services.AddScoped<IGenerationImageService, GenerationImageService>();
+    builder.Services.AddScoped<ICategoryService, CategoryService>();
+    builder.Services.AddScoped<IBodyTypeService, BodyTypeService>();
 
     //Validator
     builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

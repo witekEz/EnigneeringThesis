@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
@@ -26,14 +29,49 @@ namespace UA.Services.Seeders
                 if(!_dbContext.Roles.Any())
                 {
                     var roles = GetRoles();
-                    _dbContext.Roles.AddRange(roles);
+                    _dbContext.AddRange(roles);
                     _dbContext.SaveChanges();
                 }
                 if (!_dbContext.Generations.Any())
                 {
-                    var modelGenerations = GetModelGenerations();
-                    _dbContext.Generations.AddRange(modelGenerations);
-                    _dbContext.SaveChanges();
+                    
+                    var bodyTypes=GetBodyTypes();
+                    var bodies=GetBodies(bodyTypes);
+                    var drivetrains=GetDrivetrains();
+                    var engines =GetEngines();
+                    var gearboxes=GetGearboxes();
+                    var suspensions=GetSuspensions();
+                    var bodyColours=GetBodyColours();
+                    var brakes=GetBrakes();
+                    var brands=GetBrands();
+                    var models = GetModels(brands);
+                    var categories=GetCategories();
+
+                    var modelGenerations = GetModelGenerations(bodies, drivetrains, engines, gearboxes, suspensions, bodyColours, brakes, categories, models);
+                
+                    _dbContext.AddRange(bodyTypes);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(bodies);
+                    _dbContext.AddRange(drivetrains);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(engines);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(gearboxes);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(suspensions);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(bodyColours);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(brakes);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(brands);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(models);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(categories);
+                    //_dbContext.SaveChanges();
+                    _dbContext.AddRange(modelGenerations);
+                    _dbContext.SaveChanges();                   
                 }
 
             }
@@ -59,50 +97,182 @@ namespace UA.Services.Seeders
         }
         private IEnumerable<BodyType> GetBodyTypes()
         {
-            var roles = new List<BodyType>() 
+            var bodyTypes = new List<BodyType>()
             {
                 new BodyType()
                 {
-                    Name = "Combi",
-                    Segment = "D",
+                    Name="Kombi"
+                },
+                new BodyType()
+                {
+                    Name="Sedan"
+                },
+                new BodyType()
+                {
+                    Name="Limuzyna"
+                },
+                new BodyType()
+                {
+                    Name="Crossover"
+                },
+                new BodyType()
+                {
+                    Name="CoupeSUV"
+                },
+                new BodyType()
+                {
+                    Name="Terenowy"
+                },
+                new BodyType()
+                {
+                    Name="Pickup"
+                },
+                new BodyType()
+                {
+                    Name="VAN"
+                },
+                new BodyType()
+                {
+                    Name="Micro"
+                },
+                new BodyType()
+                {
+                    Name="Kabriolet"
+                },
+                new BodyType()
+                {
+                    Name="Muscle"
+                },
+                new BodyType()
+                {
+                    Name="Hyper"
+                },
+                new BodyType()
+                {
+                    Name="Copue"
+                },
+                new BodyType()
+                {
+                    Name="SUV"
+                },
+                new BodyType()
+                {
+                    Name="Hatchback"
+                }
+
+            };
+            return bodyTypes;
+        }
+        private IEnumerable<Body> GetBodies(IEnumerable<BodyType> bodyTypes)
+        {
+            var bodies = new List<Body>() 
+            {
+                //b6
+                new Body()
+                {
+                    BodyType=bodyTypes.First(),
+                    Segment = "A",
                     NumberOfDoors = 5,
                     NumberOfSeats = 5,
                     TrunkCapacity = 1250,
                 },
-                new BodyType()
+                new Body()
                 {
-                    Name = "Sedan",
-                    Segment = "D",
+                    BodyType =bodyTypes.Skip(1).First(),
+                    Segment = "A",
                     NumberOfDoors = 5,
                     NumberOfSeats = 5,
                     TrunkCapacity = 700,
                 },
-                new BodyType()
+                //b7
+                new Body()
                 {
-                    Name = "Combi",
-                    Segment = "D",
+                    BodyType = bodyTypes.Skip(1).First(),
+                    Segment = "B",
                     NumberOfDoors = 5,
                     NumberOfSeats = 5,
-                    TrunkCapacity = 1250,
+                    TrunkCapacity = 500,
                 },
-                new BodyType()
+                new Body()
                 {
-                    Name = "Coupe",
-                    Segment = "D",
+                    BodyType=bodyTypes.First(),
+                    Segment = "B",
+                    NumberOfDoors = 5,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 850,
+                },
+                //f10
+                new Body()
+                {
+                    BodyType=bodyTypes.First(),
+                    Segment = "C",
                     NumberOfDoors = 3,
                     NumberOfSeats = 5,
                     TrunkCapacity = 450,
                 },
-                new BodyType()
+                new Body()
                 {
-                    Name = "Hatchback",
+                    BodyType = bodyTypes.Skip(1).First(),
+                    Segment = "C",
+                    NumberOfDoors = 3,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 500,
+                },
+                //f11
+                new Body()
+                {
+                    BodyType=bodyTypes.First(),
+                    Segment = "C",
+                    NumberOfDoors = 3,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 450,
+                },
+                new Body()
+                {
+                    BodyType = bodyTypes.Skip(1).First(),
+                    Segment = "C",
+                    NumberOfDoors = 3,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 500,
+                },
+                //e39
+                new Body()
+                {
+                    BodyType = bodyTypes.Skip(1).First(),
                     Segment = "D",
                     NumberOfDoors = 3,
                     NumberOfSeats = 5,
                     TrunkCapacity = 500,
-                }
+                },
+                //e34
+                new Body()
+                {
+                    BodyType = bodyTypes.Skip(2).Last(),
+                    Segment = "E",
+                    NumberOfDoors = 3,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 500,
+                },
+                //IV
+                new Body()
+                {
+                    BodyType = bodyTypes.Last(),
+                    Segment = "F",
+                    NumberOfDoors = 3,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 500,
+                },
+                //V
+                new Body()
+                {
+                    BodyType = bodyTypes.Last(),
+                    Segment = "G",
+                    NumberOfDoors = 3,
+                    NumberOfSeats = 5,
+                    TrunkCapacity = 500,
+                },
             };
-            return roles;
+            return bodies;
         }
         private IEnumerable<Drivetrain> GetDrivetrains()
         {
@@ -491,62 +661,96 @@ namespace UA.Services.Seeders
             };
             return brands;
         }
-        private IEnumerable<Model.Entities.Model> GetModels()
+        private IEnumerable<Model.Entities.Model> GetModels(IEnumerable<Brand>brands)
         {
             var models = new List<Model.Entities.Model>()
             {
                 new Model.Entities.Model()
                 {
                     Name="A4",
-                    Brand=GetBrands().First()
+                    Brand=brands.First()
                 },
                 new Model.Entities.Model()
                 {
                     Name="5 SERIES",
-                    Brand=GetBrands().Skip(1).First()
+                    Brand=brands.Skip(1).First()
                 },
                 new Model.Entities.Model()
                 {
                     Name="GOLF",
-                    Brand=GetBrands().Last()
+                    Brand=brands.Last()
                 }
             };
             return models;
         }
-        private IEnumerable<Generation> GetModelGenerations()
+        private IEnumerable<Category>GetCategories()
         {
-            var bodyTypes = GetBodyTypes();
-            //var bodytypes2 = GetBodyTypes().TakeLast(2).ToList();
-            var drivetrains = GetDrivetrains().ToList();
-            var engines = GetEngines().ToList();
-            //var engines2 = GetEngines().Skip(1).ToList();
-            var gearboxes = GetGearboxes().ToList();
-            var suspensions = GetSuspensions().ToList();
-            var bodyColours= GetBodyColours().ToList();
-            var brakes = GetBrakes().ToList();
-            var modelAudi = GetModels().ToList().First();
-            var modelBMW = GetModels().ToList().Skip(1).First();
-            var modelVW = GetModels().ToList().Last();
+            var categories = new List<Category>()
+            {
+                new Category()
+                {
+                    Name="Rodzinny"
+                },
+                new Category()
+                {
+                    Name="Sportowy"
+                },
+                new Category()
+                {
+                    Name="Komfortowy"
+                },
+                new Category()
+                {
+                    Name="Ekonomiczny"
+                },
+                new Category()
+                {
+                    Name="Klasyk"
+                }
+            };
+            return categories;
+        }
+        private IEnumerable<Generation> GetModelGenerations( IEnumerable<Body>bodies,
+             IEnumerable<Drivetrain> drivetrains,
+             IEnumerable<Engine> engines, 
+             IEnumerable<Gearbox> gearboxes,
+             IEnumerable<Suspension> suspensions,
+             IEnumerable<BodyColour> bodyColours,
+             IEnumerable<Brake> brakes,
+             IEnumerable<Category> categories,
+             IEnumerable<Model.Entities.Model> models)
+
+        {
+            //var drivetrains = GetDrivetrains().ToList();
+            //var engines = GetEngines().ToList();
+            //var gearboxes = GetGearboxes().ToList();
+            //var suspensions = GetSuspensions().ToList();
+            //var bodyColours= GetBodyColours().ToList();
+            //var brakes = GetBrakes().ToList();
+            var modelAudi = models.ToList().First();
+            var modelBMW = models.ToList().Skip(1).First();
+            var modelVW = models.ToList().Last();
+            //var categories= GetCategories().ToList();
             var generations = new List<Generation>()
             {
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.First(),
                     Name = "B6",
-                    BodyTypes = bodyTypes.Take(2).ToList(),
+                    Bodies = bodies.Take(2).ToList(),
                     MinPrice=7000,
                     MaxPrice=30000,
                     Rate=5.0,
-                    Drivetrains=drivetrains,
+                    Drivetrains=drivetrains.ToList(),
                     Engines=engines.Take(2).ToList(),
-                    Gearboxes=gearboxes,
+                    Gearboxes=gearboxes.ToList(),
                     DetailedInfo=new DetailedInfo()
                     {
                         Suspensions=suspensions.Skip(1).ToList(),
                         ProductionStartDate=new DateTime(2001,01,01),
                         ProductionEndDate=new DateTime(2004,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -561,22 +765,22 @@ namespace UA.Services.Seeders
                 },
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.First(),
                     Name = "B7",
-                    BodyTypes = bodyTypes.TakeLast(2).ToList(),
+                    Bodies = bodies.Skip(2).Take(2).ToList(),
                     MinPrice=10000,
                     MaxPrice=25000,
                     Rate=4.3,
-                    Drivetrains=drivetrains,
+                    Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(1).ToList(),
-                    Gearboxes=gearboxes,
+                    Gearboxes=gearboxes.ToList(),
                     DetailedInfo=new DetailedInfo()
                     {
-                        Suspensions=suspensions,
+                        Suspensions=suspensions.ToList(),
                         ProductionStartDate=new DateTime(2004,01,01),
                         ProductionEndDate=new DateTime(2007,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -591,13 +795,13 @@ namespace UA.Services.Seeders
                 },
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.Skip(2).First(),
                     Name = "F10",
-                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    Bodies = bodies.Skip(4).Take(2).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
                     Rate=5.0,
-                    Drivetrains=drivetrains,
+                    Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
                     DetailedInfo=new DetailedInfo()
@@ -605,8 +809,8 @@ namespace UA.Services.Seeders
                         Suspensions=suspensions.TakeLast(6).ToList(),
                         ProductionStartDate=new DateTime(2007,01,01),
                         ProductionEndDate=new DateTime(2012,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -621,13 +825,13 @@ namespace UA.Services.Seeders
                 },
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.Skip(2).First(),
                     Name = "F11",
-                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    Bodies = bodies.Skip(6).Take(2).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
                     Rate=5.0,
-                    Drivetrains=drivetrains,
+                    Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
                     DetailedInfo=new DetailedInfo()
@@ -635,8 +839,8 @@ namespace UA.Services.Seeders
                         Suspensions=suspensions.TakeLast(6).ToList(),
                         ProductionStartDate=new DateTime(2007,01,01),
                         ProductionEndDate=new DateTime(2012,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -651,13 +855,13 @@ namespace UA.Services.Seeders
                 },
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.Last(),
                     Name = "E39",
-                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    Bodies = bodies.Skip(8).Take(1).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
                     Rate=5.0,
-                    Drivetrains=drivetrains,
+                    Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
                     DetailedInfo=new DetailedInfo()
@@ -665,8 +869,8 @@ namespace UA.Services.Seeders
                         Suspensions=suspensions.TakeLast(6).ToList(),
                         ProductionStartDate=new DateTime(2007,01,01),
                         ProductionEndDate=new DateTime(2012,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -681,13 +885,13 @@ namespace UA.Services.Seeders
                 },
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.Last(),
                     Name = "E34",
-                    BodyTypes = bodyTypes.Skip(3).ToList(),
+                    Bodies = bodies.Skip(9).Take(1).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
                     Rate=5.0,
-                    Drivetrains=drivetrains,
+                    Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
                     DetailedInfo=new DetailedInfo()
@@ -695,8 +899,8 @@ namespace UA.Services.Seeders
                         Suspensions=suspensions.TakeLast(6).ToList(),
                         ProductionStartDate=new DateTime(2007,01,01),
                         ProductionEndDate=new DateTime(2012,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -711,9 +915,9 @@ namespace UA.Services.Seeders
                 },
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.SkipLast(1).Last(),
                     Name = "IV",
-                    BodyTypes = bodyTypes.TakeLast(1).ToList(),
+                    Bodies = bodies.Skip(10).Take(1).ToList(),
                     MinPrice=35000,
                     MaxPrice=50000,
                     Rate=4.0,
@@ -725,8 +929,8 @@ namespace UA.Services.Seeders
                         Suspensions=suspensions.Take(6).ToList(),
                         ProductionStartDate=new DateTime(2004,01,01),
                         ProductionEndDate=new DateTime(2008,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
@@ -741,9 +945,9 @@ namespace UA.Services.Seeders
                 },
                 new Generation()
                 {
-                    Category="Family",
+                    Category=categories.SkipLast(1).Last(),
                     Name = "V",
-                    BodyTypes = bodyTypes.TakeLast(1).ToList(),
+                    Bodies = bodies.TakeLast(1).ToList(),
                     MinPrice=45000,
                     MaxPrice=65000,
                     Rate=4.0,
@@ -755,8 +959,8 @@ namespace UA.Services.Seeders
                         Suspensions=suspensions.Take(6).ToList(),
                         ProductionStartDate=new DateTime(2008,01,01),
                         ProductionEndDate=new DateTime(2012,12,31),
-                        BodyColours=bodyColours,
-                        Brakes=brakes,
+                        BodyColours=bodyColours.ToList(),
+                        Brakes=brakes.ToList(),
                     },
                     OptionalEquipment=new OptionalEquipment()
                     {
