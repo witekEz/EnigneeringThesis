@@ -15,7 +15,7 @@ namespace UA.Model.DTOs.Create
         [MaxLength(20)]
         public string Name { get; set; } = null!;
         [Required]
-        public List<CreateBodyDTO> BodyTypes { get; set; } = null!;
+        public List<CreateBodyDTO> Bodies { get; set; } = null!;
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
         public double Rate { get; set; }

@@ -8,7 +8,13 @@ namespace UA.Model.Queries
 {
     public class GenerationQuery
     {
-        public string ?Search { get; set; }
+        public string? Search { get; set; }
+        public string? FilterBrands { get; set; }
+        public string? FilterCategories { get; set; }
+        public string? FilterBodyTypes { get; set; }
+        public double? MinPrice { get; set; }
+        public double? MaxPrice { get; set; }
+        public double? Rate { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public string ?SortBy { get; set; }

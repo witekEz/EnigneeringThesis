@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ComparerHome from './ComparerHome'
 import AuctionsHome from './AuctionsHome'
 import Nav from 'react-bootstrap/Nav';
+import FetchGenerationsComponent from "./comparerHome/FetchGenerationsComponent";
 
 
 export default function Navigation() {
@@ -13,11 +13,11 @@ export default function Navigation() {
     const renderComponent = () => {
         switch (activeNavItem) {
           case 'link-comparer':
-            return <ComparerHome />;
+            return <FetchGenerationsComponent />;
           case 'link-auctions':
             return <AuctionsHome />;
           default:
-            return <ComparerHome />;
+            return <FetchGenerationsComponent />;
         }
     };
     return (

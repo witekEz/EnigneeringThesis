@@ -26,16 +26,43 @@ namespace UA.Services
         }
         public PageResult<GenerationDTO> GetAll(GenerationQuery query)
         {
+            string [] filterBrands= { };
+            string [] filterCategories= { };
+            string [] filterBodyTypes= { };
+            if (query.FilterBrands != null)
+            {
+                filterBrands = query.FilterBrands.ToLower().Split(',');
+            }
+            if (query.FilterCategories != null)
+            {
+                filterCategories = query.FilterCategories.Split(',');
+            }
+            if (query.FilterBodyTypes != null)
+            {
+                filterBodyTypes = query.FilterBodyTypes.Split(',');
+            }
+
             var queryBase = _dbContext
                 .Generations
                 .Include(b => b.GenerationImages)
-                .Include(b=>b.Model)
-                .Include(b=>b.Category)
+                .Include(b => b.Model)
+                .Include(b => b.Bodies)
+                .ThenInclude(b => b.BodyType)
+                .Include(b => b.Category)
                 .Include(b => b.Model.Brand)
                 .Where(o => query.Search == null ||
                         (o.Name.ToLower().Contains(query.Search.ToLower()) ||
                          o.Model.Name.ToLower().Contains(query.Search.ToLower()) ||
-                         o.Model.Brand.Name.ToLower().Contains(query.Search.ToLower())));
+                         o.Model.Brand.Name.ToLower().Contains(query.Search.ToLower()))
+                         )
+                .Where(o => query.FilterBrands == null || (filterBrands.Any(brand => brand == o.Model.Brand.Name)))
+                .Where(o => query.FilterCategories == null || (filterCategories.Any(category => category == o.Category.Name)))
+                .Where(o => query.FilterBodyTypes == null || (o.Bodies.Any(el => filterBodyTypes.Contains(el.BodyType.Name))))
+                .Where(o => query.MaxPrice == null || (o.MaxPrice <= query.MaxPrice))
+                .Where(o => query.MinPrice == null || (o.MinPrice >= query.MinPrice))
+                .Where(o => query.Rate == null || (o.Rate >= query.Rate));
+
+
 
             var totalItemsCount = queryBase.Count();
 

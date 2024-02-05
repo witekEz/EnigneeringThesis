@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Col, Row, InputGroup, FormLabel } from 'react-bootstrap';
+import { Col, Row, FormLabel, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 
-function FilterComponent({ onChangePrice }) {
+function FilterComponent({ onChangeFilters }) {
     const [form, setForm] = useState({})
     const [errors, setErrors] = useState({})
+    const [checkedCategories, setCheckedCategories] = useState([])
+    const [checkedBrands, setCheckedBrands] = useState([])
+    const [checkedBodyTypes, setCheckedBodyTypes] = useState([])
 
     const [categories, setCategories] = useState(null)
     const [brands, setBrands] = useState(null)
@@ -40,13 +43,58 @@ function FilterComponent({ onChangePrice }) {
             ...form,
             [field]: value
         })
-
         if (!!errors[field])
             setErrors({
                 ...errors,
                 [field]: null
             })
     }
+    const handleChangeOnCategory = (event) => {
+        const { value, checked } = event.target;
+        if (checked) {
+            setCheckedCategories(pre => [...pre, value])
+        }
+        else {
+            setCheckedCategories(pre => {
+                return [...pre.filter(category => category !== value)]
+            })
+        }
+    }
+    const handleChangeOnBrand = (event) => {
+        const { value, checked } = event.target;
+        if (checked) {
+            setCheckedBrands(pre => [...pre, value])
+        }
+        else {
+            setCheckedBrands(pre => {
+                return [...pre.filter(brand => brand !== value)]
+            })
+        }
+    }
+    const handleChangeOnBodyType = (event) => {
+        const { value, checked } = event.target;
+        if (checked) {
+            setCheckedBodyTypes(pre => [...pre, value])
+        }
+        else {
+            setCheckedBodyTypes(pre => {
+                return [...pre.filter(bodyType => bodyType !== value)]
+            })
+        }
+    }
+    useEffect(() => {
+        setForm({
+            ...form,
+            categories: checkedCategories,
+            brands: checkedBrands,
+            bodyTypes: checkedBodyTypes,
+        });
+    }, [checkedCategories, checkedBrands, checkedBodyTypes]);
+    function handleSubmit(e) {
+        e.preventDefault();
+        onChangeFilters(form);
+    }
+    
 
     return (
         <>
@@ -77,7 +125,7 @@ function FilterComponent({ onChangePrice }) {
                     </Col>
                 </Row>
                 <Form.Group controlId='rate'>
-                    <Form.Label>Ocena</Form.Label>
+                    <Form.Label>Minimalna ocena</Form.Label>
                     <Form.Range
                         min={0}
                         max={5}
@@ -93,8 +141,9 @@ function FilterComponent({ onChangePrice }) {
                         <Form.Check // prettier-ignore
                             type="checkbox"
                             key={category.id}
-                            id={`checkbox-${category.id}`}
                             label={category.name}
+                            value={category.name}
+                            onChange={handleChangeOnCategory}
                         />
                     ))}
                 </Form.Group>
@@ -104,25 +153,28 @@ function FilterComponent({ onChangePrice }) {
                         <Form.Check // prettier-ignore
                             type="checkbox"
                             key={brand.id}
-                            id={`checkbox-${brand.id}`}
                             label={brand.name}
+                            value={brand.name}
+                            onChange={handleChangeOnBrand}
                         />
                     ))}
                 </Form.Group>
                 <Form.Group>
                     <p>Nadwozie</p>
                     {bodyTypes != null && bodyTypes.map((bodyType) => (
-                        <Form.Check // prettier-ignore
+                        <Form.Check  //prettier-ignore
                             type="checkbox"
                             key={bodyType.id}
                             id={`checkbox-${bodyType.id}`}
                             label={bodyType.name}
+                            value={bodyType.name}
+                            onChange={handleChangeOnBodyType}
                         />
                     ))}
                 </Form.Group>
-
-
-
+                <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
+                    Zatwierdź zmiany
+                </Button>
             </Form>
 
         </>

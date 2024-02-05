@@ -10,3 +10,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+#col-cards{
+  padding: 10px;
+}

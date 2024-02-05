@@ -12,7 +12,7 @@ namespace UA.Model.DTOs
         public int Id { get; set; }
         public CategoryDTO Category { get; set; } = null!;
         public string Name { get; set; } = null!;
-        public List<BodyDTO> BodyTypes { get; set; } = null!;
+        public List<BodyDTO> Bodies { get; set; } = null!;
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
         public double Rate { get; set; }
