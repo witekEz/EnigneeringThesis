@@ -94,38 +94,39 @@ function FilterComponent({ onChangeFilters }) {
         e.preventDefault();
         onChangeFilters(form);
     }
-    
+
 
     return (
         <>
-            <Form>
-                <Row>
-                    <p>Cena</p>
-                    <Col>
+            <Form id="filterComponent">
+                <p id='filterLabel'>Filtry</p>
+                <Row className='boxForFilters'>
+                    <Form.Label id='priceLabel'>Przedział cenowy</Form.Label>
+                    <Col id='col1'>
                         <Form.Group size="sm" className="mb-3" controlId='minPrice'>
-                            <FormLabel>Od</FormLabel>
                             <Form.Control
                                 type='number'
                                 value={form.minPrice}
+                                placeholder='Od'
                                 onChange={(e) => setField('minPrice', e.target.value)}
 
                             />
                         </Form.Group>
                     </Col>
-                    <Col>
+                    <Col id='col2'>
                         <Form.Group size="sm" className="mb-3" controlId='maxPrice'>
-                            <FormLabel>Do</FormLabel>
                             <Form.Control
                                 type='number'
                                 value={form.maxPrice}
+                                placeholder='Do'
                                 onChange={(e) => setField('maxPrice', e.target.value)}
 
                             />
                         </Form.Group>
                     </Col>
                 </Row>
-                <Form.Group controlId='rate'>
-                    <Form.Label>Minimalna ocena</Form.Label>
+                <Form.Group controlId='rate' className='boxForFilters'>
+                    <Form.Label id='rateLabel'>Minimalna ocena</Form.Label>
                     <Form.Range
                         min={0}
                         max={5}
@@ -133,34 +134,36 @@ function FilterComponent({ onChangeFilters }) {
                         value={form.Rate}
                         onChange={(e) => setField('rate', e.target.value)}
                     />
-                    {form.rate}
+                    <div id='slider-value'>{form.rate ? form.rate : 0}</div>
                 </Form.Group>
-                <Form.Group>
-                    <p>Kategoria</p>
+                <Form.Group className='boxForFilters'>
+                    <Form.Label id='categoryLabel'>Kategorie</Form.Label>
                     {categories != null && categories.map((category) => (
                         <Form.Check // prettier-ignore
                             type="checkbox"
                             key={category.id}
                             label={category.name}
                             value={category.name}
+                            className='checkboxList'
                             onChange={handleChangeOnCategory}
                         />
                     ))}
                 </Form.Group>
-                <Form.Group>
-                    <p>Marka</p>
+                <Form.Group className='boxForFilters'>
+                    <Form.Label id='brandLabel'>Marki</Form.Label>
                     {brands != null && brands.map((brand) => (
                         <Form.Check // prettier-ignore
                             type="checkbox"
                             key={brand.id}
                             label={brand.name}
                             value={brand.name}
+                            className='checkboxList'
                             onChange={handleChangeOnBrand}
                         />
                     ))}
                 </Form.Group>
-                <Form.Group>
-                    <p>Nadwozie</p>
+                <Form.Group className='boxForFilters'>
+                    <Form.Label id='bodyTypeLabel'>Nadwozia</Form.Label>
                     {bodyTypes != null && bodyTypes.map((bodyType) => (
                         <Form.Check  //prettier-ignore
                             type="checkbox"
@@ -168,13 +171,23 @@ function FilterComponent({ onChangeFilters }) {
                             id={`checkbox-${bodyType.id}`}
                             label={bodyType.name}
                             value={bodyType.name}
+                            className='checkboxList'
                             onChange={handleChangeOnBodyType}
                         />
                     ))}
                 </Form.Group>
-                <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
-                    Zatwierdź zmiany
-                </Button>
+                <Row>
+                    <Col id='submit-button-col'>
+                        <Button variant="primary" type="submit" id='submit-button' onClick={(e) => handleSubmit(e)}>
+                            Zatwierdź
+                        </Button>
+                    </Col>
+                    <Col id='reset-button-col'>
+                        <Button variant="secondary" type="submit" id='reset-button' onClick={(e) => handleSubmit(e)}>
+                            Reset
+                        </Button>
+                    </Col>
+                </Row>
             </Form>
 
         </>
