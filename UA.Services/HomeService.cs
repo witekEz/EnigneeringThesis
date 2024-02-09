@@ -124,7 +124,9 @@ namespace UA.Services
                 .Generations
                 .Include(b => b.GenerationImages)
                 .Include(b => b.Bodies)
+                .ThenInclude(b=>b.BodyType)
                 .Include(b=>b.Category)
+                .Include(b=>b.GenerationImages)
                 .Include(b => b.Drivetrains)
                 .Include(b => b.Engines)
                 .Include(b => b.Gearboxes)

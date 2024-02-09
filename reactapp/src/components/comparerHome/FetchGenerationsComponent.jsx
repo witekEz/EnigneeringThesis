@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import ComparerHome from "./ComparerHome";
-import { Container } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 
 export default function FetchGenerationsComponent() {
     const BASE_URL = 'https://localhost:7092/api';
@@ -30,6 +30,7 @@ export default function FetchGenerationsComponent() {
     const [brandsSendable, setBrandsSendable] = useState("");
     const [bodyTypesSendable, setBodyTypesSendable] = useState("");
     const [categoriesSendable, setCategroiesSendable] = useState("");
+    const [isPending, setIsPending]=useState(true)
 
     const [searchPhase, setSearchPhase] = useState(undefined);
 
@@ -93,6 +94,7 @@ export default function FetchGenerationsComponent() {
                 const result = await response.json();
                 setCars(result);
                 setPagination({ totalPages: result.totalPages, itemFrom: result.itemFrom, itemTo: result.itemTo, totalItemsCount: result.totalItemsCount, page: page })
+                setIsPending(false)
             } catch (error) {
                 setError(error.message);
             }
@@ -116,6 +118,7 @@ export default function FetchGenerationsComponent() {
 
     return (
         <>
+            {isPending && <Spinner className="spinnerLoading" animation="grow" />}
             {cars && <ComparerHome fetchedCars={cars} errorWhileFetch={error} onChangeFilters={handleFiltersChange} paginationFetched={pagination} onChangePage={handlePageChange} onChangePageSize={handlePageSizeChange} onChangeSearch={handleSearchChange} />}
         </>
     )

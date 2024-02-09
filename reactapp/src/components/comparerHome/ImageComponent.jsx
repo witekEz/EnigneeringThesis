@@ -14,3 +14,4 @@ export default function Images({ generation }) {
         </>
     )
 }
+//data-bs-interval="false"

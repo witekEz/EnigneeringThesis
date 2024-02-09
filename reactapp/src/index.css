@@ -23,6 +23,10 @@ input::-webkit-inner-spin-button {
   border-style: solid;
 }*/
 
+#mainContainer{
+  padding: 0%;
+}
+
 #filterComponent #filterLabel{
   padding-left: 1rem;
   text-align: center;
@@ -131,6 +135,17 @@ input::-webkit-inner-spin-button {
 }
 .paginationItems{
   position: relative;
+  bottom: 0;  
+}
+.spinnerLoading{
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
   bottom: 0;
-  
+  left: 0;
+}
+#imageCol{
+  max-width: fit-content;
+  width: 50%;
 }

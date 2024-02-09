@@ -1,5 +1,6 @@
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap';
 import ImageComponent from './ImageComponent';
+import { Link } from 'react-router-dom';
 const GenerationList = ({ generations}) => {
 
     return (
@@ -18,7 +19,7 @@ const GenerationList = ({ generations}) => {
                                     Minimalna cena: {generation.minPrice} <br></br>
                                     Ocena: {generation.rate} <br></br>
                                 </Card.Text>
-                                <Button variant="primary">Szczegóły</Button>
+                                <Button variant="primary" as={Link} to={'/comparerDetails/'+ generation.id} >Szczegóły</Button>
                             </Card.Body>
                         </Card>
                     </Col>
