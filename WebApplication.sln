@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "UA.ReactApp", "reactapp\UA.ReactApp.esproj", "{A5E48C61-C9D5-4A53-9ABB-F67F2593BDD6}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "UA.ReactApp", "UA.ReactApp\UA.ReactApp.esproj", "{A5E48C61-C9D5-4A53-9ABB-F67F2593BDD6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UA.WebAPI", "webapi\UA.WebAPI.csproj", "{DFF623C3-000B-4259-8315-AE28EAB7B974}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UA.WebAPI", "UA.WebAPI\UA.WebAPI.csproj", "{DFF623C3-000B-4259-8315-AE28EAB7B974}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UA.DAL", "UA.DAL\UA.DAL.csproj", "{E217FEA7-15DE-4C65-9EF2-39DA0A1C002E}"
 EndProject
