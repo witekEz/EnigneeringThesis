@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UA.Model.DTOs;
 using UA.Model.DTOs.Create;
+using UA.Model.DTOs.Read;
 using UA.Model.DTOs.Update;
 using UA.Services;
 using UA.Services.Interfaces;
@@ -39,7 +39,7 @@ namespace UA.WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete([FromRoute]int brandId, [FromRoute]int modelId) 
         {
-            _modelService.DeleteById(brandId,modelId);
+            _modelService.Delete(brandId,modelId);
             return NoContent(); 
         }
         [HttpPut("{id}")]

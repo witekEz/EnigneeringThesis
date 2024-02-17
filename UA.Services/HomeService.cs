@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
-using UA.Model.DTOs;
+using UA.Model.DTOs.Read;
 using UA.Model.Entities;
 using UA.Model.Queries;
 using UA.Services.Interfaces;
@@ -45,6 +45,7 @@ namespace UA.Services
             var queryBase = _dbContext
                 .Generations
                 .Include(b => b.GenerationImages)
+                .Include(b=>b.AvgRateGeneration)
                 .Include(b => b.Model)
                 .Include(b => b.Bodies)
                 .ThenInclude(b => b.BodyType)
@@ -59,8 +60,8 @@ namespace UA.Services
                 .Where(o => query.FilterCategories == null || (filterCategories.Any(category => category == o.Category.Name)))
                 .Where(o => query.FilterBodyTypes == null || (o.Bodies.Any(el => filterBodyTypes.Contains(el.BodyType.Name))))
                 .Where(o => query.MaxPrice == null || (o.MaxPrice <= query.MaxPrice))
-                .Where(o => query.MinPrice == null || (o.MinPrice >= query.MinPrice))
-                .Where(o => query.Rate == null || (o.Rate >= query.Rate));
+                .Where(o => query.MinPrice == null || (o.MinPrice >= query.MinPrice));
+                //.Where(o => query.Rate == null || (o.Rate >= query.Rate));
 
 
 
@@ -123,6 +124,7 @@ namespace UA.Services
             var generation=_dbContext
                 .Generations
                 .Include(b => b.GenerationImages)
+                .Include(b => b.AvgRateGeneration)
                 .Include(b => b.Bodies)
                 .ThenInclude(b=>b.BodyType)
                 .Include(b=>b.Category)

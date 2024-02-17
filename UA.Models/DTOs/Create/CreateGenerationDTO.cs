@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UA.Model.DTOs.Create.Rate;
 
 namespace UA.Model.DTOs.Create
 {
@@ -18,7 +19,6 @@ namespace UA.Model.DTOs.Create
         public List<CreateBodyDTO> Bodies { get; set; } = null!;
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
-        public double Rate { get; set; }
         [Required]
         public List<CreateDrivetrainDTO> Drivetrains { get; set; } = null!;
         [Required]

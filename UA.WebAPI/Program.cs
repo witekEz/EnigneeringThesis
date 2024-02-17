@@ -11,13 +11,15 @@ using UA.Services.Middleware;
 using Microsoft.AspNetCore.Identity;
 using UA.Model.Entities.Authentication;
 using FluentValidation;
-using UA.Model.DTOs;
 using UA.Services.Validators;
 using FluentValidation.AspNetCore;
 using UA.WebAPI;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using UA.Model.Queries;
+using Microsoft.AspNetCore.Authorization;
+using UA.Services.Authorization;
+using UA.Model.DTOs.Read;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("Project starting...");
@@ -84,6 +86,9 @@ try
     builder.Services.AddScoped<IGenerationImageService, GenerationImageService>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
     builder.Services.AddScoped<IBodyTypeService, BodyTypeService>();
+    builder.Services.AddScoped<IRateGenerationService, RateGenerationService>();
+    builder.Services.AddScoped<IRateEngineService, RateEngineService>();
+    builder.Services.AddScoped<IRateGearboxService,RateGearboxService>();
 
     //Validator
     builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
@@ -93,6 +98,9 @@ try
     //Middleware
     builder.Services.AddScoped<ErrorHandlingMiddleware>();
     builder.Services.AddScoped<RequestTimeMiddleware>();
+
+    //Authorization
+    builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
 
     //CORS
     var allowedOrigins = builder.Configuration["AllowedOrigins"];

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
-using UA.Model.DTOs;
 using UA.Model.Entities.Authentication;
 using UA.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UA.WebAPI;
 using System.IdentityModel.Tokens.Jwt;
+using UA.Model.DTOs.Read;
 
 namespace UA.Services
 {

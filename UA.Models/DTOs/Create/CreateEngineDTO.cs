@@ -14,6 +14,5 @@ namespace UA.Model.DTOs.Create
         public TypeEnum Type { get; set; }
         public double FuelConsumptionCity { get; set; }
         public double FuelConsumptionSuburban { get; set; }
-        public double Rate { get; set; }
     }
 }

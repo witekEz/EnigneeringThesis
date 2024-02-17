@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using UA.Model.DTOs.Create;
 using UA.Model.DTOs.Update;
-using UA.Model.DTOs;
 using UA.Services.Interfaces;
+using UA.Model.DTOs.Read;
 
 namespace UA.WebAPI.Controllers
 {

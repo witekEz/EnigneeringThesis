@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
-using UA.Model.DTOs;
+using UA.Model.DTOs.Read;
 using UA.Services.Interfaces;
 using UA.Services.Middleware.Exceptions;
 

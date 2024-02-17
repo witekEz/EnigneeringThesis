@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
-using UA.Model.DTOs;
 using UA.Model.DTOs.Create;
+using UA.Model.DTOs.Read;
 using UA.Model.DTOs.Update;
 using UA.Model.Entities;
 using UA.Services.Interfaces;
@@ -65,7 +65,6 @@ namespace UA.Services
             gearbox.Name = dto.Name;
             gearbox.NumberOfGears = dto.NumberOfGears;
             gearbox.TypeOfGearbox = dto.TypeOfGearbox;
-            gearbox.Rate = dto.Rate;
 
             _dbContext.SaveChanges();
         }

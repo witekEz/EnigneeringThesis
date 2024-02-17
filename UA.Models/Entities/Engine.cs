@@ -1,4 +1,5 @@
 ﻿using UA.Model.Entities.Enums;
+using UA.Model.Entities.Rate;
 
 namespace UA.Model.Entities
 {
@@ -6,7 +7,7 @@ namespace UA.Model.Entities
     {
         //Primary Key
         public int Id { get; set; }
-        //Navigation Properties
+        //Properties
         public string Version { get; set; } = null!;
         public double Capacity { get; set; }
         public int HorsePower { get; set; }
@@ -14,7 +15,9 @@ namespace UA.Model.Entities
         public TypeEnum Type { get; set; }
         public double FuelConsumptionCity { get; set; }
         public double FuelConsumptionSuburban { get; set; }
-        public double Rate { get; set; }
+        //Navigation Properties
+        public virtual List<RateEngine>? Rates { get; set; }
         public virtual List<Generation>? Generations { get; set; }
+        public virtual AvgRateEngine? AvgRateEngine { get; set; }
     }
 }

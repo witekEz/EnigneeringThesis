@@ -10,6 +10,5 @@ namespace UA.Model.DTOs.Create
         public string Name { get; set; } = null!;
         public int NumberOfGears { get; set; }
         public TypeOfGearboxEnum TypeOfGearbox { get; set; }
-        public double Rate { get; set; }
     }
 }

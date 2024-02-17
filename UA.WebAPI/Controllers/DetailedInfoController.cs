@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UA.Model.DTOs;
 using UA.Model.DTOs.Create;
+using UA.Model.DTOs.Read;
 using UA.Model.DTOs.Update;
 using UA.Model.Entities;
 using UA.Services;

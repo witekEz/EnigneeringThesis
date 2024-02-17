@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UA.Model.DTOs;
+using UA.Model.DTOs.Read;
 using UA.Services.Interfaces;
 
 namespace UA.WebAPI.Controllers

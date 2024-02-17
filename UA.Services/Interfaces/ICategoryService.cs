@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UA.Model.DTOs.Create;
 using UA.Model.DTOs.Update;
-using UA.Model.DTOs;
+using UA.Model.DTOs.Read;
 
 namespace UA.Services.Interfaces
 {

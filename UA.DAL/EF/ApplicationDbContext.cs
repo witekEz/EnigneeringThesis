@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UA.Model.Entities;
 using UA.Model.Entities.Authentication;
+using UA.Model.Entities.Rate;
 
 namespace UA.DAL.EF
 {
@@ -28,6 +29,12 @@ namespace UA.DAL.EF
         public DbSet<GenerationImage> GenerationImages { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Body> Bodies { get; set; }
+        public DbSet<RateGeneration> RateGenerations { get; set; }
+        public DbSet<RateGearbox> RateGearboxes { get; set; }
+        public DbSet<RateEngine> RateEngines { get; set; }
+        public DbSet<AvgRateGeneration> AvgRateGenerations { get; set; }
+        public DbSet<AvgRateGearbox> AvgRateGearboxes { get; set; }
+        public DbSet<AvgRateEngine> AvgRateEngines { get; set; }
 
         //Authentication
         public DbSet<User> Users { get; set; }

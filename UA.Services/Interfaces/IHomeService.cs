@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UA.Model.DTOs;
+using UA.Model.DTOs.Read;
 using UA.Model.Queries;
 
 namespace UA.Services.Interfaces

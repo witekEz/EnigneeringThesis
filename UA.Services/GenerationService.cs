@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
-using UA.Model.DTOs;
 using UA.Model.Entities;
 using UA.Model.DTOs.Create;
 using UA.Services.Interfaces;
@@ -14,6 +13,7 @@ using UA.Model.DTOs.Update;
 using Microsoft.Extensions.Logging;
 using UA.Services.Middleware.Exceptions;
 using Microsoft.AspNetCore.StaticFiles;
+using UA.Model.DTOs.Read;
 
 namespace UA.Services
 {
@@ -53,6 +53,7 @@ namespace UA.Services
 
             var generation = _dbContext.Generations
                .Include(b => b.GenerationImages)
+               .Include(b => b.AvgRateGeneration)
                .Include(b => b.Category)
                .Include(b => b.Bodies)
                .Include(b => b.Drivetrains)
@@ -130,8 +131,8 @@ namespace UA.Services
             
             
             generation.Name = dto.Name;
-            generation.MinPrice = dto.MaxPrice;
-            generation.Rate = dto.Rate;
+            generation.MinPrice = dto.MinPrice;
+            generation.MaxPrice = dto.MaxPrice;
             _dbContext.SaveChanges();
         }
         private byte[] GetImage(Guid name)

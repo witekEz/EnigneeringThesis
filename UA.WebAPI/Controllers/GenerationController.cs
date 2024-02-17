@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UA.DAL.EF;
-using UA.Model.DTOs;
 using UA.Model.Entities;
 using UA.Model.DTOs.Create;
 using UA.Services.Interfaces;
 using UA.Model.DTOs.Update;
 using Microsoft.AspNetCore.Authorization;
+using UA.Model.DTOs.Read;
 
 namespace UA.WebAPI.Controllers
 {

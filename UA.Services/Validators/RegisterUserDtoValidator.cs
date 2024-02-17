@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
-using UA.Model.DTOs;
+using UA.Model.DTOs.Read;
 
 namespace UA.Services.Validators
 {

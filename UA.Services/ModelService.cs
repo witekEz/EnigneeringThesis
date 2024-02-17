@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UA.DAL.EF;
-using UA.Model.DTOs;
 using UA.Model.DTOs.Create;
+using UA.Model.DTOs.Read;
 using UA.Model.DTOs.Update;
 using UA.Model.Entities;
 using UA.Services.Interfaces;
@@ -67,7 +67,7 @@ namespace UA.Services
             return modelDTOs;
         }
 
-        public void DeleteById(int brandId, int modelId)
+        public void Delete(int brandId, int modelId)
         {
             var brand=_dbContext.Brands.FirstOrDefault(b=>b.Id==brandId);
             if (brand is null)

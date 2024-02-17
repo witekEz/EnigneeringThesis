@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,19 @@ using UA.DAL.EF;
 using UA.Model.Entities;
 using UA.Model.Entities.Authentication;
 using UA.Model.Entities.Enums;
+using UA.Model.Entities.Rate;
 
 namespace UA.Services.Seeders
 {
     public class GenerationSeeder
     {
         private readonly ApplicationDbContext _dbContext;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public GenerationSeeder(ApplicationDbContext dbContext)
+        public GenerationSeeder(ApplicationDbContext dbContext, IPasswordHasher<User> passwordHasher)
         {
             _dbContext = dbContext;
+            _passwordHasher = passwordHasher;
         }
         public void Seed() 
         {
@@ -32,9 +36,16 @@ namespace UA.Services.Seeders
                     _dbContext.AddRange(roles);
                     _dbContext.SaveChanges();
                 }
-                if (!_dbContext.Generations.Any())
+                if (!_dbContext.Users.Any())
                 {
                     
+                }
+                if (!_dbContext.Generations.Any())
+                {
+
+                    var user = GetUser();
+                    _dbContext.AddRange(user);
+
                     var bodyTypes=GetBodyTypes();
                     var bodies=GetBodies(bodyTypes);
                     var drivetrains=GetDrivetrains();
@@ -48,34 +59,47 @@ namespace UA.Services.Seeders
                     var categories=GetCategories();
 
                     var modelGenerations = GetModelGenerations(bodies, drivetrains, engines, gearboxes, suspensions, bodyColours, brakes, categories, models);
-                
+
+                    var rateGenerations = GetRateGenerations(modelGenerations, user);
+                    var rateEngines = GetRateEngines(engines, user);
+                    var rateGearboxes = GetRateGearboxes(gearboxes, user);
+
                     _dbContext.AddRange(bodyTypes);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(bodies);
                     _dbContext.AddRange(drivetrains);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(engines);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(gearboxes);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(suspensions);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(bodyColours);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(brakes);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(brands);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(models);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(categories);
-                    //_dbContext.SaveChanges();
                     _dbContext.AddRange(modelGenerations);
+
+                    _dbContext.AddRange(rateGenerations);
+                    _dbContext.AddRange(rateEngines);
+                    _dbContext.AddRange(rateGearboxes);
+
                     _dbContext.SaveChanges();                   
                 }
 
             }
         }
+        private User GetUser()
+        {
+            var newUser = new User()
+            {
+                NickName = "witek",
+                Email = "witek@witek.com",
+                DateOfBirth = new DateTime(2001, 03, 12),
+                RoleId = 3
+            };
+            var hashedPassword = _passwordHasher.HashPassword(newUser, "haslo123haslo123");
+            newUser.PasswordHash = hashedPassword;
+            return newUser;
+        }
+       
         private IEnumerable<Role> GetRoles()
         {
             var roles = new List<Role>()
@@ -305,8 +329,7 @@ namespace UA.Services.Seeders
                      Torque=400,
                      Type=TypeEnum.Diesel,
                      FuelConsumptionCity=9.5,
-                     FuelConsumptionSuburban=6.5,
-                     Rate=5
+                     FuelConsumptionSuburban=6.5
                   },
                   new Engine()
                   {
@@ -316,8 +339,7 @@ namespace UA.Services.Seeders
                      Torque=350,
                      Type=TypeEnum.Diesel,
                      FuelConsumptionCity=8.2,
-                     FuelConsumptionSuburban=6.0,
-                     Rate=5
+                     FuelConsumptionSuburban=6.0
                   },
                   new Engine()
                   {
@@ -327,8 +349,7 @@ namespace UA.Services.Seeders
                      Torque=300,
                      Type=TypeEnum.Petrol,
                      FuelConsumptionCity=10,
-                     FuelConsumptionSuburban=8.0,
-                     Rate=5
+                     FuelConsumptionSuburban=8.0
                   },
                   new Engine()
                   {
@@ -338,8 +359,8 @@ namespace UA.Services.Seeders
                      Torque=350,
                      Type=TypeEnum.Petrol,
                      FuelConsumptionCity=12,
-                     FuelConsumptionSuburban=7.0,
-                     Rate=5
+                     FuelConsumptionSuburban=7.0
+                     
                   },
                   new Engine()
                   {
@@ -349,8 +370,7 @@ namespace UA.Services.Seeders
                      Torque=310,
                      Type=TypeEnum.Petrol,
                      FuelConsumptionCity=15,
-                     FuelConsumptionSuburban=7.4,
-                     Rate=5
+                     FuelConsumptionSuburban=7.4
                   },
                   new Engine()
                   {
@@ -360,8 +380,7 @@ namespace UA.Services.Seeders
                      Torque=145,
                      Type=TypeEnum.Petrol,
                      FuelConsumptionCity=8.2,
-                     FuelConsumptionSuburban=8.0,
-                     Rate=5
+                     FuelConsumptionSuburban=8.0
                   },
                   new Engine()
                   {
@@ -371,8 +390,7 @@ namespace UA.Services.Seeders
                      Torque=320,
                      Type=TypeEnum.Diesel,
                      FuelConsumptionCity=10.2,
-                     FuelConsumptionSuburban=8.0,
-                     Rate=5
+                     FuelConsumptionSuburban=8.0
                   }
             };
             return engines;
@@ -710,6 +728,135 @@ namespace UA.Services.Seeders
             };
             return categories;
         }
+        private IEnumerable<RateGeneration> GetRateGenerations(IEnumerable<Generation>generations,User user)
+        {
+            var rates = new List<RateGeneration>()
+            {
+                new RateGeneration()
+                {
+                    Value=5,
+                    Generation=generations.First(),
+                    User=user
+                },
+                new RateGeneration()
+                {
+                    Value=4.5,
+                    Generation =generations.Skip(1).First(),
+                    User=user
+                },
+                new RateGeneration()
+                {
+                    Value=5,
+                    Generation =generations.Skip(2).First(),
+                    User=user
+                },
+                new RateGeneration()
+                {
+                    Value=3,
+                    Generation =generations.Skip(3).First(),
+                    User=user,
+                },
+                new RateGeneration()
+                {
+                    Value=4.1,
+                    Generation =generations.Skip(4).First(),
+                    User=user
+                },
+                new RateGeneration()
+                {
+                    Value=2.2,
+                    Generation =generations.Skip(5).First(),
+                    User=user
+                },
+                new RateGeneration()
+                {
+                    Value=5.0,
+                    Generation =generations.Skip(6).First(),
+                    User=user
+                }
+            };
+            return rates;
+        }
+        private IEnumerable<RateEngine> GetRateEngines(IEnumerable<Engine> engines, User user)
+        {
+            var rates = new List<RateEngine>()
+            {
+                new RateEngine()
+                {
+                    Value=5,
+                    Engine=engines.First(),
+                    User=user
+                },
+                new RateEngine()
+                {
+                    Value=4.5,
+                    Engine=engines.Skip(1).First(),
+                    User=user
+                },
+                new RateEngine()
+                {
+                    Value=5,
+                    Engine=engines.Skip(2).First(),
+                    User=user
+                },
+                new RateEngine()
+                {
+                    Value=3,
+                    Engine=engines.Skip(3).First(),
+                    User=user
+                },
+                new RateEngine()
+                {
+                    Value=4.1,
+                    Engine=engines.Skip(4).First(),
+                    User=user
+                }          
+            };
+            return rates;
+        }
+        private IEnumerable<RateGearbox> GetRateGearboxes(IEnumerable<Gearbox> gearboxes, User user)
+        {
+            var rates = new List<RateGearbox>()
+            {
+                new RateGearbox()
+                {
+                    Value=5,
+                    Gearbox=gearboxes.First(),
+                    User=user
+                },
+                new RateGearbox()
+                {
+                    Value=4.5,
+                    Gearbox=gearboxes.Skip(1).First(),
+                    User=user
+                },
+                new RateGearbox()
+                {
+                    Value=5,
+                    Gearbox=gearboxes.Last(),
+                    User=user
+                },
+                new RateGearbox()
+                {
+                    Value=3,
+                    Gearbox=gearboxes.First(),
+                    User = user
+                },
+                new RateGearbox()
+                {
+                    Value=4.1,
+                    Gearbox=gearboxes.Skip(1).First(),
+                    User = user
+                },
+                new RateGearbox()
+                {
+                    Value=2.2,
+                    Gearbox=gearboxes.Last(),
+                    User = user
+                } 
+            };
+            return rates;
+        }
         private IEnumerable<Generation> GetModelGenerations( IEnumerable<Body>bodies,
              IEnumerable<Drivetrain> drivetrains,
              IEnumerable<Engine> engines, 
@@ -721,16 +868,9 @@ namespace UA.Services.Seeders
              IEnumerable<Model.Entities.Model> models)
 
         {
-            //var drivetrains = GetDrivetrains().ToList();
-            //var engines = GetEngines().ToList();
-            //var gearboxes = GetGearboxes().ToList();
-            //var suspensions = GetSuspensions().ToList();
-            //var bodyColours= GetBodyColours().ToList();
-            //var brakes = GetBrakes().ToList();
             var modelAudi = models.ToList().First();
             var modelBMW = models.ToList().Skip(1).First();
             var modelVW = models.ToList().Last();
-            //var categories= GetCategories().ToList();
             var generations = new List<Generation>()
             {
                 new Generation()
@@ -740,7 +880,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.Take(2).ToList(),
                     MinPrice=7000,
                     MaxPrice=30000,
-                    Rate=5.0,
                     Drivetrains=drivetrains.ToList(),
                     Engines=engines.Take(2).ToList(),
                     Gearboxes=gearboxes.ToList(),
@@ -770,7 +909,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.Skip(2).Take(2).ToList(),
                     MinPrice=10000,
                     MaxPrice=25000,
-                    Rate=4.3,
                     Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(1).ToList(),
                     Gearboxes=gearboxes.ToList(),
@@ -800,7 +938,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.Skip(4).Take(2).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
-                    Rate=5.0,
                     Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
@@ -830,7 +967,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.Skip(6).Take(2).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
-                    Rate=5.0,
                     Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
@@ -860,7 +996,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.Skip(8).Take(1).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
-                    Rate=5.0,
                     Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
@@ -890,7 +1025,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.Skip(9).Take(1).ToList(),
                     MinPrice=50000,
                     MaxPrice=95000,
-                    Rate=5.0,
                     Drivetrains=drivetrains.ToList(),
                     Engines=engines.Skip(3).SkipLast(2).ToList(),
                     Gearboxes=gearboxes.TakeLast(2).ToList(),
@@ -920,7 +1054,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.Skip(10).Take(1).ToList(),
                     MinPrice=35000,
                     MaxPrice=50000,
-                    Rate=4.0,
                     Drivetrains=drivetrains.Take(4).ToList(),
                     Engines=engines.TakeLast(2).ToList(),
                     Gearboxes=gearboxes.Take(2).ToList(),
@@ -950,7 +1083,6 @@ namespace UA.Services.Seeders
                     Bodies = bodies.TakeLast(1).ToList(),
                     MinPrice=45000,
                     MaxPrice=65000,
-                    Rate=4.0,
                     Drivetrains=drivetrains.Take(4).ToList(),
                     Engines=engines.TakeLast(2).ToList(),
                     Gearboxes=gearboxes.Take(2).ToList(),

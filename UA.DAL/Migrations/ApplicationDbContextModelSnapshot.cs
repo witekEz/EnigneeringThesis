@@ -360,9 +360,6 @@ namespace UA.DAL.Migrations
                     b.Property<int>("HorsePower")
                         .HasColumnType("int");
 
-                    b.Property<double>("Rate")
-                        .HasColumnType("float");
-
                     b.Property<int>("Torque")
                         .HasColumnType("int");
 
@@ -394,9 +391,6 @@ namespace UA.DAL.Migrations
 
                     b.Property<int>("NumberOfGears")
                         .HasColumnType("int");
-
-                    b.Property<double>("Rate")
-                        .HasColumnType("float");
 
                     b.Property<int>("TypeOfGearbox")
                         .HasColumnType("int");
@@ -430,9 +424,6 @@ namespace UA.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<double>("Rate")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -521,6 +512,159 @@ namespace UA.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("OptionalEquipments");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.AvgRateEngine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AverageRate")
+                        .HasColumnType("float");
+
+                    b.Property<int>("EngineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfRates")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EngineId")
+                        .IsUnique();
+
+                    b.ToTable("AvgRateEngines");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.AvgRateGearbox", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AverageRate")
+                        .HasColumnType("float");
+
+                    b.Property<int>("GearboxId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfRates")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GearboxId")
+                        .IsUnique();
+
+                    b.ToTable("AvgRateGearboxes");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.AvgRateGeneration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AverageRate")
+                        .HasColumnType("float");
+
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfRates")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenerationId")
+                        .IsUnique();
+
+                    b.ToTable("AvgRateGenerations");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.RateEngine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EngineId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EngineId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("RateEngines");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.RateGearbox", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GearboxId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GearboxId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("RateGearboxes");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.RateGeneration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenerationId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("RateGenerations");
                 });
 
             modelBuilder.Entity("UA.Model.Entities.Suspension", b =>
@@ -724,6 +868,96 @@ namespace UA.DAL.Migrations
                     b.Navigation("Generation");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Rate.AvgRateEngine", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Engine", "Engine")
+                        .WithOne("AvgRateEngine")
+                        .HasForeignKey("UA.Model.Entities.Rate.AvgRateEngine", "EngineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Engine");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.AvgRateGearbox", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Gearbox", "Gearbox")
+                        .WithOne("AvgRateGearbox")
+                        .HasForeignKey("UA.Model.Entities.Rate.AvgRateGearbox", "GearboxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gearbox");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.AvgRateGeneration", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Generation", "Generation")
+                        .WithOne("AvgRateGeneration")
+                        .HasForeignKey("UA.Model.Entities.Rate.AvgRateGeneration", "GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Generation");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.RateEngine", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Engine", "Engine")
+                        .WithMany("Rates")
+                        .HasForeignKey("EngineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UA.Model.Entities.Authentication.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Engine");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.RateGearbox", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Gearbox", "Gearbox")
+                        .WithMany("Rates")
+                        .HasForeignKey("GearboxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UA.Model.Entities.Authentication.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gearbox");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Rate.RateGeneration", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Generation", "Generation")
+                        .WithMany("Rates")
+                        .HasForeignKey("GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UA.Model.Entities.Authentication.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Generation");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.BodyType", b =>
                 {
                     b.Navigation("Bodies");
@@ -739,8 +973,24 @@ namespace UA.DAL.Migrations
                     b.Navigation("Generations");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Engine", b =>
+                {
+                    b.Navigation("AvgRateEngine");
+
+                    b.Navigation("Rates");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.Gearbox", b =>
+                {
+                    b.Navigation("AvgRateGearbox");
+
+                    b.Navigation("Rates");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.Generation", b =>
                 {
+                    b.Navigation("AvgRateGeneration");
+
                     b.Navigation("Bodies");
 
                     b.Navigation("DetailedInfo");
@@ -748,6 +998,8 @@ namespace UA.DAL.Migrations
                     b.Navigation("GenerationImages");
 
                     b.Navigation("OptionalEquipment");
+
+                    b.Navigation("Rates");
                 });
 
             modelBuilder.Entity("UA.Model.Entities.Model", b =>
