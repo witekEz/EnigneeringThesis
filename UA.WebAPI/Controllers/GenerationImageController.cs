@@ -3,7 +3,7 @@ using UA.Services.Interfaces;
 
 namespace UA.WebAPI.Controllers
 {
-    [Route("image")]
+    [Route("api/image")]
     public class GenerationImageController : Controller
     {
         private readonly IGenerationImageService _generationImageService;

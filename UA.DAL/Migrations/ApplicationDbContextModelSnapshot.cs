@@ -297,6 +297,72 @@ namespace UA.DAL.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsModified")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("GenerationId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.CommentReply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsModified")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("CommentReplies");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.DetailedInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -805,6 +871,42 @@ namespace UA.DAL.Migrations
                     b.Navigation("Generation");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Comment", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Authentication.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UA.Model.Entities.Generation", "Generation")
+                        .WithMany("Comments")
+                        .HasForeignKey("GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Generation");
+                });
+
+            modelBuilder.Entity("UA.Model.Entities.CommentReply", b =>
+                {
+                    b.HasOne("UA.Model.Entities.Authentication.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("UA.Model.Entities.Comment", "Comment")
+                        .WithMany("Replies")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Comment");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.DetailedInfo", b =>
                 {
                     b.HasOne("UA.Model.Entities.Generation", "Generation")
@@ -973,6 +1075,11 @@ namespace UA.DAL.Migrations
                     b.Navigation("Generations");
                 });
 
+            modelBuilder.Entity("UA.Model.Entities.Comment", b =>
+                {
+                    b.Navigation("Replies");
+                });
+
             modelBuilder.Entity("UA.Model.Entities.Engine", b =>
                 {
                     b.Navigation("AvgRateEngine");
@@ -992,6 +1099,8 @@ namespace UA.DAL.Migrations
                     b.Navigation("AvgRateGeneration");
 
                     b.Navigation("Bodies");
+
+                    b.Navigation("Comments");
 
                     b.Navigation("DetailedInfo");
 

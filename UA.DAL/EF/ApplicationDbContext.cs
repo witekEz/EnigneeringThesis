@@ -35,6 +35,8 @@ namespace UA.DAL.EF
         public DbSet<AvgRateGeneration> AvgRateGenerations { get; set; }
         public DbSet<AvgRateGearbox> AvgRateGearboxes { get; set; }
         public DbSet<AvgRateEngine> AvgRateEngines { get; set; }
+        public DbSet<Comment> Comments { get; set; }  
+        public DbSet<CommentReply> CommentReplies { get; set; }
 
         //Authentication
         public DbSet<User> Users { get; set; }

@@ -60,8 +60,8 @@ namespace UA.Services
                 .Where(o => query.FilterCategories == null || (filterCategories.Any(category => category == o.Category.Name)))
                 .Where(o => query.FilterBodyTypes == null || (o.Bodies.Any(el => filterBodyTypes.Contains(el.BodyType.Name))))
                 .Where(o => query.MaxPrice == null || (o.MaxPrice <= query.MaxPrice))
-                .Where(o => query.MinPrice == null || (o.MinPrice >= query.MinPrice));
-                //.Where(o => query.Rate == null || (o.Rate >= query.Rate));
+                .Where(o => query.MinPrice == null || (o.MinPrice >= query.MinPrice))
+                .Where(o => query.AvgRate == null || (o.AvgRateGeneration.AverageRate >= query.AvgRate));
 
 
 

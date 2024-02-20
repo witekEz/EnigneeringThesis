@@ -11,6 +11,7 @@ using UA.Model.DTOs.Read;
 using UA.Model.Entities.Rate;
 using UA.Model.DTOs.Create.Rate;
 using UA.Model.DTOs.Read.Rate;
+using UA.Model.Entities.Authentication;
 
 namespace UA.Services.Mapper
 {
@@ -34,6 +35,9 @@ namespace UA.Services.Mapper
             CreateMap<OptionalEquipment,OptionalEquipmentDTO>();
             CreateMap<Suspension,SuspensionDTO>();
             CreateMap<Category, CategoryDTO>();
+            CreateMap<Comment, CommentDTO>();
+            CreateMap<CommentReply, CommentReplyDTO>();
+            CreateMap<User, UserDTO>();
 
             CreateMap<AvgRateGeneration, AvgRateGenerationDTO>()
                 .ForMember(des => des.Value, opt => opt.MapFrom(src => src.AverageRate));
@@ -59,6 +63,8 @@ namespace UA.Services.Mapper
             CreateMap<CreateSuspensionDTO, Suspension>();
             CreateMap<CreateGenerationImageDTO, GenerationImage>();
             CreateMap<CreateCategoryDTO, Category>();
+            CreateMap<CreateCommentDTO, Comment>();
+            CreateMap<CreateCommentReplyDTO, CommentReply>();
 
             CreateMap<CreateAvgRateGenerationDTO, AvgRateGeneration>()
                 .ForMember(des => des.AverageRate, opt => opt.MapFrom(src => src.Value));
@@ -90,6 +96,7 @@ namespace UA.Services.Mapper
             CreateMap<UpdateOptionalEquipmentDTO, OptionalEquipment>();
             CreateMap<UpdateSuspensionDTO, Suspension>();
             CreateMap<UpdateCategoryDTO, Category>();
+           
 
 
         }

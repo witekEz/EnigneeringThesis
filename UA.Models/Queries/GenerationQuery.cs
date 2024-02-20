@@ -14,7 +14,7 @@ namespace UA.Model.Queries
         public string? FilterBodyTypes { get; set; }
         public double? MinPrice { get; set; }
         public double? MaxPrice { get; set; }
-        public double? Rate { get; set; }
+        public double? AvgRate { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
         public string ?SortBy { get; set; }

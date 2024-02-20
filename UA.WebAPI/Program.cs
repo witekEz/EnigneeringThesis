@@ -89,6 +89,8 @@ try
     builder.Services.AddScoped<IRateGenerationService, RateGenerationService>();
     builder.Services.AddScoped<IRateEngineService, RateEngineService>();
     builder.Services.AddScoped<IRateGearboxService,RateGearboxService>();
+    builder.Services.AddScoped<ICommentService, CommentService>();
+    builder.Services.AddScoped<ICommentReplyService, CommentReplyService>();
 
     //Validator
     builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

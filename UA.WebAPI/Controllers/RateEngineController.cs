@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using UA.Model.DTOs.Create.Rate;
 using UA.Model.DTOs.Read.Rate;
@@ -18,12 +19,14 @@ namespace UA.WebAPI.Controllers
             _rateEngineService = rateEngineService;
         }
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<AvgRateEngineDTO> Get([FromRoute] int engineId)
         {
             var avgRate = _rateEngineService.Get(engineId);
             return Ok(avgRate);
         }
         [HttpPost]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Create([FromBody] CreateRateEngineDTO dto, [FromRoute] int engineId)
         {
             var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
@@ -31,12 +34,14 @@ namespace UA.WebAPI.Controllers
             return Created($"api/engine/{engineId}/rate/{rateId}", null);
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Update([FromBody] UpdateRateEngineDTO dto, [FromRoute] int id, [FromRoute] int engineId)
         {
             _rateEngineService.Update(dto, engineId, id, User);
             return NoContent();
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Delete([FromRoute] int engineId, [FromRoute] int id)
         {
             _rateEngineService.Delete(engineId, id, User);

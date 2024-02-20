@@ -28,5 +28,6 @@ namespace UA.Model.Entities
         public virtual OptionalEquipment? OptionalEquipment { get; set; }
         public virtual Model Model { get; set; } = null!;
         public virtual AvgRateGeneration ?AvgRateGeneration { get; set; }
+        public virtual List<Comment> ?Comments { get; set; }
     }
 }

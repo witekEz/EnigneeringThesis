@@ -7,7 +7,7 @@ using UA.Services.Interfaces;
 
 namespace UA.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/brand")]
     [ApiController]
     public class BrandController : Controller
     {
