@@ -7,15 +7,21 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "predev": "node aspnetcore-https.js"
+    "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.1",
+    "@smastrom/react-rating": "^1.5.0",
+    "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0"
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.0",
+    "react-toastify": "^10.0.4",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

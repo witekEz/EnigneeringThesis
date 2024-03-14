@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Col, Row, FormLabel, Button } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 
@@ -94,6 +94,18 @@ function FilterComponent({ onChangeFilters }) {
         e.preventDefault();
         onChangeFilters(form);
     }
+    function handleReset(e) {
+        e.preventDefault();
+        setForm({})
+        onChangeFilters({
+            minPrice: '',
+            maxPrice: '',
+            rate: '',
+            bodyTypes: [],
+            brands: [],
+            categories: []
+        });
+    }
 
 
     return (
@@ -183,7 +195,7 @@ function FilterComponent({ onChangeFilters }) {
                         </Button>
                     </Col>
                     <Col id='reset-button-col'>
-                        <Button variant="secondary" type="submit" id='reset-button' onClick={(e) => handleSubmit(e)}>
+                        <Button variant="secondary" type="submit" id='reset-button' onClick={(e) => handleReset(e)}>
                             Reset
                         </Button>
                     </Col>

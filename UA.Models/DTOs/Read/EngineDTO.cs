@@ -15,7 +15,7 @@ namespace UA.Model.DTOs.Read
         public double Capacity { get; set; }
         public int HorsePower { get; set; }
         public int Torque { get; set; }
-        public TypeEnum Type { get; set; }
+        public string Type { get; set; } = null!;
         public double FuelConsumptionCity { get; set; }
         public double FuelConsumptionSuburban { get; set; }
         public AvgRateEngineDTO? Rate { get; set; }

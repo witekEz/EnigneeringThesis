@@ -11,6 +11,5 @@ namespace UA.Model.DTOs.Create.Rate
     public class CreateRateEngineDTO
     {
         public double Value { get; set; }
-        public int EnigneId { get; set; }
     }
 }

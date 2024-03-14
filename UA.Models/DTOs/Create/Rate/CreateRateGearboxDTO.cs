@@ -11,6 +11,5 @@ namespace UA.Model.DTOs.Create.Rate
     public class CreateRateGearboxDTO
     {
         public double Value { get; set; }
-        public int GearboxId { get; set; }
     }
 }

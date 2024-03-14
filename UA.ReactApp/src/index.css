@@ -65,13 +65,13 @@ input::-webkit-inner-spin-button {
 }
 
 #filterComponent #categoryLabel{
-    font-size: 18px;
-    text-align:center;
-    bottom:0;
-    width:100%;
-    left:10%;
-    font-weight: 560;
-    font-family: "Arial";
+  font-size: 18px;
+  text-align:center;
+  bottom:0;
+  width:100%;
+  left:10%;
+  font-weight: 560;
+  font-family: "Arial";
 }
 #filterComponent #rateLabel{
   text-align:center;
@@ -148,4 +148,285 @@ input::-webkit-inner-spin-button {
 #imageCol{
   max-width: fit-content;
   width: 50%;
+}
+.card-text{
+  margin: 0%;
+}
+.rating-card{
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+#comparer-details-main{
+  margin-top: 1%;
+}
+#comparer-details-main .comparer-details-col-left{
+  padding: 1rem;
+}
+#comparer-details-main .comparer-details-col-left{
+  padding: 1rem;
+}
+#comparer-details-main .mainRow{
+  width: 101%;
+}
+#comparer-details-main .detailsCol{
+
+  border: 2px;
+  border-style: double;
+  border-radius: 1rem;
+  color:black;
+}
+#comparer-details-main #brandName{
+  text-align: right;
+  font-family:Copperplate,Papyrus,fantasy;
+  font-size: 2.5vw;
+  
+}
+#comparer-details-main #modelName{
+  text-align: center;
+  font-family:Copperplate,Papyrus,fantasy;
+  font-size: 2.5vw;
+  
+}
+#comparer-details-main #generationName{
+  text-align: left;
+  font-family:Copperplate,Papyrus,fantasy;
+  font-size: 2.5vw;
+}
+#comparer-details-main #rating-details{
+  justify-content: center;
+}
+#comparer-details-main #rating-details-col1{
+  font-size: 1.7vw;
+  text-align: left;
+  padding: 1rem;
+  padding-right: 0%;
+  padding-bottom: 0%;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main #rating-details-col2{
+  font-size: 1.7vw;
+  text-align: left;
+  padding: 1rem;
+  padding-left: 0%;
+  padding-bottom: 0%;
+}
+#comparer-details-main #averageRate{
+  text-align: left;
+  font-size: 1.7vw;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main #numberOfRates{
+  text-align: left;
+  font-size: 1.7vw;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main .nazwakurwaten{
+  justify-content: center;
+  width: 100%;
+}
+#comparer-details-main .alert1{
+  margin-bottom: 0%;
+  font-size: 1.1vw;
+  text-align: center;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main .alert2{
+  margin-bottom: 0%;
+  font-size: 1.1vw;
+  text-align: center;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main .alert2 p{
+  margin-bottom: 0%;
+}
+#comparer-details-main .alert1 p{
+  margin-bottom: 0%;
+}
+
+#comparer-details-main .buttonBackEdit{
+  text-align: center;
+}
+#comparer-details-main .detailsBorder{
+  text-align: left;
+  margin-top: 1rem;
+  border: 1px;
+  border-style:double;
+  border-radius: 1rem;
+  color:black;
+}
+
+#comparer-details-main .detailsBorder-technicalData p{
+  margin: 0%;
+  padding: 1rem;
+  font-family: "Roboto Mono", monospace;
+  
+}
+#comparer-details-main .detailsBorder-engines{
+  margin: 1%;
+  padding: 1rem;
+  border: 1px;
+  border-style:double;
+  border-radius: 1rem;
+  color:black;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main .detailsBorder-types{
+  margin: 1%;
+  padding: 1rem;
+  border: 1px;
+  border-style:double;
+  border-radius: 1rem;
+  color:black;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main .detailsBorder-engines-table{
+  margin: 0%;
+  padding: 1rem;
+  border: 1px;
+  border-style:double;
+  color:black;
+  font-family: "Roboto Mono", monospace;
+  font-size: 16px;
+  text-align: center;
+}
+#comparer-details-main .detailsBorder-gearboxes-table{
+  margin: 0%;
+  padding: 1rem;
+  border: 1px;
+  border-style:double;
+  color:black;
+  font-family: "Roboto Mono", monospace;
+  text-align: center;
+}
+#comparer-details-main .detailsBorder-gearboxes{
+  margin: 0%;
+  padding: 1rem;
+  border: 1px;
+  border-style:double;
+  border-radius: 1rem;
+  color:black;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main .detailsBorder-drivetrains{
+  margin-top: 1%;
+  margin-left: 1%;
+  padding: 1rem;
+  border: 1px;
+  border-style:double;
+  border-radius: 1rem;
+  color:black;
+  font-family: "Roboto Mono", monospace;
+  text-align: center;
+}
+#comparer-details-main .detailsBorder-bodyTypes{
+  margin-top: 1%;
+  margin-left: 1%;
+  margin-right: 1%;
+  padding: 1rem;
+  border: 1px;
+  border-style:double;
+  border-radius: 1rem;
+  color:black;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main #addCommentButton{
+  margin-bottom: 1rem;
+  width: 100%;
+}
+#comparer-details-main .detailsBorder-details{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  font-family: "Roboto Mono", monospace;
+}
+
+#comparer-details-main .detailsBorder-comments{
+  border: 1px;
+  border-width: 0.4rem;
+  margin-bottom: 1%;
+
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main .detailsBorder-comment{
+  border: 1px;
+  border-width: 0.4rem;
+  margin-bottom: 1%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border-style:solid ;
+  color: black;
+  font-family: "Roboto Mono", monospace;
+  background-color:lightblue;
+  opacity: 89%;
+}
+#comparer-details-main .detailsBorder-comments .detailsBorder-replies{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-left: 5%;
+  border-width: 0.2rem;
+  border-style:solid ;
+  color: black;
+}
+
+#comparer-details-main .detailsBorder-comments .detailsBorder-comments-nickname{
+  font-size: large;
+  padding: 0.1rem;
+  font-weight: 700;
+}
+#comparer-details-main .detailsBorder-comments .detailsBorder-comments-date{
+  font-size: small;
+  padding: 0.1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 100;
+}
+
+#comparer-details-main .detailsBorder-comments-content{
+  font-family: Arial, Helvetica, sans-serif;
+  padding-left: 0.4rem;
+}
+
+#comparer-details-main .detailsBorder-replies{
+  border: 1px;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border-style:solid ;
+  color: darkgray;
+  font-family: "Roboto Mono", monospace;
+}
+#comparer-details-main #forumLabel{
+  font-size: 50px;
+  text-align: center;
+  margin-top: 1rem;
+  
+}
+
+
+
+#authenticateComponent #authenticateLabel{
+  padding-left: 1rem;
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 0px;
+  border: 1px;
+  border-style:double;
+  border-radius: 1rem;
+  margin: 1rem;
+  font-size: 25px;
+  font-weight: 900;
+  font-family: "Roboto Mono", monospace;
+  color: #3264fe;
+  
+}
+#authenticateComponent .registerLoginInput{
+  justify-content: center;
+}
+#authenticateComponent .loginRegisterLogoutButtons{
+  width: 70%;
+  margin: auto;
+  margin-bottom: 1rem;
+
+}
+#authenticateComponent .loggedButtons{
+  width: 70%;
+  margin: auto;
+  margin-bottom: 1rem;
 }

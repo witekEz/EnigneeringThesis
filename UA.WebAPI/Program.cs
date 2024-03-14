@@ -102,7 +102,9 @@ try
     builder.Services.AddScoped<RequestTimeMiddleware>();
 
     //Authorization
-    builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
+    builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementRateGenerationHandler>();
+    builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementCommentHandler>();
+    builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementCommentReplyHandler>();
 
     //CORS
     var allowedOrigins = builder.Configuration["AllowedOrigins"];
@@ -111,6 +113,7 @@ try
         options.AddPolicy("Client", builder =>
             builder.AllowAnyMethod()
             .AllowAnyHeader()
+            .AllowCredentials()
             .WithOrigins("https://localhost:5173")
         );
     });

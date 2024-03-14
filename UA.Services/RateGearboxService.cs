@@ -38,7 +38,7 @@ namespace UA.Services
                 throw new NotFoundException("Gearbox not found");
             }
 
-            var ratesGearbox = _dbContext.RateGearboxes.ToList();
+            var ratesGearbox = _dbContext.RateGearboxes.Where(e => e.GearboxId == gearboxId).ToList();
             var avgRateGearbox = _dbContext.AvgRateGearboxes.FirstOrDefault(i => i.GearboxId == gearboxId);
 
             if (avgRateGearbox == null)
@@ -66,8 +66,9 @@ namespace UA.Services
                 }
                 sum += dto.Value;
                 var newAvgRate = sum / (ratesGearbox.Count() + 1);
+                newAvgRate = (double)System.Math.Round(newAvgRate, 2);
                 avgRateGearbox.AverageRate = newAvgRate;
-                avgRateGearbox.NumberOfRates = ratesGearbox.Where(i => i.GearboxId == gearboxId).Count() + 1;
+                avgRateGearbox.NumberOfRates = ratesGearbox.Count() + 1;
             }
             else
             {
@@ -96,7 +97,7 @@ namespace UA.Services
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateGearbox, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
             _dbContext.RateGearboxes.Remove(rateGearbox);
             _dbContext.SaveChanges();
@@ -133,7 +134,7 @@ namespace UA.Services
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateGearbox, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
 
             rateGearbox.Value = dto.Value;

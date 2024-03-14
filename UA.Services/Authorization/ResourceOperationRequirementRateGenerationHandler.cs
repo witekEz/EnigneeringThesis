@@ -5,11 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using UA.Model.Entities;
 using UA.Model.Entities.Rate;
 
 namespace UA.Services.Authorization
 {
-    public class ResourceOperationRequirementHandler:AuthorizationHandler<ResourceOperationRequirement,RateGeneration>
+    public class ResourceOperationRequirementRateGenerationHandler:AuthorizationHandler<ResourceOperationRequirement,RateGeneration>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ResourceOperationRequirement requirement, RateGeneration rate)
         {

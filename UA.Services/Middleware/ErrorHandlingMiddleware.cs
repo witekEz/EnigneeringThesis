@@ -31,6 +31,7 @@ namespace UA.Services.Middleware
             }
             catch (ForbidException forbidException)
             {
+                _logger.LogError(forbidException, forbidException.Message);
                 context.Response.StatusCode = 403;
                 await context.Response.WriteAsync(forbidException.Message);
             }

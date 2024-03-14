@@ -5,6 +5,7 @@ import PaginationComponent from "./PaginationComponent"
 import PageSizeComponent from "./PageSizeComponent"
 import FilterComponent from "./FilterComponent"
 import { Row, Col, Container } from "react-bootstrap";
+import AuthenticateComponent from "./Autenticate/AuthenticateComponent"
 export default function ComparerHome({ fetchedCars, errorWhileFetch, onChangeFilters, paginationFetched, onChangePage, onChangePageSize, onChangeSearch }) {
 
     const [cars, setCars] = useState(fetchedCars)
@@ -32,25 +33,27 @@ export default function ComparerHome({ fetchedCars, errorWhileFetch, onChangeFil
 
     return (
         <>
-            <NavigationBar onChangeSearch={handleSearchChange} />
-            
-                <Row className="home">
-                    <Col xxl={2} xl={2} lg={3} md={3} xs={4} className="bg-body-tertiary">
-                        <FilterComponent onChangeFilters={handleChangeFilters} />
-                    </Col>
-                    <Col xxl={8} xl={8} lg={6} md={8} xs={4} > 
-                            <Row>     
-                                {cars && <GenerationList generations={cars} title="All Generations!" />}
-                            </Row>
-                            <Row className="paginationItems" >
-                                <Col>{pagination.totalItemsCount > 5 && <PageSizeComponent pageSize={pagination.pageSize} onChangePageSize={handleChangePageSize} />}</Col>
-                                <Col>{pagination.totalPages > 1 && <PaginationComponent pagination={pagination} onChangePage={handleChangePage} />}</Col>
-                            </Row>
-                    </Col>
-                    <Col xxl={2} xl={2} lg={3} md={0} xs={4} className="bg-body-tertiary">
-                    </Col>
-                </Row>
-            
+            <Row>
+                <NavigationBar onChangeSearch={handleSearchChange} />
+            </Row>
+            <Row className="home">
+                <Col xxl={2} xl={2} lg={3} md={3} xs={4} className="bg-body-tertiary">
+                    <FilterComponent onChangeFilters={handleChangeFilters} />
+                </Col>
+                <Col xxl={8} xl={8} lg={6} md={8} xs={4} >
+                    <Row>
+                        {cars && <GenerationList generations={cars} title="All Generations!" />}
+                    </Row>
+                    <Row className="paginationItems" >
+                        <Col>{pagination.totalItemsCount > 5 && <PageSizeComponent pageSize={pagination.pageSize} onChangePageSize={handleChangePageSize} />}</Col>
+                        <Col>{pagination.totalPages > 1 && <PaginationComponent pagination={pagination} onChangePage={handleChangePage} />}</Col>
+                    </Row>
+                </Col>
+                <Col xxl={2} xl={2} lg={3} md={0} xs={4} className="bg-body-tertiary">
+                    <AuthenticateComponent />
+                </Col>
+            </Row>
+
 
             <div>
                 {errorWhileFetch && <p>Error: {error}</p>}

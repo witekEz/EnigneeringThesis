@@ -73,6 +73,9 @@ namespace UA.DAL.EF
             modelBuilder.Entity<Engine>()
                 .Property(p => p.Version)
                 .HasMaxLength(40);
+            modelBuilder.Entity<Engine>()
+                .Property(p => p.Type)
+                .HasConversion<string>();
             //Gearbox
             modelBuilder.Entity<Gearbox>()
                 .Property(p => p.Name)

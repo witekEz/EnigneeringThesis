@@ -58,7 +58,7 @@ namespace UA.Services
             var authorizationResult = _authorizationService.AuthorizeAsync(author, reply, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
             _dbContext.CommentReplies.Remove(reply);
             _dbContext.SaveChanges();
@@ -79,11 +79,11 @@ namespace UA.Services
             var authorizationResult = _authorizationService.AuthorizeAsync(author, reply, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
-            comment.Content = dto.Content;
-            comment.CreatedOn = DateTime.Now;
-            comment.IsModified = true;
+            reply.Content = dto.Content;
+            reply.CreatedOn = DateTime.Now;
+            reply.IsModified = true;
             _dbContext.SaveChanges();
         }
     }

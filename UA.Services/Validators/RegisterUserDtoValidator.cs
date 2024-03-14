@@ -15,12 +15,13 @@ namespace UA.Services.Validators
         {
             RuleFor(e => e.Email)
                 .MinimumLength(12)
-                .NotEmpty()
                 .EmailAddress();
+            RuleFor(e => e.NickName)
+                .MinimumLength(3);
 
             RuleFor(e => e.Password)
-                .MinimumLength(8)
-                .NotEmpty();
+                .MinimumLength(8);
+
 
             RuleFor(e => e.ConfirmPassword)
                 .Equal(e => e.Password);
@@ -31,9 +32,18 @@ namespace UA.Services.Validators
                     var emailInUse = dbContext.Users.Any(u => u.Email == value);
                     if (emailInUse)
                     {
-                        context.AddFailure("Emial", "that email is taken!");
+                        context.AddFailure("Email", "that email is taken!");
                     }
                 });
+            RuleFor(e => e.NickName)
+               .Custom((value, context) =>
+               {
+                   var nicknameInUse = dbContext.Users.Any(u => u.NickName == value);
+                   if (nicknameInUse)
+                   {
+                       context.AddFailure("Nickname", "that nickname is taken!");
+                   }
+               });
 
         }
     }

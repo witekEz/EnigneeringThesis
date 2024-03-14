@@ -14,6 +14,8 @@ namespace UA.Model.DTOs.Read
         public string NickName { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string ConfirmPassword { get; set; } = null!;
+        public string ?FirstName { get; set; }
+        public string ?LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int RoleId { get; set; } = 1;
     }

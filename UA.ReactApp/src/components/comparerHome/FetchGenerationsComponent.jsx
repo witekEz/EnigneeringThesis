@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import ComparerHome from "./ComparerHome";
 import { Spinner } from "react-bootstrap";
+import axios from "axios";
 
 export default function FetchGenerationsComponent() {
     const BASE_URL = 'https://localhost:7092/api';
@@ -78,24 +79,19 @@ export default function FetchGenerationsComponent() {
 
     useEffect(() => {
         const fetchCars = async () => {
-            try {
-                const response = await fetch(`${BASE_URL}/home?pageSize=${pageSize}&pageNumber=${page}` +
-                    `${minPrice ? `&minPrice=${minPrice}` : ''}` +
-                    `${maxPrice ? `&maxPrice=${maxPrice}` : ''}` +
-                    `${rate ? `&rate=${rate}` : ''}` +
-                    `${brandsSendable != "" ? `&filterBrands=${brandsSendable}` : ''}` +
-                    `${categoriesSendable != "" ? `&filterCategories=${categoriesSendable}` : ''}` +
-                    `${bodyTypesSendable != "" ? `&filterBodyTypes=${bodyTypesSendable}` : ''}` +
-                    `${searchPhase ? `&search=${searchPhase}` : ''}`);
-                
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const result = await response.json();
-                setCars(result);
-                setPagination({ totalPages: result.totalPages, itemFrom: result.itemFrom, itemTo: result.itemTo, totalItemsCount: result.totalItemsCount, page: page })
+            try{
+                const response = await axios.get(`${BASE_URL}/home?pageSize=${pageSize}&pageNumber=${page}` +
+                `${minPrice ? `&minPrice=${minPrice}` : ''}` +
+                `${maxPrice ? `&maxPrice=${maxPrice}` : ''}` +
+                `${rate ? `&avgRate=${rate}` : ''}` +
+                `${brandsSendable != "" ? `&filterBrands=${brandsSendable}` : ''}` +
+                `${categoriesSendable != "" ? `&filterCategories=${categoriesSendable}` : ''}` +
+                `${bodyTypesSendable != "" ? `&filterBodyTypes=${bodyTypesSendable}` : ''}` +
+                `${searchPhase ? `&search=${searchPhase}` : ''}`);
+                setCars(response.data);
+                setPagination({ totalPages: response.data.totalPages, itemFrom: response.data.itemFrom, itemTo: response.data.itemTo, totalItemsCount: response.data.totalItemsCount, page: page })
                 setIsPending(false)
-            } catch (error) {
+            }catch (error) {
                 setError(error.message);
             }
         };

@@ -13,6 +13,5 @@ namespace UA.Model.DTOs.Update
         public string ?Name { get; set; }
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
-        public double Rate { get; set; }
     }
 }

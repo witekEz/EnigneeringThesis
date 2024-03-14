@@ -429,8 +429,9 @@ namespace UA.DAL.Migrations
                     b.Property<int>("Torque")
                         .HasColumnType("int");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Version")
                         .IsRequired()

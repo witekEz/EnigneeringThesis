@@ -39,7 +39,7 @@ namespace UA.Services
                 throw new NotFoundException("Generation not found");
             }
 
-            var ratesGeneration = _dbContext.RateGenerations.ToList();
+            var ratesGeneration = _dbContext.RateGenerations.Where(g=>g.GenerationId==generationId).ToList();
             var avgRateGeneration=_dbContext.AvgRateGenerations.FirstOrDefault(i=>i.GenerationId==generationId);
 
             if (avgRateGeneration == null)
@@ -66,7 +66,8 @@ namespace UA.Services
                     sum += rate.Value;
                 }
                 sum += dto.Value;
-                var newAvgRate = sum / (ratesGeneration.Where(i => i.GenerationId == generationId).Count()+1);
+                var newAvgRate = sum / (ratesGeneration.Count()+1);
+                newAvgRate = (double)System.Math.Round(newAvgRate, 2);
                 avgRateGeneration.AverageRate= newAvgRate;
                 avgRateGeneration.NumberOfRates = ratesGeneration.Count() + 1;
             }
@@ -77,6 +78,7 @@ namespace UA.Services
             
             var rateGeneration = _mapper.Map<RateGeneration>(dto);
             rateGeneration.UserID = userId;
+            rateGeneration.GenerationId = generationId;
             _dbContext.RateGenerations.Add(rateGeneration);
             _dbContext.SaveChanges();
             return rateGeneration.Id;
@@ -96,7 +98,7 @@ namespace UA.Services
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateGeneration, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
             _dbContext.RateGenerations.Remove(rateGeneration);
             _dbContext.SaveChanges();
@@ -132,7 +134,7 @@ namespace UA.Services
             var authorizationResult=_authorizationService.AuthorizeAsync(user, rateGeneration, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
 
             rateGeneration.Value = dto.Value;

@@ -37,7 +37,7 @@ namespace UA.Services
 
 
                 using var imageStream = Image.Load(image.OpenReadStream());
-                imageStream.Mutate(x => x.Resize(640, 480));
+                imageStream.Mutate(x => x.Resize(600, 400));
                 imageStream.Save(fullPath);
 
                 //using (var stream=new FileStream(fullPath, FileMode.Create))

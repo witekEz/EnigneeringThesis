@@ -38,7 +38,7 @@ namespace UA.Services
                 throw new NotFoundException("Engine not found");
             }
 
-            var ratesEngine = _dbContext.RateEngines.ToList();
+            var ratesEngine = _dbContext.RateEngines.Where(e => e.EngineId == engineId).ToList();
             var avgRateEngine = _dbContext.AvgRateEngines.FirstOrDefault(i => i.EngineId == engineId);
 
             if (avgRateEngine == null)
@@ -66,8 +66,9 @@ namespace UA.Services
                 }
                 sum += dto.Value;
                 var newAvgRate = sum / (ratesEngine.Count() + 1);
+                newAvgRate = (double)System.Math.Round(newAvgRate, 2);
                 avgRateEngine.AverageRate = newAvgRate;
-                avgRateEngine.NumberOfRates = ratesEngine.Where(i => i.EngineId == engineId).Count() + 1;
+                avgRateEngine.NumberOfRates = ratesEngine.Count() + 1;
             }
             else
             {
@@ -96,7 +97,7 @@ namespace UA.Services
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateEngine, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
             _dbContext.RateEngines.Remove(rateEngine);
             _dbContext.SaveChanges();
@@ -133,7 +134,7 @@ namespace UA.Services
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateEngine, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
-                throw new ForbidException();
+                throw new ForbidException("You cant do that!");
             }
 
             rateEngine.Value = dto.Value;
