@@ -3,6 +3,6 @@
     public enum TypeOfGearboxEnum
     {
         Manual,
-        Autmatic
+        Automatic
     }
 }

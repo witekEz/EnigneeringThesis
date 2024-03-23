@@ -47,14 +47,22 @@ namespace UA.Services.Mapper
                 .ForMember(des => des.Value, opt => opt.MapFrom(src => src.AverageRate));
 
             //From CreateDTO => Entity
-            CreateMap<CreateGenerationDTO, Generation>();
-                
+            CreateMap<CreateGenerationDTO, Generation>()
+                .ForMember(m => m.Drivetrains, c => c.Ignore())
+                .ForMember(m => m.Engines, c => c.Ignore())
+                .ForMember(m => m.Bodies, c => c.Ignore())
+                .ForMember(m => m.Gearboxes, c => c.Ignore());
+            //.ForMember(m=>m.Engines, e=>e.MapFrom(src=>src.Engines.Where(e=>e.));
+
             CreateMap<CreateBodyColourDTO, BodyColour>();
             CreateMap<CreateBodyDTO, Body>();
             CreateMap<CreateBodyTypeDTO, BodyType>();
             CreateMap<CreateBrakeDTO, Brake>();
             CreateMap<CreateBrandDTO, Brand>();
-            CreateMap<CreateDetailedInfoDTO, DetailedInfo>();
+            CreateMap<CreateDetailedInfoDTO, DetailedInfo>()
+                .ForMember(m => m.BodyColours, c => c.Ignore())
+                .ForMember(m => m.Brakes, c => c.Ignore())
+                .ForMember(m => m.Suspensions, c => c.Ignore());
             CreateMap<CreateDrivetrainDTO, Drivetrain>();
             CreateMap<CreateEngineDTO, Engine>();
             CreateMap<CreateGearboxDTO, Gearbox>();

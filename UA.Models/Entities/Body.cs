@@ -12,7 +12,7 @@ namespace UA.Model.Entities
         public int NumberOfSeats { get; set; }
         public int TrunkCapacity { get; set; }
         //Navigation Properties
-        public virtual Generation Generation { get; set; } = null!;
+        public virtual Generation ?Generation { get; set; }
         public virtual BodyType ?BodyType { get; set; }
         //Foreign Key
         public int GenerationId { get; set; }

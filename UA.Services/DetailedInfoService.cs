@@ -35,6 +35,21 @@ namespace UA.Services
 
             var detailedInfo = _mapper.Map<DetailedInfo>(dto);
             detailedInfo.GenerationId= generationId;
+            if (dto.BodyColours!=null)
+            {
+                var bodyColoursEntity = _dbContext.BodyColours.Where(data => dto.BodyColours.Contains(data.Id)).ToList();
+                detailedInfo.BodyColours = bodyColoursEntity;
+            }
+            if (dto.Brakes != null)
+            {
+                var brakesEntity = _dbContext.Brakes.Where(data => dto.Brakes.Contains(data.Id)).ToList();
+                detailedInfo.Brakes = brakesEntity;
+            }
+            if (dto.Suspensions != null)
+            {
+                var suspensionsEntity = _dbContext.Suspensions.Where(data => dto.Suspensions.Contains(data.Id)).ToList();
+                detailedInfo.Suspensions = suspensionsEntity;
+            }
             _dbContext.DeatiledInfos.Add(detailedInfo);
             _dbContext.SaveChanges();
             return detailedInfo.Id;

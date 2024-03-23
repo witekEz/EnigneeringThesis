@@ -430,3 +430,42 @@ input::-webkit-inner-spin-button {
   margin: auto;
   margin-bottom: 1rem;
 }
+.createGeneration-main{
+  margin-top: 1rem;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.createGeneration-main .createGeneration-select{
+  margin-bottom: 1%;
+}
+.createGeneration-main .createGeneration-drivetrain p{
+  margin-top: 1rem;
+}
+.createGeneration-main .createGeneration-engines{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.createGeneration-main .createGeneration-engines #addButton{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.createGeneration-main .createGeneration-gearboxes{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.createGeneration-main .createGeneration-gearboxes #addButton{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.createGeneration-main .createGeneration-productionDate{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.createGeneration-main .createGeneration-bodyColour #addButton{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.createGeneration-main #generationName{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

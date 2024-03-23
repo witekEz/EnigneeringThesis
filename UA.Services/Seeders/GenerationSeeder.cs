@@ -304,15 +304,15 @@ namespace UA.Services.Seeders
             {
                 new Drivetrain()
                 {
-                     Type="FrontWheelDrive"
+                     Type="Na przednią oś"
                 },
                 new Drivetrain()
                 {
-                     Type="AllWheelDrive"
+                     Type="Na wszystkie koła"
                 },
                 new Drivetrain()
                 {
-                     Type="RearWheelDrive"
+                     Type="Na tylną oś"
                 }
             };
             return drivetrains;
@@ -409,7 +409,7 @@ namespace UA.Services.Seeders
                {
                     Name="ZF",
                     NumberOfGears=8,
-                    TypeOfGearbox=TypeOfGearboxEnum.Autmatic
+                    TypeOfGearbox=TypeOfGearboxEnum.Automatic
                },
                new Gearbox()
                {
@@ -426,19 +426,19 @@ namespace UA.Services.Seeders
             {
                 new Suspension()
                 {
-                    Type="Four-shovel suspension"
+                    Type="Cztero-wahaczowe"
                 },
                 new Suspension()
                 {
-                    Type="Two-shovel suspension"
+                    Type="Ddwu-wahaczowe"
                 },
                 new Suspension()
                 {
-                    Type="Pneumatic"
+                    Type="Pneumatyczne"
                 },
                 new Suspension()
                 {
-                    Type="Multi-link"
+                    Type="Wielowahaczowe"
                 },
                 new Suspension()
                 {
@@ -446,15 +446,11 @@ namespace UA.Services.Seeders
                 },
                 new Suspension()
                 {
-                    Type="Torsion beam"
+                    Type="Belka skrętna"
                 },
                 new Suspension()
                 {
-                    Type="Torsion bar beam"
-                },
-                new Suspension()
-                {
-                    Type="Hydropneumatics"
+                    Type="Hydropneumatyczne"
                 },
             };
             return suspensions;
@@ -647,15 +643,15 @@ namespace UA.Services.Seeders
             {
                new Brake()
                 {
-                    Type="Ceramic"
+                    Type="Ceramiczne"
                 },
                 new Brake()
                 {
-                    Type="Disc"
+                    Type="Tarczowe"
                 },
                 new Brake()
                 {
-                    Type="Drum"
+                    Type="Bębnowe"
                 }
             };
             return brakes;
@@ -690,7 +686,7 @@ namespace UA.Services.Seeders
                 },
                 new Model.Entities.Model()
                 {
-                    Name="5 SERIES",
+                    Name="SERIA 5",
                     Brand=brands.Skip(1).First()
                 },
                 new Model.Entities.Model()

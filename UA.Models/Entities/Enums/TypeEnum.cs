@@ -1,4 +1,6 @@
-﻿namespace UA.Model.Entities.Enums
+﻿using System.Text.Json.Serialization;
+
+namespace UA.Model.Entities.Enums
 {
     public enum TypeEnum
     {

@@ -10,13 +10,13 @@ import Comments from "./Forum/CommentsComponent";
 
 const BASE_URL = 'https://localhost:7092/api';
 
-export default function Generation({generation}) {
+export default function Generation({ generation }) {
 
     const generateKey = (pre1, pre2) => {
-        return `${ pre1 }_${pre2}_${ new Date().getTime() }`;
+        return `${pre1}_${pre2}_${new Date().getTime()}`;
     }
 
-    const id= generation.id;
+    const id = generation.id;
     const { isLoggedIn } = useSelector(state => state.authenticate)
 
     const [rating, setRating] = useState({})
@@ -27,15 +27,15 @@ export default function Generation({generation}) {
     ))
     const uniqueTypes = Array.from(new Set(engineTypes));
 
-    const handleRate=async (rate)=>{
-            try{
-                const response = await axios.post(`${BASE_URL}/generation/${id}/rate`,{value : rate});
-                console.log(response);
-                setRating(rate);
-            }catch(error){
-                setError(error.message);
-                console.log(error);
-            }
+    const handleRate = async (rate) => {
+        try {
+            const response = await axios.post(`${BASE_URL}/generation/${id}/rate`, { value: rate });
+            console.log(response);
+            setRating(rate);
+        } catch (error) {
+            setError(error.message);
+            console.log(error);
+        }
     };
 
     return (
@@ -145,14 +145,13 @@ export default function Generation({generation}) {
                             </thead>
                             <tbody>
                                 {generation.gearboxes.map(gearbox => (
-                                    gearbox.typeOfGearbox == 0 ?
-                                        <tr key={generateKey(gearbox.id, gearbox.name)}>
-                                            <td>{gearbox.id}</td>
-                                            <td>{gearbox.name}</td>
-                                            <td>{gearbox.numberOfGears}</td>
-                                            <td>Manulana</td>
-                                            <td>{gearbox.rate ? gearbox.rate : "TBA"}</td>
-                                        </tr> : null
+                                    <tr key={generateKey(gearbox.id, gearbox.name)}>
+                                        <td>{gearbox.id}</td>
+                                        <td>{gearbox.name}</td>
+                                        <td>{gearbox.numberOfGears}</td>
+                                        <td>{gearbox.type}</td>
+                                        <td>{gearbox.rate ? gearbox.rate : "TBA"}</td>
+                                    </tr>
                                 ))}
                             </tbody>
                         </Table>
@@ -258,15 +257,15 @@ export default function Generation({generation}) {
             </Col>
             <Row>
                 <Col className="buttonBackEdit">
-                    <Button className="sticky-top" variant="primary" size="lg" as={Link} to={'/comparerHome'}>Cofnij</Button>
+                    <Button className="sticky-top" variant="primary" size="lg" as={Link} to={'/comparer/home'}>Cofnij</Button>
                 </Col>
             </Row>
             <Row className="">
                 <p id="forumLabel">Forum</p>
-                <Comments generationId={id}/>
+                <Comments generationId={id} />
             </Row>
 
-           
+
 
         </>
     )

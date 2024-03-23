@@ -13,7 +13,7 @@ namespace UA.Model.DTOs.Read
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public int NumberOfGears { get; set; }
-        public TypeOfGearboxEnum TypeOfGearbox { get; set; }
+        public string TypeOfGearbox { get; set; }
         public AvgRateGearboxDTO? Rate { get; set; }
     }
 }

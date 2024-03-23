@@ -11,23 +11,22 @@ namespace UA.Model.DTOs.Create
     public class CreateGenerationDTO
     {
         [Required]
-        public CreateCategoryDTO Category { get; set; } = null!;
-        [Required]
         [MaxLength(20)]
         public string Name { get; set; } = null!;
-        [Required]
-        public List<CreateBodyDTO> Bodies { get; set; } = null!;
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
         [Required]
-        public List<CreateDrivetrainDTO> Drivetrains { get; set; } = null!;
+        public int CategoryId { get; set; }
         [Required]
-        public List<CreateEngineDTO> Engines { get; set; } = null!;
+        public List<int> Bodies { get; set; } = null!;
         [Required]
-        public List<CreateGearboxDTO> Gearboxes { get; set; } = null!;
-        public CreateDetailedInfoDTO? DeatiledInfo { get; set; }
+        public List<int> Drivetrains { get; set; } = null!;
+        [Required]
+        public List<int> Engines { get; set; } = null!;
+        [Required]
+        public List<int> Gearboxes { get; set; } = null!;
+        public CreateDetailedInfoDTO? DetailedInfo { get; set; }
         public CreateOptionalEquipmentDTO? OptionalEquipment { get; set; }
-        [Required]
-        public CreateModelDTO Model { get; set; } = null!;
+        
     }
 }

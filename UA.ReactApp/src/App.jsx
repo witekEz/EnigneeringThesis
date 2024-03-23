@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import FetchGenerationsComponent from "./components/comparerHome/FetchGenerationsComponent";
 import FetchAuctionsHome from './components/FetchAuctionsHome'
 import FetchGenerationComponent from './components/comparerHome/FetchGenerationComponent';
+import CreateGenerationComponent from './components/comparerHome/CreateGenerationComponent';
 import { Container, Row } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
@@ -36,9 +37,10 @@ export default function App() {
                 </Row>
                 <Navigation />
                 <Routes>
-                    <Route exact path="/comparerHome" element={<FetchGenerationsComponent />}></Route>
-                    <Route exact path="/comparerDetails/:id" element={<FetchGenerationComponent />}></Route>
-                    <Route path="/auctionsHome" element={<FetchAuctionsHome />}></Route>
+                    <Route exact path="/comparer/home" element={<FetchGenerationsComponent />}></Route>
+                    <Route exact path="/comparer/details/:id" element={<FetchGenerationComponent />}></Route>
+                    <Route exact path="/comparer/create" element={<CreateGenerationComponent />}></Route>
+                    <Route path="/auctions/home" element={<FetchAuctionsHome />}></Route>
                 </Routes>
                 <ToastContainer />
             </Container>

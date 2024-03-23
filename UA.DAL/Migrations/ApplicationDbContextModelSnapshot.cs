@@ -459,8 +459,9 @@ namespace UA.DAL.Migrations
                     b.Property<int>("NumberOfGears")
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeOfGearbox")
-                        .HasColumnType("int");
+                    b.Property<string>("TypeOfGearbox")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

@@ -37,7 +37,7 @@ const GenerationList = ({ generations }) => {
                                 </div>
 
 
-                                <Button variant="primary" as={Link} to={'/comparerDetails/' + generation.id} >Szczegóły</Button>
+                                <Button variant="primary" as={Link} to={'/comparer/details/' + generation.id} >Szczegóły</Button>
                             </Card.Body>
 
 

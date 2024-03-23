@@ -80,6 +80,9 @@ namespace UA.DAL.EF
             modelBuilder.Entity<Gearbox>()
                 .Property(p => p.Name)
                 .HasMaxLength(20);
+            modelBuilder.Entity<Gearbox>()
+                .Property(p => p.TypeOfGearbox)
+                .HasConversion<string>();
             //Generation
             modelBuilder.Entity<Generation>()
                 .Property(p => p.Name)

@@ -1,5 +1,8 @@
 import { Button, Row } from "react-bootstrap"
 import { useSelector } from "react-redux"
+import { Link } from 'react-router-dom';
+
+
 export default function LoggedComponent({ generation }) {
 
     const nickName = useSelector(state => state.authenticate.name)
@@ -10,7 +13,7 @@ export default function LoggedComponent({ generation }) {
         <>
             <p id='authenticateLabel'>Profil</p>
             <Row>
-                <Button variant="primary" className="loggedButtons">
+                <Button as={Link} variant="primary" to={'/comparer/create'} className="loggedButtons">
                     Dodaj samochód
                 </Button>
             </Row>

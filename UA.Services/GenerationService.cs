@@ -115,7 +115,28 @@ namespace UA.Services
                 throw new NotFoundException("Model not found");
 
             var generationEntity = _mapper.Map<Generation>(dto);
-            generationEntity.Model.Id = modelId;
+            generationEntity.Model = model;
+            if(dto.Bodies.Count > 0)
+            {
+                var bodiesEntity=_dbContext.Bodies.Where(data=>dto.Bodies.Contains(data.Id)).ToList();
+                generationEntity.Bodies = bodiesEntity;
+            }
+            if (dto.Drivetrains.Count > 0)
+            {
+                var drivetrainsEntity = _dbContext.Drivetrains.Where(data => dto.Drivetrains.Contains(data.Id)).ToList();
+                generationEntity.Drivetrains= drivetrainsEntity;
+            }
+            if (dto.Engines.Count > 0)
+            {
+                var enginesEntity = _dbContext.Engines.Where(data => dto.Engines.Contains(data.Id)).ToList();
+                generationEntity.Engines = enginesEntity;
+            }
+            if (dto.Gearboxes.Count > 0)
+            {
+                var gearboxesEntity = _dbContext.Gearboxes.Where(data => dto.Gearboxes.Contains(data.Id)).ToList();
+                generationEntity.Gearboxes = gearboxesEntity;
+            }
+
             _dbContext.Generations.Add(generationEntity);
             _dbContext.SaveChanges();
             return generationEntity.Id;

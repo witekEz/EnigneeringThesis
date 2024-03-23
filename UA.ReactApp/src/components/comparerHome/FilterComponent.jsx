@@ -59,6 +59,7 @@ function FilterComponent({ onChangeFilters }) {
                 return [...pre.filter(category => category !== value)]
             })
         }
+        console.log(checkedCategories)
     }
     const handleChangeOnBrand = (event) => {
         const { value, checked } = event.target;
@@ -106,6 +107,7 @@ function FilterComponent({ onChangeFilters }) {
             categories: []
         });
     }
+    
 
 
     return (
