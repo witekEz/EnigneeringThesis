@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Navigation from './components/Navigation';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import FetchGenerationsComponent from "./components/comparerHome/FetchGenerationsComponent";
@@ -42,6 +43,7 @@ export default function App() {
                     <Route exact path="/comparer/create" element={<CreateGenerationComponent />}></Route>
                     <Route path="/auctions/home" element={<FetchAuctionsHome />}></Route>
                 </Routes>
+                <Footer />
                 <ToastContainer />
             </Container>
         </Router>

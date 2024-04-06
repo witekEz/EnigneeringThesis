@@ -36,10 +36,6 @@ namespace UA.Services.Seeders
                     _dbContext.AddRange(roles);
                     _dbContext.SaveChanges();
                 }
-                if (!_dbContext.Users.Any())
-                {
-                    
-                }
                 if (!_dbContext.Generations.Any())
                 {
 
@@ -430,7 +426,7 @@ namespace UA.Services.Seeders
                 },
                 new Suspension()
                 {
-                    Type="Ddwu-wahaczowe"
+                    Type="Dwu-wahaczowe"
                 },
                 new Suspension()
                 {

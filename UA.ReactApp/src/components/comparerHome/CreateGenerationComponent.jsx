@@ -8,6 +8,9 @@ import CreateBodyColourModal from "./Modals/CreateBodyColourModal";
 import CreateBrakeModal from "./Modals/CreateBrakeModal";
 import CreateSuspensionModal from "./Modals/CreateSuspensionModal";
 import { Accordion, Row, Col } from "react-bootstrap";
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 
 export default function CreateGenerationComponent() {
@@ -24,6 +27,7 @@ export default function CreateGenerationComponent() {
     today = yyyy + '-' + mm + '-' + dd;
 
     const [errors, setErrors] = useState({});
+    const [error, setError] = useState({});
     const [brands, setBrands] = useState([]);
     const [models, setModels] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -35,21 +39,21 @@ export default function CreateGenerationComponent() {
     const [brakes, setBrakes] = useState(null)
     const [suspensions, setSuspensions] = useState(null);
     const [bodyTypes, setBodyTypes] = useState(null);
-    
 
+    const navigate = useNavigate();
 
     const [created, setCreated] = useState()
 
     const [selectedBrand, setSelectedBrand] = useState({});
     const [selectedModel, setSelectedModel] = useState({});
-    const [selectedCategory, setSelectedCategory] = useState({});
+    const [selectedCategory, setSelectedCategory] = useState(0);
     const [checkedDrivetrains, setCheckedDrivetrains] = useState([]);
     const [checkedEngines, setCheckedEngines] = useState([]);
     const [checkedGearboxes, setCheckedGearboxes] = useState([]);
     const [checkedBodyColours, setCheckedBodyColours] = useState([]);
     const [checkedBrakes, setCheckedBrakes] = useState([]);
     const [checkedSuspensions, setCheckedSuspensions] = useState([]);
-    const [checkedBodyTypes, setCheckedBodyTypes] = useState([]);
+    const [checkedBodyType, setCheckedBodyType] = useState({});
     const [bodyForm, setBodyForm] = useState({
         "segment": "",
         "numberOfDoors": "",
@@ -64,8 +68,13 @@ export default function CreateGenerationComponent() {
         "esp": false,
         "asr": false,
     })
-    const [form, setForm] = useState({})
-
+    const [form, setForm] = useState({
+        "name": "",
+        "minPrice": "",
+        "maxPrice": ""
+    })
+    const [detailedInfoForm, setDetailedInfoForm] = useState({})
+    const [image,setImage]=useState(null)
 
     useEffect(() => {
         const fetchBrands = async () => {
@@ -182,7 +191,6 @@ export default function CreateGenerationComponent() {
     }, [created])
 
     const handleBrandChange = async (event) => {
-        console.log(event.target.value)
         setSelectedBrand(event.target.value);
         if (event.target.value != 0) {
             try {
@@ -225,6 +233,45 @@ export default function CreateGenerationComponent() {
                 [field]: null
             })
     }
+    const setDetailedInfoField = (field, value) => {
+        setDetailedInfoForm({
+            ...detailedInfoForm,
+            [field]: value
+        })
+        if (!!errors[field])
+            setErrors({
+                ...errors,
+                [field]: null
+            })
+    }
+
+    const validate = () => {
+        let error = {};
+
+        if (!form.name) {
+            error.name = 'Nazwa generacji jest wymagana do jej utworzenia';
+        }
+        if (selectedCategory == 0) {
+            error.selectedCategory = 'Wybierz odpowiednią kategorię';
+        }
+        if (!bodyForm.numberOfDoors) {
+            error.numberOfDoors = 'Wypełnij to pole';
+        }
+        if (!bodyForm.numberOfSeats) {
+            error.numberOfSeats = 'Wypełnij to pole';
+        }
+        if (!checkedDrivetrains || checkedDrivetrains.length <= 0) {
+            error.checkedDrivetrains = 'Dodaj minimum jeden napęd';
+        }
+        if (!checkedEngines || checkedEngines.length <= 0) {
+            error.checkedEngines = 'Dodaj minimum jeden silnik';
+        }
+        if (!checkedGearboxes || checkedGearboxes.length <= 0) {
+            error.checkedGearboxes = 'Dodaj minimum jedną skrzynię';
+        }
+
+        return error;
+    };
 
     const handleModelChange = (event) => {
         setSelectedModel(event.target.value);
@@ -235,7 +282,7 @@ export default function CreateGenerationComponent() {
     const handleDrivetrainsChange = (event) => {
         const { value, checked } = event.target;
         if (checked) {
-            setCheckedDrivetrains(pre => [...pre, value])
+            setCheckedDrivetrains(pre => [...pre, value]);
         }
         else {
             setCheckedDrivetrains(pre => {
@@ -253,6 +300,7 @@ export default function CreateGenerationComponent() {
                 return [...pre.filter(engine => engine !== value)]
             })
         }
+
     }
     const handleGearboxesChange = (event) => {
         const { value, checked } = event.target;
@@ -299,31 +347,54 @@ export default function CreateGenerationComponent() {
         }
     }
     const handleBodyTypeChange = (event) => {
-        const { value, checked } = event.target;
-        if (checked) {
-            setCheckedBodyTypes(pre => [...pre, value])
-        }
-        else {
-            setCheckedBodyTypes(pre => {
-                return [...pre.filter(bodyType => bodyType !== value)]
-            })
-        }
+        const { value } = event.target;
+        setCheckedBodyType(value)
     }
-    const handleGenerationCreate=()=>{
-        const generationForm=1
-        const brandJSON=selectedBrand;
-        const modelJSON=selectedBrand;
-        console.log(selectedBrand, selectedModel, form, bodyForm, checkedDrivetrains, checkedEngines, checkedGearboxes, checkedBodyColours, checkedBrakes,checkedSuspensions, optionalEquipmentForm )
-        console.log("---------------------------------")
-        console.log(checkedDrivetrains)
-        try{
-            
+    const handleGenerationCreate = async () => {
+        const errors = validate();
+        setErrors(errors);
+        const detailedInfoFormLocal = {
+            ...detailedInfoForm,
+            'bodyColours': checkedBodyColours,
+            'suspensions': checkedSuspensions,
+            'brakes': checkedBrakes
         }
-        catch(err){
-            setErrors(err);
+        let tempBodyForm={
+            ...bodyForm
+        }
+        if (checkedBodyType.length>0) {
+            tempBodyForm={
+                ...bodyForm,
+                "bodyTypeId":checkedBodyType
+            }
+        }
+        const generationForm = {
+            ...form,
+            'categoryId': selectedCategory,
+            'body': tempBodyForm,
+            'drivetrains': checkedDrivetrains,
+            'engines': checkedEngines,
+            'gearboxes': checkedGearboxes,
+            'detailedInfo': detailedInfoFormLocal,
+            'optionalEquipment': optionalEquipmentForm
+        }
+        try {
+            const generationId = await axios.post(`${BASE_URL}/model/${selectedModel}/generation`, generationForm)
+            if(image!=null){
+                const fi=new FormData();
+                fi.append('image', image)
+                await axios.post(`${BASE_URL}/image/${generationId.data}`, fi);
+            }
+            navigate('/comparer/home');
+            toast.success("Utworzono nowe auto!")
+        }
+        catch (err) {
+            setError(err);
+            toast.error("Błędy w formularzu!")
         }
     }
 
+    
     return (
         <div className="createGeneration-main">
             <div>
@@ -342,8 +413,14 @@ export default function CreateGenerationComponent() {
                 <Form.Control
                     id="generationName"
                     value={form.name}
+                    required={true}
                     placeholder='Generacja'
-                    onChange={(e) => setField('name', e.target.value)} />
+                    onChange={(e) => setField('name', e.target.value)}
+                    isInvalid={!!errors.name}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.name}
+                </Form.Control.Feedback>
                 <Row>
                     <Col id='col1'>
                         <Form.Group size="sm" className="mb-3" controlId='minPrice'>
@@ -368,14 +445,21 @@ export default function CreateGenerationComponent() {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Form.Select value={selectedCategory} onChange={handleCategoryChange} className="createGeneration-select" aria-label="Default select example">
+                <Form.Select isInvalid={!!errors.selectedCategory} value={selectedCategory} onChange={handleCategoryChange} className="createGeneration-select" aria-label="Default select example">
                     <option value={0}>Wybierz kateogrię</option>
                     {categories.length > 0 ? categories.map(category => (
                         <option key={generateKey(category.id, category.name)} value={category.id}>{category.name}</option>
                     )) : null}
                 </Form.Select>
-                <Form.Group>
-                    <p>Nadwozie</p>
+                <Form.Control.Feedback type="invalid">
+                    {errors.selectedCategory}
+                </Form.Control.Feedback>
+                <Form.Group controlId="formFile" className="mb-3">
+                    <p id="image">Wyślij zdjęcie</p>
+                    <Form.Control type="file"  onChange={(e)=>setImage(e.target.files[0])}/>
+                </Form.Group>
+                <Form.Group className="createGeneration-bodyType">
+                    <p id="bodyType">Nadwozie</p>
                     <Form.Control
                         id="generationName"
                         value={bodyForm.segment}
@@ -388,14 +472,22 @@ export default function CreateGenerationComponent() {
                         value={bodyForm.numberOfDoors}
                         placeholder='Liczba drzwi'
                         onChange={(e) => setBodyField('numberOfDoors', e.target.value)}
+                        isInvalid={!!errors.numberOfDoors}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.numberOfDoors}
+                    </Form.Control.Feedback>
                     <Form.Control
                         id="generationName"
                         type='number'
                         value={bodyForm.numberOfSeats}
-                        placeholder='Liczba drzwi'
+                        placeholder='Liczba miejsc'
                         onChange={(e) => setBodyField('numberOfSeats', e.target.value)}
+                        isInvalid={!!errors.numberOfSeats}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.numberOfSeats}
+                    </Form.Control.Feedback>
                     <Form.Control
                         id="generationName"
                         type='number'
@@ -418,8 +510,9 @@ export default function CreateGenerationComponent() {
                                         {bodyTypes != null ? bodyTypes.map(bodyType => (
                                             <tr key={generateKey(bodyType.id, bodyType.name)}>
                                                 <td>
-                                                    <FormCheck type="checkbox"
+                                                    <FormCheck type="radio"
                                                         id={bodyType.id}
+                                                        name="jakas"
                                                         value={bodyType.id}
                                                         onChange={handleBodyTypeChange}></FormCheck>
                                                 </td>
@@ -432,8 +525,8 @@ export default function CreateGenerationComponent() {
                         </Accordion.Item>
                     </Accordion>
                 </Form.Group>
-                <Form.Group className="createGeneration-drivetrain">
-                    <p>Wybierz napęd</p>
+                <Form.Group className="createGeneration-drivetrain" >
+                    <p id="drivetrain">Wybierz napęd</p>
                     {drivetrains != null && drivetrains.map((drivetrain) => (
                         <Form.Check
                             type="checkbox"
@@ -445,151 +538,197 @@ export default function CreateGenerationComponent() {
                         />
 
                     ))}
+
                 </Form.Group>
+                <Form.Control.Feedback type="invalid">
+                    {errors.checkedDrivetrains}
+                </Form.Control.Feedback>
                 <div className="createGeneration-engines">
-                    <Accordion>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>Wybierz silniki</Accordion.Header>
-                            <Accordion.Body>
-                                <Table responsive className="detailsBorder-engines-table">
-                                    <thead>
-                                        <tr>
-                                            <td>Wybierz</td>
-                                            <td>Wersja</td>
-                                            <td>Pojemność</td>
-                                            <td>Moc</td>
-                                            <td>Moment obrotowy</td>
-                                            <td>Paliwo</td>
-                                            <td>Spalanie w mieście</td>
-                                            <td>Spalanie poza miastem</td>
-                                            <td>Ocena</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {engines != null ? engines.map(engine => (
-                                            <tr key={generateKey(engine.id, engine.name)}>
-                                                <td>
-                                                    <FormCheck type="checkbox"
-                                                        id={engine.id}
-                                                        value={engine.id}
-                                                        onChange={handleEnginesChange}></FormCheck>
-                                                </td>
-                                                <td>{engine.version}</td>
-                                                <td>{engine.capacity}</td>
-                                                <td>{engine.horsePower}</td>
-                                                <td>{engine.torque}</td>
-                                                <td>{engine.type}</td>
-                                                <td>{engine.fuelConsumptionCity}</td>
-                                                <td>{engine.fuelConsumptionSuburban}</td>
-                                                <td>{engine.rate ? engine.rate : "TBA"}</td>
-                                            </tr>
-                                        )) : null}
-                                    </tbody>
-                                </Table>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
-                    <CreateEngineModal onEngineCreate={setCreated} />
+                    <Row>
+                        <Col xs={10}>
+                            <Accordion>
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header>Wybierz silniki</Accordion.Header>
+                                    <Accordion.Body>
+                                        <Table responsive className="detailsBorder-engines-table">
+                                            <thead>
+                                                <tr>
+                                                    <td>Wybierz</td>
+                                                    <td>Wersja</td>
+                                                    <td>Pojemność</td>
+                                                    <td>Moc</td>
+                                                    <td>Moment obrotowy</td>
+                                                    <td>Paliwo</td>
+                                                    <td>Spalanie w mieście</td>
+                                                    <td>Spalanie poza miastem</td>
+                                                    <td>Ocena</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {engines != null ? engines.map(engine => (
+                                                    <tr key={generateKey(engine.id, engine.name)}>
+                                                        <td>
+                                                            <FormCheck type="checkbox"
+                                                                id={engine.id}
+                                                                value={engine.id}
+                                                                onChange={handleEnginesChange}
+                                                            />
+                                                        </td>
+                                                        <td>{engine.version}</td>
+                                                        <td>{engine.capacity}</td>
+                                                        <td>{engine.horsePower}</td>
+                                                        <td>{engine.torque}</td>
+                                                        <td>{engine.type}</td>
+                                                        <td>{engine.fuelConsumptionCity}</td>
+                                                        <td>{engine.fuelConsumptionSuburban}</td>
+                                                        <td>{engine.rate ? engine.rate : "TBA"}</td>
+                                                    </tr>
+                                                )) : null}
+                                            </tbody>
+                                        </Table>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Col>
+                        <Col xs={2}>
+                            <CreateEngineModal onEngineCreate={setCreated} />
+                        </Col>
+
+                    </Row>
+
                 </div>
+                <Form.Control.Feedback type="invalid">
+                    {errors.checkedEngines}
+                </Form.Control.Feedback>
                 <div className="createGeneration-gearboxes">
-                    <Accordion>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>Wybierz skrzynie biegów</Accordion.Header>
-                            <Accordion.Body>
-                                <Table responsive className="">
-                                    <thead>
-                                        <tr>
-                                            <td>Wybierz</td>
-                                            <td>Nazwa</td>
-                                            <td>Liczba biegów</td>
-                                            <td>Typ</td>
-                                            <td>Ocena</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {gearboxes != null ? gearboxes.map(gearbox => (
-                                            <tr key={generateKey(gearbox.id, gearbox.name)}>
-                                                <td>
-                                                    <FormCheck type="checkbox"
-                                                        id={gearbox.id}
-                                                        value={gearbox.id}
-                                                        onChange={handleGearboxesChange}></FormCheck>
-                                                </td>
-                                                <td>{gearbox.name}</td>
-                                                <td>{gearbox.numberOfGears}</td>
-                                                <td>{gearbox.typeOfGearbox}</td>
-                                                <td>{gearbox.rate ? gearbox.rate : "TBA"}</td>
-                                            </tr>
-                                        )) : null}
-                                    </tbody>
-                                </Table>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
-                    <CreateGearboxModal onGearboxCreate={setCreated} />
+                    <Row>
+                        <Col xs={10}>
+                            <Accordion>
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header>Wybierz skrzynie biegów</Accordion.Header>
+                                    <Accordion.Body>
+                                        <Table responsive className="">
+                                            <thead>
+                                                <tr>
+                                                    <td>Wybierz</td>
+                                                    <td>Nazwa</td>
+                                                    <td>Liczba biegów</td>
+                                                    <td>Typ</td>
+                                                    <td>Ocena</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {gearboxes != null ? gearboxes.map(gearbox => (
+                                                    <tr key={generateKey(gearbox.id, gearbox.name)}>
+                                                        <td>
+                                                            <FormCheck type="checkbox"
+                                                                id={gearbox.id}
+                                                                value={gearbox.id}
+                                                                onChange={handleGearboxesChange}></FormCheck>
+                                                        </td>
+                                                        <td>{gearbox.name}</td>
+                                                        <td>{gearbox.numberOfGears}</td>
+                                                        <td>{gearbox.typeOfGearbox}</td>
+                                                        <td>{gearbox.rate ? gearbox.rate : "TBA"}</td>
+                                                    </tr>
+                                                )) : null}
+                                            </tbody>
+                                        </Table>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Col>
+                        <Col xs={2}>
+                            <CreateGearboxModal onGearboxCreate={setCreated} />
+                        </Col>
+                    </Row>
                 </div>
-                <Form.Group className="createGeneration-bodyColour">
-                    <Form.Label>Szczegółowe informacje</Form.Label>
-                    <Form.Control value={today ? today : "2000/12/12"} className="createGeneration-productionDate" type="date" onChange={(e) => setField('productionStartDate', e.target.value)} />
-                    <Form.Control value={today ? today : "2000/12/12"} className="createGeneration-productionDate" type="date" onChange={(e) => setField('productionEndDate', e.target.value)} />
-                    <Accordion>
-                        <Accordion.Item eventKey="0">
-                            <Accordion.Header>Wybierz odpowiednie kolory</Accordion.Header>
-                            <Accordion.Body>
-                                <Table responsive >
-                                    <thead>
-                                        <tr>
-                                            <td>Wybierz</td>
-                                            <td>Nazwa</td>
-                                            <td>Kod lakieru</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {bodyColours != null ? bodyColours.map(bodyColour => (
-                                            <tr key={generateKey(bodyColour.id, bodyColour.colour)}>
-                                                <td>
-                                                    <FormCheck type="checkbox"
-                                                        id={bodyColour.id}
-                                                        value={bodyColour.id}
-                                                        onChange={handleBodyColourChange}></FormCheck>
-                                                </td>
-                                                <td>{bodyColour.colour}</td>
-                                                <td>{bodyColour.colourCode}</td>
-                                            </tr>
-                                        )) : null}
-                                    </tbody>
-                                </Table>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
-                    <CreateBodyColourModal onBodyColourCreate={setCreated} />
-                    <p>Wybierz hamulce</p>
-                    {brakes != null && brakes.map((brake) => (
-                        <Form.Check
-                            type="checkbox"
-                            key={brake.id}
-                            id={brake.id}
-                            label={brake.type}
-                            value={brake.id}
-                            onChange={handleBrakeChange}
-                        />
-                    ))}
-                    <CreateBrakeModal onBrakesCreate={setCreated} />
-                    <p>Wybierz zawieszenie</p>
-                    {suspensions != null && suspensions.map((suspension) => (
-                        <Form.Check
-                            type="checkbox"
-                            key={suspension.id}
-                            id={suspension.id}
-                            label={suspension.type}
-                            value={suspension.id}
-                            onChange={handleSuspensionChange}
-                        />
-                    ))}
-                    <CreateSuspensionModal onSuspensionCreate={setCreated} />
+                <Form.Control.Feedback type="invalid">
+                    {errors.checkedGearboxes}
+                </Form.Control.Feedback>
+                <Form.Group className="createGeneration-detailedInfo">
+                    <p id="detailedInfo">Szczegółowe informacje</p>
+                    <Row>
+                        <Col>
+                            <p id="productionDate">Rozpoczęcie produkcji</p>
+                            <Form.Control value={detailedInfoForm.productionStartDate} className="createGeneration-productionDate" type="date" onChange={(e) => setDetailedInfoField('productionStartDate', e.target.value)} />
+                        </Col>
+                        <Col>
+                            <p id="productionDate">Zakończenie produkcji</p>
+                            <Form.Control value={detailedInfoForm.productionEndDate} className="createGeneration-productionDate" type="date" onChange={(e) => setDetailedInfoField('productionEndDate', e.target.value)} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={10}>
+                            <Accordion>
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header>Wybierz odpowiednie kolory</Accordion.Header>
+                                    <Accordion.Body>
+                                        <Table responsive >
+                                            <thead>
+                                                <tr>
+                                                    <td>Wybierz</td>
+                                                    <td>Nazwa</td>
+                                                    <td>Kod lakieru</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {bodyColours != null ? bodyColours.map(bodyColour => (
+                                                    <tr key={generateKey(bodyColour.id, bodyColour.colour)}>
+                                                        <td>
+                                                            <FormCheck type="checkbox"
+                                                                id={bodyColour.id}
+                                                                value={bodyColour.id}
+                                                                onChange={handleBodyColourChange}></FormCheck>
+                                                        </td>
+                                                        <td>{bodyColour.colour}</td>
+                                                        <td>{bodyColour.colourCode}</td>
+                                                    </tr>
+                                                )) : null}
+                                            </tbody>
+                                        </Table>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                        </Col>
+                        <Col xs={2}>
+                            <CreateBodyColourModal onBodyColourCreate={setCreated} />
+                        </Col>
+                    </Row>
+                    <div className="brakes">
+                        <p id="brakes">Wybierz hamulce</p>
+                        {brakes != null && brakes.map((brake) => (
+
+                            <Form.Check
+                                type="checkbox"
+                                key={brake.id}
+                                id={brake.id}
+                                label={brake.type}
+                                value={brake.id}
+                                onChange={handleBrakeChange}
+                            />
+
+                        ))}
+                        <CreateBrakeModal onBrakesCreate={setCreated} />
+                    </div>
+                    <div className="suspension">
+                        <p id="suspension">Wybierz zawieszenie</p>
+                        {suspensions != null && suspensions.map((suspension) => (
+                            <Form.Check
+                                type="checkbox"
+                                key={suspension.id}
+                                id={suspension.id}
+                                label={suspension.type}
+                                value={suspension.id}
+                                onChange={handleSuspensionChange}
+                            />
+                        ))}
+                        <CreateSuspensionModal onSuspensionCreate={setCreated} />
+                    </div>
+
                 </Form.Group>
-                <Form.Group>
-                    <p>Opcjonalne wyposażenie</p>
+                <Form.Group className="createGeneration-optionalEquipment">
+                    <p id="optionalEquipment">Opcjonalne wyposażenie</p>
                     <Form.Check // prettier-ignore
                         type="switch"
                         id="custom-switch1"
@@ -635,7 +774,7 @@ export default function CreateGenerationComponent() {
                     />
                 </Form.Group>
             </div>
-            <Button onClick={handleGenerationCreate}>Utwórz nowy samochód</Button>
+            <Button variant="primary" id="addGeneration" onClick={handleGenerationCreate}>Utwórz nowy samochód</Button>
         </div>
     )
 }

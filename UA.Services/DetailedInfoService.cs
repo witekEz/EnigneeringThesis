@@ -35,6 +35,7 @@ namespace UA.Services
 
             var detailedInfo = _mapper.Map<DetailedInfo>(dto);
             detailedInfo.GenerationId= generationId;
+
             if (dto.BodyColours!=null)
             {
                 var bodyColoursEntity = _dbContext.BodyColours.Where(data => dto.BodyColours.Contains(data.Id)).ToList();
@@ -50,6 +51,7 @@ namespace UA.Services
                 var suspensionsEntity = _dbContext.Suspensions.Where(data => dto.Suspensions.Contains(data.Id)).ToList();
                 detailedInfo.Suspensions = suspensionsEntity;
             }
+
             _dbContext.DeatiledInfos.Add(detailedInfo);
             _dbContext.SaveChanges();
             return detailedInfo.Id;

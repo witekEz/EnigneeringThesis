@@ -16,7 +16,7 @@ namespace UA.Model.Entities
         public virtual BodyType ?BodyType { get; set; }
         //Foreign Key
         public int GenerationId { get; set; }
-        public int BodyTypeId { get; set; }
+        public int ?BodyTypeId { get; set; }
 
     }
 }

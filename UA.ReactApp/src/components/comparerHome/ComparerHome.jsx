@@ -54,18 +54,6 @@ export default function ComparerHome({ fetchedCars, errorWhileFetch, onChangeFil
                 </Col>
             </Row>
 
-
-            <div>
-                {errorWhileFetch && <p>Error: {error}</p>}
-                {cars && (
-                    <div>
-                        <h1>Data from API:</h1>
-                        <pre>{JSON.stringify(cars, null, 2)}</pre>
-                    </div>
-                )}
-            </div>
-
-
         </>
     )
 }

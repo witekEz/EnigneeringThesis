@@ -12,6 +12,7 @@ using UA.Model.Entities.Rate;
 using UA.Model.DTOs.Create.Rate;
 using UA.Model.DTOs.Read.Rate;
 using UA.Model.Entities.Authentication;
+using SixLabors.ImageSharp.ColorSpaces.Companding;
 
 namespace UA.Services.Mapper
 {
@@ -51,11 +52,13 @@ namespace UA.Services.Mapper
                 .ForMember(m => m.Drivetrains, c => c.Ignore())
                 .ForMember(m => m.Engines, c => c.Ignore())
                 .ForMember(m => m.Bodies, c => c.Ignore())
-                .ForMember(m => m.Gearboxes, c => c.Ignore());
-            //.ForMember(m=>m.Engines, e=>e.MapFrom(src=>src.Engines.Where(e=>e.));
+                .ForMember(m => m.Gearboxes, c => c.Ignore())
+                .ForMember(m => m.Bodies, c => c.Ignore())
+            .ForMember(dest => dest.Bodies, opt => opt.MapFrom(src => new List<CreateBodyDTO> { src.Body } ));
 
             CreateMap<CreateBodyColourDTO, BodyColour>();
             CreateMap<CreateBodyDTO, Body>();
+                //.ForMember(m => m.BodyTypeId, opt => opt.MapFrom(src => src.BodyType));
             CreateMap<CreateBodyTypeDTO, BodyType>();
             CreateMap<CreateBrakeDTO, Brake>();
             CreateMap<CreateBrandDTO, Brand>();

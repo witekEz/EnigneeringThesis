@@ -18,10 +18,10 @@ export default function Navigation() {
         <>
             <Nav variant="underline justify-content-center" defaultActiveKey="link-comparer" onSelect={changeComponent}>
                 <Nav.Item>
-                    <Nav.Link as={Link} to="/comparerHome" eventKey="link-comparer">Porównywarka</Nav.Link>
+                    <Nav.Link as={Link} to="/comparer/home" eventKey="link-comparer">Porównywarka</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as={Link} to="/auctionsHome" eventKey="link-auctions">Aukcje</Nav.Link>
+                    <Nav.Link disabled as={Link} to="/auctions/home" eventKey="link-auctions">Aukcje</Nav.Link>
                 </Nav.Item>
             </Nav>
         </>

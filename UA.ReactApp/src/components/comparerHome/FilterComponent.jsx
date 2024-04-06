@@ -108,8 +108,6 @@ function FilterComponent({ onChangeFilters }) {
         });
     }
     
-
-
     return (
         <>
             <Form id="filterComponent">

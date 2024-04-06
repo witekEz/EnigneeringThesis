@@ -18,7 +18,7 @@ namespace UA.Model.DTOs.Create
         [Required]
         public int CategoryId { get; set; }
         [Required]
-        public List<int> Bodies { get; set; } = null!;
+        public CreateBodyDTO Body { get; set; } = null!;
         [Required]
         public List<int> Drivetrains { get; set; } = null!;
         [Required]

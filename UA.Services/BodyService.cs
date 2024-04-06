@@ -34,6 +34,11 @@ namespace UA.Services
 
             var body = _mapper.Map<Body>(dto);
             body.GenerationId = generationId;
+            if (dto.BodyTypeId != 0)
+            {
+                var bodyTypeEntity = _dbContext.BodyTypes.FirstOrDefault(bt => bt.Id == dto.BodyTypeId);
+                body.BodyType = bodyTypeEntity;
+            }
             _dbContext.Bodies.Add(body);
             _dbContext.SaveChanges();
             return body.Id;

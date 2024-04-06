@@ -9,7 +9,7 @@ export default function ComparerDetails({ generation }) {
     return (
         <Row id="comparer-details-main">
             <Col  xxl={2} xl={2} lg={0} md={0} xs={0} className="bg-body-tertiary comparer-details-col-left">
-                <p>TEKST1</p>
+                
             </Col>
             <Col xxl={8} xl={8} lg={12} md={12} xs={12} className="comparer-details-col-main">
                 <Generation generation={generation}></Generation>

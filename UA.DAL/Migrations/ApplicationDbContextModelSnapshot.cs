@@ -176,7 +176,7 @@ namespace UA.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BodyTypeId")
+                    b.Property<int?>("BodyTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("GenerationId")
@@ -858,9 +858,7 @@ namespace UA.DAL.Migrations
                 {
                     b.HasOne("UA.Model.Entities.BodyType", "BodyType")
                         .WithMany("Bodies")
-                        .HasForeignKey("BodyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BodyTypeId");
 
                     b.HasOne("UA.Model.Entities.Generation", "Generation")
                         .WithMany("Bodies")

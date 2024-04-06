@@ -56,6 +56,8 @@ namespace UA.Services
                .Include(b => b.AvgRateGeneration)
                .Include(b => b.Category)
                .Include(b => b.Bodies)
+               .Include(b => b.Bodies)
+                .ThenInclude(bt=>bt.BodyType)
                .Include(b => b.Drivetrains)
                .Include(b => b.Engines)
                .Include(b => b.Gearboxes)
@@ -115,12 +117,8 @@ namespace UA.Services
                 throw new NotFoundException("Model not found");
 
             var generationEntity = _mapper.Map<Generation>(dto);
+
             generationEntity.Model = model;
-            if(dto.Bodies.Count > 0)
-            {
-                var bodiesEntity=_dbContext.Bodies.Where(data=>dto.Bodies.Contains(data.Id)).ToList();
-                generationEntity.Bodies = bodiesEntity;
-            }
             if (dto.Drivetrains.Count > 0)
             {
                 var drivetrainsEntity = _dbContext.Drivetrains.Where(data => dto.Drivetrains.Contains(data.Id)).ToList();
@@ -136,7 +134,35 @@ namespace UA.Services
                 var gearboxesEntity = _dbContext.Gearboxes.Where(data => dto.Gearboxes.Contains(data.Id)).ToList();
                 generationEntity.Gearboxes = gearboxesEntity;
             }
-
+            if(dto.DetailedInfo!=null  )
+            {
+                if(dto.DetailedInfo.Suspensions != null && dto.DetailedInfo.Suspensions.Count > 0)
+                {
+                    var suspensionsEntity = _dbContext.Suspensions.Where(data => dto.DetailedInfo.Suspensions.Contains(data.Id)).ToList();
+                    if (generationEntity.DetailedInfo!=null)
+                    {
+                        generationEntity.DetailedInfo.Suspensions = suspensionsEntity;
+                    }          
+                }
+                if (dto.DetailedInfo.BodyColours != null && dto.DetailedInfo.BodyColours.Count > 0)
+                {
+                    var bodyColoursEntity = _dbContext.BodyColours.Where(data => dto.DetailedInfo.BodyColours.Contains(data.Id)).ToList();
+                    if (generationEntity.DetailedInfo != null)
+                    {
+                        generationEntity.DetailedInfo.BodyColours = bodyColoursEntity;
+                    }
+                }
+                if (dto.DetailedInfo.Brakes != null && dto.DetailedInfo.Brakes.Count > 0)
+                {
+                    var brakesEntity = _dbContext.Brakes.Where(data => dto.DetailedInfo.Brakes.Contains(data.Id)).ToList();
+                    if (generationEntity.DetailedInfo != null)
+                    {
+                        generationEntity.DetailedInfo.Brakes = brakesEntity;
+                    }
+                }
+            }
+            
+            
             _dbContext.Generations.Add(generationEntity);
             _dbContext.SaveChanges();
             return generationEntity.Id;

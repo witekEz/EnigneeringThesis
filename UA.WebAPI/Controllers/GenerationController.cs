@@ -30,15 +30,15 @@ namespace UA.WebAPI.Controllers
             return NoContent();
         }
 
-        //[Route("api/brand/{brandId}/model/{modelId}/generation")]
+        
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Create([FromRoute]int modelId,[FromBody]CreateGenerationDTO dto)
         {
             var id=_generationService.Create(modelId,dto);
-            return Created($"api/brand/model/{modelId}/generation/{id}", null);
+            return Ok(id);
         }
-        //[Route("api/model/{modelId}/generation")]
+        
         [HttpGet]
         [AllowAnonymous]
         public ActionResult<List<GenerationDTO>> Get([FromRoute] int modelId)
@@ -46,7 +46,7 @@ namespace UA.WebAPI.Controllers
             var generationsDTOs = _generationService.GetAll(modelId);
             return Ok(generationsDTOs);
         }
-        //[Route("api/model/{modelId}/generation")]
+        
         [HttpGet("{id}")]
         [AllowAnonymous]
         public ActionResult<GenerationDTO> Get([FromRoute] int modelId,[FromRoute]int id)
@@ -55,7 +55,7 @@ namespace UA.WebAPI.Controllers
 
             return Ok(generation);
         }
-        //[Route("api/model/{modelId}/generation")]
+        
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Update([FromBody]UpdateGenerationDTO dto, [FromRoute]int id)

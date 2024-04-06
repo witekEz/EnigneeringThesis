@@ -399,15 +399,13 @@ input::-webkit-inner-spin-button {
   
 }
 
-
-
 #authenticateComponent #authenticateLabel{
   padding-left: 1rem;
   text-align: center;
   padding: 1rem;
   margin-bottom: 0px;
   border: 1px;
-  border-style:double;
+  border-style:solid;
   border-radius: 1rem;
   margin: 1rem;
   font-size: 25px;
@@ -468,4 +466,116 @@ input::-webkit-inner-spin-button {
 .createGeneration-main #generationName{
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+.createGeneration-main .createGeneration-bodyType{
+  border: 2px;
+  border-style:solid;
+  border-radius: 1rem;
+  padding: 3%;
+}
+.createGeneration-main .createGeneration-bodyType #bodyType{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+}
+.createGeneration-main .createGeneration-drivetrain{
+  border: 2px;
+  border-style:solid;
+  border-radius: 1rem;
+  padding: 3%;
+  margin-top: 1rem;
+}
+.createGeneration-main .createGeneration-drivetrain #drivetrain{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+  margin-top: 0%;
+}
+.createGeneration-main .createGeneration-engines #addButton{
+  margin-bottom: 0%;
+  margin-top: 0%;
+  padding: 1rem;
+  width: 100%;
+}
+.createGeneration-main .createGeneration-gearboxes #addButton{
+  margin-bottom: 0%;
+  margin-top: 0%;
+  padding: 1.0rem;
+  width: 100%;
+}
+.createGeneration-main .createGeneration-detailedInfo{
+  border: 2px;
+  border-style:solid;
+  border-radius: 1rem;
+  padding: 3%;
+}
+.createGeneration-main .createGeneration-detailedInfo #detailedInfo{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+  margin-top: 0%;
+}
+.createGeneration-main .createGeneration-detailedInfo #productionDate{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+  margin-top: 0%;
+}
+.createGeneration-main .createGeneration-detailedInfo #addButton{
+  margin-bottom: 0%;
+  margin-top: 0%;
+  padding: 1.0rem;
+  width: 100%;
+}
+.createGeneration-main .createGeneration-detailedInfo .brakes{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 2px;
+  border-style:solid;
+  border-radius: 1rem;
+  padding: 2%;
+}
+.createGeneration-main .createGeneration-detailedInfo .brakes #brakes{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+  margin-top: 0%;
+}
+.createGeneration-main .createGeneration-detailedInfo .suspension{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 2px;
+  border-style:solid;
+  border-radius: 1rem;
+  padding: 2%;
+}
+.createGeneration-main .createGeneration-detailedInfo .suspension #suspension{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+  margin-top: 0%;
+}
+.createGeneration-main .createGeneration-optionalEquipment{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 2px;
+  border-style:solid;
+  border-radius: 1rem;
+  padding: 2%;
+}
+.createGeneration-main .createGeneration-optionalEquipment #optionalEquipment{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+  margin-top: 0%;
+}
+.createGeneration-main #addGeneration{
+  margin-bottom: 1rem;
+  width: 100%;
+}
+.createGeneration-main #image{
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-bottom: 1px solid black;
+  margin-top: 0%;
 }

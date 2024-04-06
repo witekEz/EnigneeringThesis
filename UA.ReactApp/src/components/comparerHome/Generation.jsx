@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Comments from "./Forum/CommentsComponent";
+import UpdateGenerationModal from "./Modals/UpdateGenerationModal";
 
 const BASE_URL = 'https://localhost:7092/api';
 
@@ -40,6 +41,7 @@ export default function Generation({ generation }) {
 
     return (
         <>
+            
             <Row className="container-fluid mainRow">
                 <Col xxl={6} xl={6} lg={6} md={6} xs={12} id="imageCol">
                     <ImageComponent generation={generation} />
@@ -203,7 +205,7 @@ export default function Generation({ generation }) {
                         <Accordion>
                             {generation.bodies.map(body => (
                                 <Accordion.Item eventKey={body.id} key={generateKey(body.id, body.name)}>
-                                    <Accordion.Header>{body.bodyType.name}</Accordion.Header>
+                                    <Accordion.Header>{body.bodyType!=null?body.bodyType.name:"Brak kategorii"}</Accordion.Header>
                                     <Accordion.Body>
                                         Segment: {body.segment}<br></br>
                                         Liczba drzwi: {body.numberOfDoors}<br></br>
