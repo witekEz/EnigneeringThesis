@@ -30,8 +30,10 @@ namespace UA.Services.Mapper
             CreateMap<Brand,BrandDTO >();
             CreateMap<DetailedInfo,DetailedInfoDTO>();
             CreateMap<Drivetrain,DrivetrainDTO>();
-            CreateMap<Engine,EngineDTO>();
-            CreateMap<Gearbox,GearboxDTO>();
+            CreateMap<Engine,EngineDTO>()
+                .ForMember(des => des.Rate, opt => opt.MapFrom(src => src.AvgRateEngine));
+            CreateMap<Gearbox,GearboxDTO>()
+                .ForMember(des => des.Rate, opt => opt.MapFrom(src => src.AvgRateGearbox));
             CreateMap<Model.Entities.Model,ModelDTO >();
             CreateMap<OptionalEquipment,OptionalEquipmentDTO>();
             CreateMap<Suspension,SuspensionDTO>();
@@ -39,6 +41,8 @@ namespace UA.Services.Mapper
             CreateMap<Comment, CommentDTO>();
             CreateMap<CommentReply, CommentReplyDTO>();
             CreateMap<User, UserDTO>();
+            CreateMap<User, UserDetailsDTO>();
+            CreateMap<Role, RoleDTO>();
 
             CreateMap<AvgRateGeneration, AvgRateGenerationDTO>()
                 .ForMember(des => des.Value, opt => opt.MapFrom(src => src.AverageRate));

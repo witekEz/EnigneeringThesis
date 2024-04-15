@@ -77,6 +77,7 @@ namespace UA.Services
 
             var rateEngine = _mapper.Map<RateEngine>(dto);
             rateEngine.UserID = userId;
+            rateEngine.EngineId = engineId;
             _dbContext.RateEngines.Add(rateEngine);
             _dbContext.SaveChanges();
             return rateEngine.Id;

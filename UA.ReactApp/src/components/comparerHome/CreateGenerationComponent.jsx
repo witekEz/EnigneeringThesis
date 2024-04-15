@@ -514,7 +514,8 @@ export default function CreateGenerationComponent() {
                                                         id={bodyType.id}
                                                         name="jakas"
                                                         value={bodyType.id}
-                                                        onChange={handleBodyTypeChange}></FormCheck>
+                                                        onChange={handleBodyTypeChange}
+                                                    />
                                                 </td>
                                                 <td>{bodyType.name}</td>
                                             </tr>

@@ -77,6 +77,7 @@ namespace UA.Services
 
             var rateGearbox = _mapper.Map<RateGearbox>(dto);
             rateGearbox.UserID = userId;
+            rateGearbox.GearboxId = gearboxId;
             _dbContext.RateGearboxes.Add(rateGearbox);
             _dbContext.SaveChanges();
             return rateGearbox.Id;

@@ -11,6 +11,6 @@ namespace UA.Services.Interfaces
     public interface IHomeService
     {
         PageResult<GenerationDTO> GetAll(GenerationQuery query);
-        GenerationDTO GetById(int id);
+        Task<GenerationDTO> GetById(int id);
     }
 }

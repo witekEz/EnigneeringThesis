@@ -63,8 +63,8 @@ namespace UA.Services
             var suspension = _dbContext.Suspensions.FirstOrDefault(o => o.Id == id);
             if (suspension == null)
                 throw new NotFoundException("Suspension not found");
-
-            suspension.Type=dto.Type;
+            if(dto.Type!=null)
+                suspension.Type=dto.Type;
             _dbContext.SaveChanges();
         }
     }

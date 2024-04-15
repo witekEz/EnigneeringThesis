@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Comments from "./Forum/CommentsComponent";
-import UpdateGenerationModal from "./Modals/UpdateGenerationModal";
+import { toast } from 'react-toastify';
 
 const BASE_URL = 'https://localhost:7092/api';
 
@@ -20,7 +20,11 @@ export default function Generation({ generation }) {
     const id = generation.id;
     const { isLoggedIn } = useSelector(state => state.authenticate)
 
+    const [engineId,setEngineId]=useState(0);
+    const [gearboxId,setGearboxId]=useState(0);
     const [rating, setRating] = useState({})
+    const [engineRating, setEngineRating] = useState({})
+    const [gearboxRating, setGearboxRating] = useState({})
     const [error, setError] = useState({});
     let engineTypes = [];
     engineTypes = generation.engines.map(engine => (
@@ -30,18 +34,32 @@ export default function Generation({ generation }) {
 
     const handleRate = async (rate) => {
         try {
-            const response = await axios.post(`${BASE_URL}/generation/${id}/rate`, { value: rate });
-            console.log(response);
+            await axios.post(`${BASE_URL}/generation/${id}/rate`, { value: rate });
             setRating(rate);
+            
         } catch (error) {
             setError(error.message);
-            console.log(error);
         }
     };
-
+    const handleEngineRate = async (rate,engineId) => {
+        try {
+            await axios.post(`${BASE_URL}/engine/${engineId}/rate`, { value: rate });
+            toast.info("Oceniłeś silnik")
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+    const handleGearboxRate = async (rate,gearboxId) => {
+        try {
+            await axios.post(`${BASE_URL}/gearbox/${gearboxId}/rate`, { value: rate });
+            toast.info("Oceniłeś skrzynię biegów")
+        } catch (error) {
+            setError(error.message);
+        }
+    };
     return (
         <>
-            
+
             <Row className="container-fluid mainRow">
                 <Col xxl={6} xl={6} lg={6} md={6} xs={12} id="imageCol">
                     <ImageComponent generation={generation} />
@@ -53,17 +71,17 @@ export default function Generation({ generation }) {
                         <Col xs={4} id="generationName">{generation.name}</Col>
                     </Row>
                     <Row id="rating-details">
-                        <Col id="rating-details-col1" xs={5} md={5}>
+                        <Col id="rating-details-col1" xs={6} md={6}>
                             <p>Wystaw ocenę:</p>
                         </Col>
-                        <Col id="rating-details-col2" xs={7} md={7}>
+                        <Col id="rating-details-col2" xs={6} md={6}>
                             {isLoggedIn ? <Rating
-                                style={{ maxWidth: 300 }}
+                                style={{ maxWidth: 250 }}
                                 value={rating}
                                 onChange={handleRate}
 
                             /> : <Rating
-                                style={{ maxWidth: 300 }}
+                                style={{ maxWidth: 250 }}
                                 value={rating}
                                 onChange={handleRate}
                                 isDisabled={true}
@@ -74,12 +92,12 @@ export default function Generation({ generation }) {
                         <p id="averageRate">Średnia ocena: {generation.rate != null ? generation.rate.value : "TBA"}</p>
                         <p id="numberOfRates">Liczba ocen użytkowników: {generation.rate != null ? generation.rate.numberOfRates : "TBA"}</p>
                         <Row className="nazwakurwaten">
-                            <Col>
+                            <Col xs={6} md={6}>
                                 <Alert variant="danger" className="alert1">
                                     <p className="price">Cena min:{generation.minPrice != null ? generation.minPrice : "TBA"}</p>
                                 </Alert>
                             </Col>
-                            <Col>
+                            <Col xs={6} md={6}>
                                 <Alert variant="success" className="alert2">
                                     <p className="price">Cena max:{generation.maxPrice != null ? generation.maxPrice : "TBA"}</p>
                                 </Alert>
@@ -100,7 +118,6 @@ export default function Generation({ generation }) {
                             <Table responsive className="detailsBorder-engines-table">
                                 <thead>
                                     <tr>
-                                        <td>ID</td>
                                         <td>Wersja</td>
                                         <td>Pojemność</td>
                                         <td>Moc</td>
@@ -109,13 +126,13 @@ export default function Generation({ generation }) {
                                         <td>Spalanie w mieście</td>
                                         <td>Spalanie poza miastem</td>
                                         <td>Ocena</td>
+                                        <td>Wystaw ocenę</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {generation.engines.map(engine => (
                                         engine.type == type ?
                                             <tr key={generateKey(engine.id, engine.name)}>
-                                                <td>{engine.id}</td>
                                                 <td>{engine.version}</td>
                                                 <td>{engine.capacity}</td>
                                                 <td>{engine.horsePower}</td>
@@ -123,7 +140,21 @@ export default function Generation({ generation }) {
                                                 <td>{engine.type}</td>
                                                 <td>{engine.fuelConsumptionCity}</td>
                                                 <td>{engine.fuelConsumptionSuburban}</td>
-                                                <td>{engine.rate ? engine.rate : "TBA"}</td>
+                                                <td>{engine.rate ? engine.rate.value : "TBA"}</td>
+                                                <td>
+                                                    <div className="row-container">
+                                                        {isLoggedIn ? <Rating
+                                                        style={{ maxWidth: 120 }}
+                                                        value={engineRating}
+                                                        onChange={(e)=>handleEngineRate(e,engine.id)}
+
+                                                    /> : <Rating
+                                                        style={{ maxWidth: 120 }}
+                                                        value={engineRating}
+                                                        isDisabled={true}
+                                                    />}
+                                                    </div>
+                                                </td>
                                             </tr> : null
                                     ))}
                                 </tbody>
@@ -138,22 +169,33 @@ export default function Generation({ generation }) {
                         <Table responsive className="detailsBorder-gearboxes-table">
                             <thead>
                                 <tr>
-                                    <td>ID</td>
                                     <td>Nazwa</td>
                                     <td>Liczba biegów</td>
                                     <td>Typ</td>
                                     <td>Ocena</td>
+                                    <td>Wystaw ocenę</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 {generation.gearboxes.map(gearbox => (
-                                    <tr key={generateKey(gearbox.id, gearbox.name)}>
-                                        <td>{gearbox.id}</td>
-                                        <td>{gearbox.name}</td>
-                                        <td>{gearbox.numberOfGears}</td>
-                                        <td>{gearbox.type}</td>
-                                        <td>{gearbox.rate ? gearbox.rate : "TBA"}</td>
-                                    </tr>
+                                    gearbox.typeOfGearbox == "Manual" ?
+                                        <tr key={generateKey(gearbox.id, gearbox.name)}>
+                                            <td>{gearbox.name}</td>
+                                            <td>{gearbox.numberOfGears}</td>
+                                            <td>Manualna</td>
+                                            <td>{gearbox.rate ? gearbox.rate.value : "TBA"}</td>
+                                            <td><div className="row-container">{isLoggedIn ? <Rating
+                                                style={{ maxWidth: 120 }}
+                                                value={gearboxRating}
+                                                onChange={(e)=>handleGearboxRate(e,gearbox.id)}
+                                            /> : <Rating
+                                                style={{ maxWidth: 120 }}
+                                                value={gearboxRating}
+                                                isDisabled={true}
+                                            />}
+                                            </div>
+                                            </td>
+                                        </tr> : null
                                 ))}
                             </tbody>
                         </Table>
@@ -163,22 +205,35 @@ export default function Generation({ generation }) {
                         <Table responsive className="detailsBorder-gearboxes-table">
                             <thead>
                                 <tr>
-                                    <td>ID</td>
                                     <td>Nazwa</td>
                                     <td>Liczba biegów</td>
                                     <td>Typ</td>
                                     <td>Ocena</td>
+                                    <td>Wystaw ocenę</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 {generation.gearboxes.map(gearbox => (
-                                    gearbox.typeOfGearbox == 1 ?
+                                    gearbox.typeOfGearbox == "Automatic" ?
                                         <tr key={generateKey(gearbox.id, gearbox.name)}>
-                                            <td>{gearbox.id}</td>
                                             <td>{gearbox.name}</td>
                                             <td>{gearbox.numberOfGears}</td>
                                             <td>Autmatyczna</td>
-                                            <td>{gearbox.rate ? gearbox.rate : "TBA"}</td>
+                                            <td>{gearbox.rate ? gearbox.rate.value : "TBA"}</td>
+                                            <td>
+                                                <div className="row-container">{isLoggedIn ? <Rating
+                                                    style={{ maxWidth: 120 }}
+                                                    value={gearboxRating}
+                                                    onChange={(e)=>handleGearboxRate(e,gearbox.id)}
+
+
+                                                /> : <Rating
+                                                    style={{ maxWidth: 120 }}
+                                                    value={gearboxRating}
+                                                    isDisabled={true}
+                                                />}
+                                                </div>
+                                            </td>
                                         </tr> : null
                                 ))}
                             </tbody>
@@ -205,7 +260,7 @@ export default function Generation({ generation }) {
                         <Accordion>
                             {generation.bodies.map(body => (
                                 <Accordion.Item eventKey={body.id} key={generateKey(body.id, body.name)}>
-                                    <Accordion.Header>{body.bodyType!=null?body.bodyType.name:"Brak kategorii"}</Accordion.Header>
+                                    <Accordion.Header>{body.bodyType != null ? body.bodyType.name : "Brak kategorii"}</Accordion.Header>
                                     <Accordion.Body>
                                         Segment: {body.segment}<br></br>
                                         Liczba drzwi: {body.numberOfDoors}<br></br>
@@ -259,7 +314,7 @@ export default function Generation({ generation }) {
             </Col>
             <Row>
                 <Col className="buttonBackEdit">
-                    <Button className="sticky-top" variant="primary" size="lg" as={Link} to={'/comparer/home'}>Cofnij</Button>
+                    <Button className="" variant="primary" size="lg" as={Link} to={'/comparer/home'}>Cofnij</Button>
                 </Col>
             </Row>
             <Row className="">

@@ -23,9 +23,9 @@ namespace UA.WebAPI.Controllers
             return Ok(generations);
         }
         [HttpGet("{id}")]
-        public ActionResult<GenerationDTO> Get(int id)
+        public async Task<ActionResult<GenerationDTO>> Get(int id)
         {
-            var generation = _homeService.GetById(id);
+            var generation = await _homeService.GetById(id);    
             return Ok(generation);
         }
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -45,7 +46,7 @@ namespace UA.Services
             var queryBase = _dbContext
                 .Generations
                 .Include(b => b.GenerationImages)
-                .Include(b=>b.AvgRateGeneration)
+                .Include(b => b.AvgRateGeneration)
                 .Include(b => b.Model)
                 .Include(b => b.Bodies)
                 .ThenInclude(b => b.BodyType)
@@ -119,19 +120,22 @@ namespace UA.Services
 
         }
 
-        public GenerationDTO GetById(int id)
+        public async Task<GenerationDTO> GetById(int id)
         {
-            var generation=_dbContext
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            var generation = await _dbContext
                 .Generations
-                .Include(b => b.GenerationImages)
+                .Where(g => g.Id == id)
                 .Include(b => b.AvgRateGeneration)
                 .Include(b => b.Bodies)
-                .ThenInclude(b=>b.BodyType)
-                .Include(b=>b.Category)
-                .Include(b=>b.GenerationImages)
+                    .ThenInclude(b => b.BodyType)
+                .Include(b => b.Category)
+                .Include(b => b.GenerationImages)
                 .Include(b => b.Drivetrains)
                 .Include(b => b.Engines)
+                    .ThenInclude(r => r.AvgRateEngine)
                 .Include(b => b.Gearboxes)
+                    .ThenInclude(r => r.AvgRateGearbox)
                 .Include(b => b.DetailedInfo)
                 .Include(b => b.DetailedInfo.Suspensions)
                 .Include(b => b.DetailedInfo.BodyColours)
@@ -139,12 +143,18 @@ namespace UA.Services
                 .Include(b => b.OptionalEquipment)
                 .Include(b => b.Model)
                 .Include(b => b.Model.Brand)
-                .FirstOrDefault(g=> g.Id == id);
+                .FirstOrDefaultAsync();
+   
+
+            stopwatch.Stop();
+            long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+
+            Console.WriteLine($"Time taken: {elapsedMilliseconds} milliseconds");
             if (generation is null)
             {
                 throw new NotFoundException("Generation not found");
             }
-            var generationDTO=_mapper.Map<GenerationDTO>(generation);
+            var generationDTO = _mapper.Map<GenerationDTO>(generation);
             generationDTO.Images = new List<GenerationImageDTO>() { };
             if (generation.GenerationImages != null)
             {
@@ -158,6 +168,7 @@ namespace UA.Services
                     generationDTO.Images.Add(imageDTO);
                 }
             }
+            
             return generationDTO;
         }
         private byte[] GetImage(Guid name)

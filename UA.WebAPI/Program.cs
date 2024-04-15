@@ -91,6 +91,7 @@ try
     builder.Services.AddScoped<IRateGearboxService,RateGearboxService>();
     builder.Services.AddScoped<ICommentService, CommentService>();
     builder.Services.AddScoped<ICommentReplyService, CommentReplyService>();
+    builder.Services.AddScoped<IUserService, UserService>();
 
     //Validator
     builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

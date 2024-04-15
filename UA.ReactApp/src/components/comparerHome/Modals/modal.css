@@ -1,0 +1,54 @@
+.modal-width {
+    width: 90%;
+    min-width: 70%;
+}
+.images{
+    border: 2px;
+    border-style: solid;
+    border-radius: 1rem;
+    color: black;
+
+    margin: 0.1rem;
+}
+.thead {
+    border: 2px;
+    border-style: double;
+    border-radius: 1rem;
+    color: black;
+    height: 60%;
+    padding: 1rem;
+    text-align: left;
+    margin: 0.1rem;
+}
+.tbody {
+    border: 2px;
+    border-style: double;
+    border-radius: 1rem;
+    color: black;
+    height: 60%;
+    padding: 1rem;
+    text-align: left;
+    margin: 0.1rem;
+}
+.thead p{
+   margin: 0.3rem;
+   
+}
+.thead #dark{
+    
+    background-color: darkgrey;
+ }
+.tbody p{
+    margin: 0.3rem;
+    
+}
+.tbody #dark{
+    
+    background-color: darkgrey;
+ }
+ #drivetrains{
+    margin-left: 0%;
+ }
+ #bodyTypes{
+    margin-left: 0%;
+ }

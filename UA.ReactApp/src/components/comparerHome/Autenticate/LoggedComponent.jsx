@@ -57,7 +57,7 @@ export default function LoggedComponent({ generation }) {
                 }
             </Row>
             <Row>
-                {role == "Admin" ? <Button variant="primary" className="loggedButtons">
+                {role == "Admin" ? <Button as={Link} to={'/comparer/settings'} variant="primary" className="loggedButtons">
                     Ustawienia
                 </Button> : <Button variant="primary" disabled className="loggedButtons">
                     Ustawienia
