@@ -125,8 +125,7 @@ namespace UA.Services
             Stopwatch stopwatch = Stopwatch.StartNew();
             var generation = await _dbContext
                 .Generations
-                .Where(g => g.Id == id)
-                .Include(b => b.AvgRateGeneration)
+                /*.Include(b => b.AvgRateGeneration)
                 .Include(b => b.Bodies)
                     .ThenInclude(b => b.BodyType)
                 .Include(b => b.Category)
@@ -143,9 +142,8 @@ namespace UA.Services
                 .Include(b => b.OptionalEquipment)
                 .Include(b => b.Model)
                 .Include(b => b.Model.Brand)
-                .FirstOrDefaultAsync();
-   
-
+                .SingleAsync(i=>i.Id==id);*/
+                .FirstOrDefaultAsync(gener => gener.Id == id);
             stopwatch.Stop();
             long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
 

@@ -32,7 +32,7 @@ namespace UA.WebAPI.Controllers
             return Ok(suspension);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody] CreateSuspensionDTO suspensionDTO)
         {
             var suspensionId = _suspensionService.Create(suspensionDTO);

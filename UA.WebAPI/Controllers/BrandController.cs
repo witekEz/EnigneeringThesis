@@ -31,7 +31,7 @@ namespace UA.WebAPI.Controllers
             return Ok(brand);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody]CreateBrandDTO brandDTO)
         {
             var id = _brandService.Create(brandDTO);

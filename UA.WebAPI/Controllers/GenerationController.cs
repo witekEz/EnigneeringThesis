@@ -32,7 +32,7 @@ namespace UA.WebAPI.Controllers
 
         
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromRoute]int modelId,[FromBody]CreateGenerationDTO dto)
         {
             var id=_generationService.Create(modelId,dto);

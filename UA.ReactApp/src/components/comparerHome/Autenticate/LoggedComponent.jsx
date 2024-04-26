@@ -37,22 +37,22 @@ export default function LoggedComponent({ generation }) {
             <p id='authenticateLabel'>Profil</p>
             <Row>
                 <Button as={Link} variant="primary" to={'/comparer/create'} className="loggedButtons">
-                    Dodaj samochód
+                    Dodaj pojazd
                 </Button>
             </Row>
             <Row>
                 {generation != null ? <Button variant="primary" onClick={handleShowUpdateModal} className="loggedButtons">
-                    Zaktualizauj obecny samochód
+                    Zaktualizauj obecny pojazd
                 </Button> : <Button variant="primary" disabled className="loggedButtons">
-                    Zaktualizauj obecny samochód
+                    Zaktualizauj obecny pojazd
                 </Button>
                 }
             </Row>
             <Row>
                 {generation != null && role == "Admin" ? <Button variant="primary" onClick={handleDelete} className="loggedButtons">
-                    Usuń samochód
+                    Usuń pojazd
                 </Button> : <Button variant="primary" disabled className="loggedButtons">
-                    Usuń samochód
+                    Usuń pojazd
                 </Button>
                 }
             </Row>

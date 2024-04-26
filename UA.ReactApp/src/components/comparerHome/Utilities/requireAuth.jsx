@@ -7,7 +7,7 @@ export default function requireAuth(ComposedComponent){
     const {isLoggedIn}=useSelector(state=>state.authenticate);
     let navigate= useNavigate();
     if(!isLoggedIn){
-        navigate('/comparerHome');
+        navigate('/comparer/home');
     }
     render(
         <ComposedComponent />

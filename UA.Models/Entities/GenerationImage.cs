@@ -13,7 +13,7 @@ namespace UA.Model.Entities
         //Property
         public Guid ImageGUID { get; set; }
         //Navigation Property
-        public Generation Generation { get; set; } = null!;
+        public virtual Generation Generation { get; set; } = null!;
         //Foreign Key
         public int GenerationId { get; set; }
     }

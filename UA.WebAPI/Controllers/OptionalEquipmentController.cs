@@ -25,7 +25,7 @@ namespace UA.WebAPI.Controllers
             return Ok(optionalEquipment);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromRoute] int generationId, [FromBody] CreateOptionalEquipmentDTO dto)
         {
             var id = _optionalEquipmentService.Create(generationId, dto);

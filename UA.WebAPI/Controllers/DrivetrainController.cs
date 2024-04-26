@@ -31,7 +31,7 @@ namespace UA.WebAPI.Controllers
             return Ok(drivetrain);
         }
         [HttpPost]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles ="Admin,SuperUser,User")]
         public ActionResult Create([FromBody]CreateDrivetrainDTO dto)
         {
             var id= _drivetrainService.Create(dto);
@@ -45,7 +45,7 @@ namespace UA.WebAPI.Controllers
             return NoContent();
         }
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Update([FromRoute] int id, [FromBody]UpdateDrivetrainDTO dto)
         {
             _drivetrainService.Update(id,dto);

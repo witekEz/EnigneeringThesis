@@ -14,8 +14,8 @@ namespace UA.Model.Entities.Rate
         //Properties
         public double Value { get; set; }
         //Navigaton Property
-        public Generation Generation { get; set; } = null!;
-        public User User { get; set; } = null!;
+        public  virtual Generation Generation { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
         //Foreign Key
         public int GenerationId { get; set; }
         public int UserID { get; set; }

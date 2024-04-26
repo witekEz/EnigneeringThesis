@@ -66,7 +66,7 @@ export default function UpdateGenerationModal({ generationId, modelId, onShowCha
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Zauktualizuj dane samochodu</Modal.Title>
+                    <Modal.Title>Zauktualizuj dane pojazdu</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>

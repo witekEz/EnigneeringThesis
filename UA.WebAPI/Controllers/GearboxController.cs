@@ -31,7 +31,7 @@ namespace UA.WebAPI.Controllers
             return Ok(gearbox);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody] CreateGearboxDTO gearboxDTO)
         {
             var gearboxId = _gearboxService.Create(gearboxDTO);

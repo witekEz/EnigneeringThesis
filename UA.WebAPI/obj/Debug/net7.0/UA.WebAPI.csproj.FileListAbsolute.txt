@@ -188,3 +188,5 @@ C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.WebAPI\obj\Debug\n
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.WebAPI\obj\Debug\net7.0\UA.WebAPI.pdb
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.WebAPI\obj\Debug\net7.0\UA.WebAPI.genruntimeconfig.cache
 C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.WebAPI\obj\Debug\net7.0\ref\UA.WebAPI.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.WebAPI\bin\Debug\net7.0\Castle.Core.dll
+C:\Users\MrRobot\Desktop\Praca Inżynierska\WebApplication\UA.WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Proxies.dll

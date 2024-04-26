@@ -94,26 +94,6 @@ namespace UA.Services.Mapper
             CreateMap<CreateRateEngineDTO, RateEngine>();
             CreateMap<CreateRateGenerationDTO, RateGeneration>();
             CreateMap<CreateRateGearboxDTO, RateGearbox>();
-
-
-            //From UpdateDTO => Entity
-            CreateMap<UpdateGenerationDTO, Generation>();
-            CreateMap<UpdateBodyColourDTO, BodyColour>();
-            CreateMap<UpdateBodyDTO, Body>();
-            CreateMap<UpdateBodyTypeDTO, BodyType>();
-            CreateMap<UpdateBrakeDTO, Brake>();
-            CreateMap<UpdateBrandDTO, Brand>();
-            CreateMap<UpdateDetailedInfoDTO, DetailedInfo>();
-            CreateMap<UpdateDrivetrainDTO, Drivetrain>();
-            CreateMap<UpdateEngineDTO, Engine>();
-            CreateMap<UpdateGearboxDTO, Gearbox>();
-            CreateMap<UpdateModelDTO, Model.Entities.Model>();
-            CreateMap<UpdateOptionalEquipmentDTO, OptionalEquipment>();
-            CreateMap<UpdateSuspensionDTO, Suspension>();
-            CreateMap<UpdateCategoryDTO, Category>();
-           
-
-
         }
     }
 }

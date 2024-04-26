@@ -26,7 +26,7 @@ namespace UA.WebAPI.Controllers
             return Ok(avgRate);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody] CreateRateEngineDTO dto, [FromRoute] int engineId)
         {
             var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);

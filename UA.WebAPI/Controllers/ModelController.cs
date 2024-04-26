@@ -15,7 +15,7 @@ namespace UA.WebAPI.Controllers
         private readonly IModelService _modelService;
         public ModelController(IModelService modelService) { _modelService = modelService; }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromRoute]int brandId, [FromBody]CreateModelDTO modelDTO)
         {
             var modelId=_modelService.Create(brandId, modelDTO);

@@ -31,7 +31,7 @@ namespace UA.WebAPI.Controllers
             return Ok(engine);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody]CreateEngineDTO dto)
         {
             var engineId=_engineService.Create( dto);

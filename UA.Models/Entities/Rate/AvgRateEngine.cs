@@ -14,7 +14,7 @@ namespace UA.Model.Entities.Rate
         public double AverageRate { get; set; } = 0;
         public int NumberOfRates { get; set; }
         //Navigation Property
-        public Engine Engine { get; set; } = null!;
+        public virtual Engine Engine { get; set; } = null!;
         //Foreign Key
         public int EngineId { get; set; }
     }

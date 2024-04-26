@@ -26,7 +26,7 @@ namespace UA.WebAPI.Controllers
             return Ok(detailedInfo);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromRoute]int generationId,[FromBody] CreateDetailedInfoDTO dto)
         {
             var id = _detailedInfoService.Create(generationId,dto);

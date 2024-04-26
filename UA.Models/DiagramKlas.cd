@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="UA.Model.Entities.Authentication.Role" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Authentication\Role.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Authentication.User" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAEIAACAAAAAAEAAAAAAAAAAQAAEAAAAAAAAAAAg=</HashCode>
+      <FileName>Entities\Authentication\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Rate.AvgRateEngine" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAEAAAAAAAAAJAAAAAACAAA=</HashCode>
+      <FileName>Entities\Rate\AvgRateEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Rate.AvgRateGearbox" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Entities\Rate\AvgRateGearbox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Rate.AvgRateGeneration" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACABA=</HashCode>
+      <FileName>Entities\Rate\AvgRateGeneration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Rate.RateEngine" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAAAAAAAgAAAAAAAAAJAAgAAAAAAA=</HashCode>
+      <FileName>Entities\Rate\RateEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Rate.RateGearbox" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAHAAAAAAAAAAAAAgAAAAgAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Entities\Rate\RateGearbox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Rate.RateGeneration" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACDAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAgAAAAABA=</HashCode>
+      <FileName>Entities\Rate\RateGeneration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Body" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CADCAEAAAAAAAAAAAAEAAAAAIAAAAAAAAIAAAAAAABA=</HashCode>
+      <FileName>Entities\Body.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.BodyColour" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAAAAIAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Entities\BodyColour.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.BodyType" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\BodyType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Brake" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Entities\Brake.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Brand" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Entities\Brand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Category" Collapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Comment" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAgAAAAABgAAAAAAAAAACAAAAABAAAAAIABA=</HashCode>
+      <FileName>Entities\Comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.CommentReply" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAgAAAAABgAAAAAAAAAACAAAgABAAAAAAAAA=</HashCode>
+      <FileName>Entities\CommentReply.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.DetailedInfo" Collapsed="true">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAEAACABEAAAAAEAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Entities\DetailedInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Drivetrain" Collapsed="true">
+    <Position X="4" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAACAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Entities\Drivetrain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Engine" Collapsed="true">
+    <Position X="5.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAAAQAAAAAAIAAACCAiAAgAAAAAAQAAAAAAAAI=</HashCode>
+      <FileName>Entities\Engine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Gearbox" Collapsed="true">
+    <Position X="7.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAAAAAAAAAAAAAAAACQBAAgAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Entities\Gearbox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Generation" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAKACAAAEAAgwAAAAAAAoQAIAgAAAAAAAgABAAAKAA=</HashCode>
+      <FileName>Entities\Generation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.GenerationImage" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Entities\GenerationImage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Model" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAARAAA=</HashCode>
+      <FileName>Entities\Model.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.OptionalEquipment" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAAAAAAAAwEAAAAAAABABBI=</HashCode>
+      <FileName>Entities\OptionalEquipment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UA.Model.Entities.Suspension" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Entities\Suspension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="UA.Model.Entities.Enums.TypeEnum" Collapsed="true">
+    <Position X="0.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAAAQAAAAAAAAAAAwAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Enums\TypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="UA.Model.Entities.Enums.TypeOfGearboxEnum" Collapsed="true">
+    <Position X="2.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Enums\TypeOfGearboxEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

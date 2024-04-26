@@ -775,7 +775,7 @@ export default function CreateGenerationComponent() {
                     />
                 </Form.Group>
             </div>
-            <Button variant="primary" id="addGeneration" onClick={handleGenerationCreate}>Utwórz nowy samochód</Button>
+            <Button variant="primary" id="addGeneration" onClick={handleGenerationCreate}>Utwórz nowy pojazd</Button>
         </div>
     )
 }

@@ -15,8 +15,8 @@ namespace UA.WebAPI.Controllers
         public HomeController(IHomeService homeService) {
             _homeService = homeService;
         }
+
         [HttpGet]
-        
         public ActionResult<PageResult<GenerationDTO>> Get([FromQuery]GenerationQuery query)
         {
             var generations=_homeService.GetAll(query);

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/2lcRi8s1xCroaiA0LtGaoYqAXhRuUTQWOPtYNFT2j8=",
+  "Hash": "08G1c0hFhOi6VjItkkWu0MQ137qJUF+Hdesve98RWKo=",
   "Source": "UA.WebAPI",
   "BasePath": "_content/UA.WebAPI",
   "Mode": "Default",
@@ -16,6 +16,25 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\0a83f10c-b4dc-4646-818d-af42b0620484.jpg",
+      "SourceId": "UA.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\",
+      "BasePath": "_content/UA.WebAPI",
+      "RelativePath": "images/0a83f10c-b4dc-4646-818d-af42b0620484.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\0a83f10c-b4dc-4646-818d-af42b0620484.jpg"
+    },
     {
       "Identity": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\609d41f0-efef-40e6-a9b4-66ef6f2aead6.jpg",
       "SourceId": "UA.WebAPI",
@@ -112,6 +131,25 @@
       "OriginalItemSpec": "wwwroot\\images\\d7a6b375-a9bd-433c-8849-bcd7700b4a2d.jpg"
     },
     {
+      "Identity": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\df869d60-8c1a-49b8-bd3a-3ce7e9fa5100.jpg",
+      "SourceId": "UA.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\",
+      "BasePath": "_content/UA.WebAPI",
+      "RelativePath": "images/df869d60-8c1a-49b8-bd3a-3ce7e9fa5100.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\df869d60-8c1a-49b8-bd3a-3ce7e9fa5100.jpg"
+    },
+    {
       "Identity": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\e625d691-4f9d-43a3-80cf-64b064efde11.jpg",
       "SourceId": "UA.WebAPI",
       "SourceType": "Discovered",
@@ -129,6 +167,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\e625d691-4f9d-43a3-80cf-64b064efde11.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\faae7327-4774-49c9-ab8f-65d2af502680.jpg",
+      "SourceId": "UA.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\",
+      "BasePath": "_content/UA.WebAPI",
+      "RelativePath": "images/faae7327-4774-49c9-ab8f-65d2af502680.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\faae7327-4774-49c9-ab8f-65d2af502680.jpg"
     }
   ]
 }

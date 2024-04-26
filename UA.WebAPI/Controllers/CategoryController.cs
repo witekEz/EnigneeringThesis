@@ -32,14 +32,14 @@ namespace UA.WebAPI.Controllers
             return Ok(category);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody]CreateCategoryDTO dto)
         {
             var categoryId = _categoryService.Create(dto);
             return Created($"category/{categoryId}",null);
         }
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,SuperUser")]
         public ActionResult Update([FromRoute]int id,[FromBody]UpdateCategoryDTO dto)
         {
             _categoryService.Update(id,dto);

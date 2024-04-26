@@ -14,8 +14,8 @@ namespace UA.Model.Entities.Rate
         //Properties
         public double Value { get; set; }
         //Navigaton Property
-        public Engine Engine { get; set; } = null!;
-        public User User { get; set; } = null!;
+        public virtual Engine Engine { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
         //Foreign Key
         public int EngineId { get; set; }
         public int UserID { get; set; }

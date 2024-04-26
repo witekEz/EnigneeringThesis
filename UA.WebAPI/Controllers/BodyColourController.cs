@@ -31,7 +31,7 @@ namespace UA.WebAPI.Controllers
             return Ok(bodyColour);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody] CreateBodyColourDTO dto)
         {
             var bodyColourId = _bodyColourService.Create(dto);

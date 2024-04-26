@@ -22,7 +22,9 @@ namespace UA.Services
         private readonly ApplicationDbContext _dbContext;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
-        public AccountService(ApplicationDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings) {
+        public AccountService(ApplicationDbContext dbContext, 
+            IPasswordHasher<User> passwordHasher, 
+            AuthenticationSettings authenticationSettings) {
             _dbContext = dbContext;
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;

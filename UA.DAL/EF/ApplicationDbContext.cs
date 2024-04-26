@@ -104,6 +104,7 @@ namespace UA.DAL.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies().LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name });
         }
 
     }

@@ -27,7 +27,7 @@ namespace UA.WebAPI.Controllers
             return Ok(avgRate);
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody] CreateRateGearboxDTO dto, [FromRoute] int gearboxId)
         {
             var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);

@@ -18,7 +18,7 @@ namespace UA.WebAPI.Controllers
             _commentReplyService = commentReplyService;
         }
         [HttpPost]
-        [Authorize(Roles = "Admin,SuperUser")]
+        [Authorize(Roles = "Admin,SuperUser,User")]
         public ActionResult Create([FromBody] CreateCommentReplyDTO dto, [FromRoute] int commentId)
         {
             var authorId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
