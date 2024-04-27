@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IBodyColourService
     {
-        List<BodyColourDTO> GetAll();
-        BodyColourDTO GetById(int id);
-        int Create(CreateBodyColourDTO dto);
-        void Update(int id, UpdateBodyColourDTO dto);
-        void Delete(int id);
+        Task<List<BodyColourDTO>> GetAll();
+        Task<BodyColourDTO> GetById(int id);
+        Task<int> Create(CreateBodyColourDTO dto);
+        Task Update(int id, UpdateBodyColourDTO dto);
+        Task Delete(int id);
     }
 }

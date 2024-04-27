@@ -10,6 +10,6 @@ namespace UA.Services.Interfaces
 {
     public interface IGenerationImageService
     {
-        void Upload(int generationId,IFormFile image);
+        Task Upload(int generationId,IFormFile image);
     }
 }

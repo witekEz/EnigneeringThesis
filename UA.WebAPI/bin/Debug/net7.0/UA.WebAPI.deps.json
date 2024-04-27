@@ -375,15 +375,15 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Proxies/7.0.0": {
+      "Microsoft.EntityFrameworkCore.Proxies/7.0.13": {
         "dependencies": {
           "Castle.Core": "5.1.0",
           "Microsoft.EntityFrameworkCore": "7.0.13"
         },
         "runtime": {
           "lib/net6.0/Microsoft.EntityFrameworkCore.Proxies.dll": {
-            "assemblyVersion": "7.0.0.0",
-            "fileVersion": "7.0.22.51807"
+            "assemblyVersion": "7.0.13.0",
+            "fileVersion": "7.0.1323.51806"
           }
         }
       },
@@ -680,11 +680,11 @@
           }
         }
       },
-      "SixLabors.ImageSharp/3.1.2": {
+      "SixLabors.ImageSharp/3.1.4": {
         "runtime": {
           "lib/net6.0/SixLabors.ImageSharp.dll": {
             "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.1.2.0"
+            "fileVersion": "3.1.4.0"
           }
         }
       },
@@ -919,7 +919,7 @@
       "UA.DAL/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.13",
-          "Microsoft.EntityFrameworkCore.Proxies": "7.0.0",
+          "Microsoft.EntityFrameworkCore.Proxies": "7.0.13",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.13",
           "UA.Model": "1.0.0"
         },
@@ -939,7 +939,7 @@
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.AspNetCore.StaticFiles": "2.2.0",
-          "SixLabors.ImageSharp": "3.1.2",
+          "SixLabors.ImageSharp": "3.1.4",
           "UA.DAL": "1.0.0",
           "UA.Model": "1.0.0"
         },
@@ -1207,12 +1207,12 @@
       "path": "microsoft.entityframeworkcore.design/7.0.13",
       "hashPath": "microsoft.entityframeworkcore.design.7.0.13.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Proxies/7.0.0": {
+    "Microsoft.EntityFrameworkCore.Proxies/7.0.13": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kyW50VblVb1Xs4mp0KTSc5lHeVGBfFCH54AqjfB4fD/Ulc7MJv3qGmvhT7zNJfjJ4L9bKHGTJQIlUm1qS7r9Vw==",
-      "path": "microsoft.entityframeworkcore.proxies/7.0.0",
-      "hashPath": "microsoft.entityframeworkcore.proxies.7.0.0.nupkg.sha512"
+      "sha512": "sha512-AwL8z9Ltskm06EpHeTRymeEW2U28m1RDA1hOCB0jMFRCGSUty5lBw4AiNlPdxOy1IMUDqi2ODHwXbN3xnxXH6Q==",
+      "path": "microsoft.entityframeworkcore.proxies/7.0.13",
+      "hashPath": "microsoft.entityframeworkcore.proxies.7.0.13.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/7.0.13": {
       "type": "package",
@@ -1480,12 +1480,12 @@
       "path": "nlog.web.aspnetcore/5.3.7",
       "hashPath": "nlog.web.aspnetcore.5.3.7.nupkg.sha512"
     },
-    "SixLabors.ImageSharp/3.1.2": {
+    "SixLabors.ImageSharp/3.1.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-PYdR6GUI+gW6LBaAQKTik0Ai8oLpFAz3a/KrVusxoTg3kf7F3cuIqKMhJGsuQcmDHCF+iD81Pyn4cexyHrb1ZA==",
-      "path": "sixlabors.imagesharp/3.1.2",
-      "hashPath": "sixlabors.imagesharp.3.1.2.nupkg.sha512"
+      "sha512": "sha512-lFIdxgGDA5iYkUMRFOze7BGLcdpoLFbR+a20kc1W7NepvzU7ejtxtWOg9RvgG7kb9tBoJ3ONYOK6kLil/dgF1w==",
+      "path": "sixlabors.imagesharp/3.1.4",
+      "hashPath": "sixlabors.imagesharp.3.1.4.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",

@@ -11,9 +11,9 @@ namespace UA.Services.Interfaces
 {
     public interface IOptionalEquipmentService
     {
-        OptionalEquipmentDTO GetById(int generationId);
-        int Create(int generationId, CreateOptionalEquipmentDTO dto);
-        void Update(UpdateOptionalEquipmentDTO dto, int generationId);
-        void Delete(int generationId);
+        Task<OptionalEquipmentDTO> GetById(int generationId);
+        Task<int> Create(int generationId, CreateOptionalEquipmentDTO dto);
+        Task Update(UpdateOptionalEquipmentDTO dto, int generationId);
+        Task Delete(int generationId);
     }
 }

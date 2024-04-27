@@ -74,7 +74,7 @@ export default function CreateGenerationComponent() {
         "maxPrice": ""
     })
     const [detailedInfoForm, setDetailedInfoForm] = useState({})
-    const [image,setImage]=useState(null)
+    const [image, setImage] = useState(null)
 
     useEffect(() => {
         const fetchBrands = async () => {
@@ -359,13 +359,13 @@ export default function CreateGenerationComponent() {
             'suspensions': checkedSuspensions,
             'brakes': checkedBrakes
         }
-        let tempBodyForm={
+        let tempBodyForm = {
             ...bodyForm
         }
-        if (checkedBodyType.length>0) {
-            tempBodyForm={
+        if (checkedBodyType.length > 0) {
+            tempBodyForm = {
                 ...bodyForm,
-                "bodyTypeId":checkedBodyType
+                "bodyTypeId": checkedBodyType
             }
         }
         const generationForm = {
@@ -380,8 +380,8 @@ export default function CreateGenerationComponent() {
         }
         try {
             const generationId = await axios.post(`${BASE_URL}/model/${selectedModel}/generation`, generationForm)
-            if(image!=null){
-                const fi=new FormData();
+            if (image != null) {
+                const fi = new FormData();
                 fi.append('image', image)
                 await axios.post(`${BASE_URL}/image/${generationId.data}`, fi);
             }
@@ -394,7 +394,7 @@ export default function CreateGenerationComponent() {
         }
     }
 
-    
+
     return (
         <div className="createGeneration-main">
             <div>
@@ -456,7 +456,7 @@ export default function CreateGenerationComponent() {
                 </Form.Control.Feedback>
                 <Form.Group controlId="formFile" className="mb-3">
                     <p id="image">Wyślij zdjęcie</p>
-                    <Form.Control type="file"  onChange={(e)=>setImage(e.target.files[0])}/>
+                    <Form.Control type="file" onChange={(e) => setImage(e.target.files[0])} />
                 </Form.Group>
                 <Form.Group className="createGeneration-bodyType">
                     <p id="bodyType">Nadwozie</p>
@@ -582,7 +582,7 @@ export default function CreateGenerationComponent() {
                                                         <td>{engine.type}</td>
                                                         <td>{engine.fuelConsumptionCity}</td>
                                                         <td>{engine.fuelConsumptionSuburban}</td>
-                                                        <td>{engine.rate ? engine.rate : "TBA"}</td>
+                                                        <td>{engine.rate ? engine.rate.value : "TBA"}</td>
                                                     </tr>
                                                 )) : null}
                                             </tbody>
@@ -630,7 +630,7 @@ export default function CreateGenerationComponent() {
                                                         <td>{gearbox.name}</td>
                                                         <td>{gearbox.numberOfGears}</td>
                                                         <td>{gearbox.typeOfGearbox}</td>
-                                                        <td>{gearbox.rate ? gearbox.rate : "TBA"}</td>
+                                                        <td>{gearbox.rate ? gearbox.rate.value : "TBA"}</td>
                                                     </tr>
                                                 )) : null}
                                             </tbody>

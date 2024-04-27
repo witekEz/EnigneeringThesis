@@ -12,9 +12,9 @@ namespace UA.Services.Interfaces
 {
     public interface IRateEngineService
     {
-        AvgRateEngineDTO Get(int engineId);
-        int Create(CreateRateEngineDTO dto, int engineId, int userId);
-        void Update(UpdateRateEngineDTO dto, int engineId, int id, ClaimsPrincipal user);
-        void Delete(int engineId, int id, ClaimsPrincipal user);
+        Task<AvgRateEngineDTO> Get(int engineId);
+        Task<int> Create(CreateRateEngineDTO dto, int engineId, int userId);
+        Task Update(UpdateRateEngineDTO dto, int engineId, int id, ClaimsPrincipal user);
+        Task Delete(int engineId, int id, ClaimsPrincipal user);
     }
 }

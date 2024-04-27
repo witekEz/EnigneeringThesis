@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,50 +24,50 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public int Create(CreateBodyColourDTO dto)
+        public async Task<int> Create(CreateBodyColourDTO dto)
         {
             var bodyColour = _mapper.Map<BodyColour>(dto);
-            _dbContext.Add(bodyColour);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(bodyColour);
+            await _dbContext.SaveChangesAsync();
             return bodyColour.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var bodyColour = _dbContext.BodyColours.FirstOrDefault(o => o.Id == id);
+            var bodyColour = await _dbContext.BodyColours.FirstOrDefaultAsync(o => o.Id == id);
             if (bodyColour == null)
                 throw new NotFoundException("Body colour not found");
             _dbContext.Remove(bodyColour);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<BodyColourDTO> GetAll()
+        public async Task<List<BodyColourDTO>> GetAll()
         {
-            var bodyColours = _dbContext.BodyColours.ToList();
+            var bodyColours = await _dbContext.BodyColours.ToListAsync();
             if (bodyColours == null)
                 throw new NotFoundException("Body colours not found");
             var bodyColourDTOs = _mapper.Map<List<BodyColourDTO>>(bodyColours);
             return bodyColourDTOs;
         }
 
-        public BodyColourDTO GetById(int id)
+        public async Task<BodyColourDTO> GetById(int id)
         {
-            var bodyColour = _dbContext.BodyColours.FirstOrDefault(o => o.Id == id);
+            var bodyColour = await _dbContext.BodyColours.FirstOrDefaultAsync(o => o.Id == id);
             if (bodyColour == null)
                 throw new NotFoundException("Body colour not found");
             var bodyColourDTOs = _mapper.Map<BodyColourDTO>(bodyColour);
             return bodyColourDTOs;
         }
 
-        public void Update(int id, UpdateBodyColourDTO dto)
+        public async Task Update(int id, UpdateBodyColourDTO dto)
         {
-            var bodyColour = _dbContext.BodyColours.FirstOrDefault(o => o.Id == id);
+            var bodyColour = await _dbContext.BodyColours.FirstOrDefaultAsync(o => o.Id == id);
             if (bodyColour == null)
                 throw new NotFoundException("Body colour not found");
 
             bodyColour.Colour = dto.Colour;
             bodyColour.ColourCode = dto.ColourCode;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

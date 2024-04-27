@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,49 +24,42 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public int Create(CreateBrakeDTO dto)
+        public async Task<int> Create(CreateBrakeDTO dto)
         {
             var brake = _mapper.Map<Brake>(dto);
-            _dbContext.Add(brake);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(brake);
+            await _dbContext.SaveChangesAsync();
             return brake.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var brake = _dbContext.Brakes.FirstOrDefault(o => o.Id == id);
+            var brake = await _dbContext.Brakes.FirstOrDefaultAsync(o => o.Id == id);
             if (brake == null)
                 throw new NotFoundException("Brake not found");
             _dbContext.Remove(brake);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<BrakeDTO> GetAll()
+        public async Task<List<BrakeDTO>> GetAll()
         {
-            var brakes = _dbContext.Brakes.ToList();
-            if (brakes == null)
-                throw new NotFoundException("Brakes not found");
+            var brakes = await _dbContext.Brakes.ToListAsync() ?? throw new NotFoundException("Brakes not found");
             var brakeDTOs = _mapper.Map<List<BrakeDTO>>(brakes);
             return brakeDTOs;
         }
 
-        public BrakeDTO GetById(int id)
+        public async Task<BrakeDTO> GetById(int id)
         {
-            var brake = _dbContext.Brakes.FirstOrDefault(o => o.Id == id);
-            if (brake == null)
-                throw new NotFoundException("Brake not found");
+            var brake = await _dbContext.Brakes.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Brake not found");
             var brakeDTO = _mapper.Map<BrakeDTO>(brake);
             return brakeDTO;
         }
 
-        public void Update(int id, UpdateBrakeDTO dto)
+        public async Task Update(int id, UpdateBrakeDTO dto)
         {
-            var brake = _dbContext.Brakes.FirstOrDefault(o => o.Id == id);
-            if (brake == null)
-                throw new NotFoundException("Brake not found");
-
+            var brake = await _dbContext.Brakes.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Brake not found");
             brake.Type= dto.Type;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

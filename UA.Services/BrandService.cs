@@ -27,50 +27,42 @@ namespace UA.Services
             _dbContext = dbContext;
         }
 
-        public int Create(CreateBrandDTO brandDTO)
+        public async Task<int> Create(CreateBrandDTO brandDTO)
         {
             var brand=_mapper.Map<Brand>(brandDTO);
-            _dbContext.Brands.Add(brand);
-            _dbContext.SaveChanges();
+            await _dbContext.Brands.AddAsync(brand);
+            await _dbContext.SaveChangesAsync();
             return brand.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var brand=_dbContext.Brands.FirstOrDefault(n => n.Id == id);
-            if(brand is null)
-            {
-                throw new NotFoundException("Brand not found");
-            }
+            var brand=await _dbContext.Brands.FirstOrDefaultAsync(n => n.Id == id) ?? throw new NotFoundException("Brand not found");
             _dbContext.Remove(brand);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
         }
 
-        public IEnumerable<BrandDTO> GetAll()
+        public async Task<IEnumerable<BrandDTO>> GetAll()
         {
-            var brands=_dbContext.Brands.ToList();
+            var brands=await _dbContext.Brands.ToListAsync();
             var brandsDTO=_mapper.Map<List<BrandDTO>>(brands);
             return brandsDTO;
         }
 
-        public BrandDTO GetById(int id)
+        public async Task<BrandDTO> GetById(int id)
         {
-            var brand= _dbContext.Brands.Include(m => m.Models).FirstOrDefault(n => n.Id == id);
+            var brand= await _dbContext.Brands.FirstOrDefaultAsync(n => n.Id == id);
             var brandDTO= _mapper.Map<BrandDTO>(brand);
             return brandDTO;
         }
 
-        public void Update(int id, UpdateBrandDTO brandDTO)
+        public async Task Update(int id, UpdateBrandDTO brandDTO)
         {
-            var brand=_dbContext.Brands.FirstOrDefault(n=>n.Id==id);
-            if(brand is null) 
-            { 
-                throw new NotFoundException("Brand not found"); 
-            }
+            var brand=await _dbContext.Brands.FirstOrDefaultAsync(n=>n.Id==id) ?? throw new NotFoundException("Brand not found");
             brand.Name = brandDTO.Name;
             brand = _mapper.Map(brandDTO, brand);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             
         }
     }

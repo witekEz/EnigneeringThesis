@@ -37,6 +37,7 @@ export default function Comments({ generationId }) {
                 const response = await axios.post(`${BASE_URL}/generation/${generationId}/comment`, {
                     content: form
                 });
+                console.log(response);
                 const data = await response.data;
                 setTrigger(!trigger)
             }

@@ -9,7 +9,7 @@ namespace UA.Services.Interfaces
 {
     public interface IAccountService
     {
-        void RegisterUser(RegisterUserDTO dto);
-        string GenerateJwt(LoginDTO dto);
+        Task RegisterUser(RegisterUserDTO dto);
+        Task<string> GenerateJwt(LoginDTO dto);
     }
 }

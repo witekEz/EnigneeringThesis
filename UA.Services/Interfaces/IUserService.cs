@@ -10,9 +10,9 @@ namespace UA.Services.Interfaces
 {
     public interface IUserService
     {
-         List<UserDetailsDTO> GetAll();
-         UserDetailsDTO GetById(int id);
-         void Delete(int id);
-         void Update(int id, UpdateUserDetailsDTO userDTO);
+         Task<List<UserDetailsDTO>> GetAll();
+         Task<UserDetailsDTO> GetById(int id);
+         Task Delete(int id);
+         Task Update(int id, UpdateUserDetailsDTO userDTO);
     }
 }

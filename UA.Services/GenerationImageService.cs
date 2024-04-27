@@ -24,7 +24,7 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public void Upload(int generationId,IFormFile image)
+        public async Task Upload(int generationId,IFormFile image)
         {
             if(image != null && image.Length > 0) 
             {
@@ -46,8 +46,8 @@ namespace UA.Services
                 //}
 
                 var newImage=_mapper.Map<GenerationImage>(newImageDTO);
-                _dbContext.Add(newImage);
-                _dbContext.SaveChanges();
+                await _dbContext.AddAsync(newImage);
+                await _dbContext.SaveChangesAsync();
 
             }
             else

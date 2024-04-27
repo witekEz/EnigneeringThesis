@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IDrivetrainService
     {
-        List<DrivetrainDTO> GetAll();
-        DrivetrainDTO GetById(int id);
-        int Create(CreateDrivetrainDTO dto);
-        void Update(int id, UpdateDrivetrainDTO dto);
-        void Delete(int id);
+        Task<List<DrivetrainDTO>> GetAll();
+        Task<DrivetrainDTO> GetById(int id);
+        Task<int> Create(CreateDrivetrainDTO dto);
+        Task Update(int id, UpdateDrivetrainDTO dto);
+        Task Delete(int id);
     }
 }

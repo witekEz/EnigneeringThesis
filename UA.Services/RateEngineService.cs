@@ -15,6 +15,7 @@ using UA.Model.Entities;
 using UA.Services.Interfaces;
 using UA.Services.Middleware.Exceptions;
 using UA.Services.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace UA.Services
 {
@@ -30,16 +31,11 @@ namespace UA.Services
             _authorizationService = authorizationService;
         }
 
-        public int Create(CreateRateEngineDTO dto, int engineId, int userId)
+        public async Task<int> Create(CreateRateEngineDTO dto, int engineId, int userId)
         {
-            var engine = _dbContext.Engines.FirstOrDefault(i => i.Id == engineId);
-            if (engine == null)
-            {
-                throw new NotFoundException("Engine not found");
-            }
-
-            var ratesEngine = _dbContext.RateEngines.Where(e => e.EngineId == engineId).ToList();
-            var avgRateEngine = _dbContext.AvgRateEngines.FirstOrDefault(i => i.EngineId == engineId);
+            var engine = await _dbContext.Engines.FirstOrDefaultAsync(i => i.Id == engineId) ?? throw new NotFoundException("Engine not found");
+            var ratesEngine = await _dbContext.RateEngines.Where(e => e.EngineId == engineId).ToListAsync();
+            var avgRateEngine = await _dbContext.AvgRateEngines.FirstOrDefaultAsync(i => i.EngineId == engineId);
 
             if (avgRateEngine == null)
             {
@@ -50,10 +46,10 @@ namespace UA.Services
                     EngineId = engineId,
                 };
                 var newAvgRateEngine = _mapper.Map<AvgRateEngine>(createAvgRateEngine);
-                _dbContext.AvgRateEngines.Add(newAvgRateEngine);
-                _dbContext.SaveChanges();
+                await _dbContext.AvgRateEngines.AddAsync(newAvgRateEngine);
+                await _dbContext.SaveChangesAsync();
 
-                avgRateEngine = _dbContext.AvgRateEngines.FirstOrDefault(i => i.EngineId == engineId);
+                avgRateEngine = await _dbContext.AvgRateEngines.FirstOrDefaultAsync(i => i.EngineId == engineId);
             }
 
             if (ratesEngine != null && avgRateEngine != null)
@@ -78,68 +74,43 @@ namespace UA.Services
             var rateEngine = _mapper.Map<RateEngine>(dto);
             rateEngine.UserID = userId;
             rateEngine.EngineId = engineId;
-            _dbContext.RateEngines.Add(rateEngine);
-            _dbContext.SaveChanges();
+            await _dbContext.RateEngines.AddAsync(rateEngine);
+            await _dbContext.SaveChangesAsync();
             return rateEngine.Id;
         }
 
-        public void Delete(int engineId, int id, ClaimsPrincipal user)
+        public async Task Delete(int engineId, int id, ClaimsPrincipal user)
         {
-            var engine = _dbContext.Engines.FirstOrDefault(i => i.Id == engineId);
-            if (engine == null)
-            {
-                throw new NotFoundException("Engine not found");
-            }
-            var rateEngine = _dbContext.RateEngines.FirstOrDefault(i => i.Id == id);
-            if (rateEngine == null)
-            {
-                throw new NotFoundException("This rate does not exsist");
-            }
+            var engine = await _dbContext.Engines.FirstOrDefaultAsync(i => i.Id == engineId) ?? throw new NotFoundException("Engine not found");
+            var rateEngine = await _dbContext.RateEngines.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException("This rate does not exsist");
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateEngine, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
             _dbContext.RateEngines.Remove(rateEngine);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public AvgRateEngineDTO Get(int engineId)
+        public async Task<AvgRateEngineDTO> Get(int engineId)
         {
-            var engine = _dbContext.Engines.FirstOrDefault(i => i.Id == engineId);
-            if (engine == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-            var avgRateEngine = _dbContext.AvgRateEngines.FirstOrDefault(i => i.EngineId == engineId);
-            if (avgRateEngine == null)
-            {
-                throw new NotFoundException($"Average rate for engine with ID:{engine.Id} not found");
-            }
+            var engine = await _dbContext.Engines.FirstOrDefaultAsync(i => i.Id == engineId) ?? throw new NotFoundException("Generation not found");
+            var avgRateEngine = await _dbContext.AvgRateEngines.FirstOrDefaultAsync(i => i.EngineId == engineId) ?? throw new NotFoundException($"Average rate for engine with ID:{engine.Id} not found");
             var avgRateEngineDTO = _mapper.Map<AvgRateEngineDTO>(avgRateEngine);
             return avgRateEngineDTO;
         }
 
-        public void Update(UpdateRateEngineDTO dto, int engineId, int id, ClaimsPrincipal user)
+        public async Task Update(UpdateRateEngineDTO dto, int engineId, int id, ClaimsPrincipal user)
         {
-            var engine = _dbContext.Engines.FirstOrDefault(i => i.Id == engineId);
-            if (engine == null)
-            {
-                throw new NotFoundException("Engine not found");
-            }
-            var rateEngine = _dbContext.RateEngines.FirstOrDefault(i => i.Id == id);
-            if (rateEngine == null)
-            {
-                throw new NotFoundException($"Rate for engine with ID: {engine.Id} not found");
-            }
+            var engine = await _dbContext.Engines.FirstOrDefaultAsync(i => i.Id == engineId) ?? throw new NotFoundException("Engine not found");
+            var rateEngine = await _dbContext.RateEngines.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException($"Rate for engine with ID: {engine.Id} not found");
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateEngine, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
-
             rateEngine.Value = dto.Value;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

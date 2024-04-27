@@ -16,9 +16,9 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<BodyTypeDTO>> Get()
+        public async Task<ActionResult<List<BodyTypeDTO>>> Get()
         {
-            var bodyTypes=_filterService.GetAll();
+            var bodyTypes=await _filterService.GetAll();
             return Ok(bodyTypes);
         }
     }

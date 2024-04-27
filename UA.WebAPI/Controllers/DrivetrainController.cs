@@ -18,37 +18,37 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<DrivetrainDTO>> Get()
+        public async Task<ActionResult<List<DrivetrainDTO>>> Get()
         {
-            var drivetrains=_drivetrainService.GetAll();
+            var drivetrains=await _drivetrainService.GetAll();
             return Ok(drivetrains);
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<DrivetrainDTO> Get(int id)
+        public async Task<ActionResult<DrivetrainDTO>> Get(int id)
         {
-            var drivetrain = _drivetrainService.GetById(id);
+            var drivetrain = await _drivetrainService.GetById(id);
             return Ok(drivetrain);
         }
         [HttpPost]
         [Authorize(Roles ="Admin,SuperUser,User")]
-        public ActionResult Create([FromBody]CreateDrivetrainDTO dto)
+        public async Task<IActionResult> Create([FromBody]CreateDrivetrainDTO dto)
         {
-            var id= _drivetrainService.Create(dto);
+            var id= await _drivetrainService.Create(dto);
             return Created($"api/drivetrain/{id}",null);
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute]int id)
+        public async Task<IActionResult> Delete([FromRoute]int id)
         {
-            _drivetrainService.Delete(id);
+            await _drivetrainService.Delete(id);
             return NoContent();
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int id, [FromBody]UpdateDrivetrainDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody]UpdateDrivetrainDTO dto)
         {
-            _drivetrainService.Update(id,dto);
+            await _drivetrainService.Update(id,dto);
             return Ok();
         }
     }

@@ -12,10 +12,10 @@ namespace UA.Services.Interfaces
 {
     public interface IModelService
     {
-        int Create(int brandId, CreateModelDTO dto);
-        ModelDTO GetById(int brandId,int modelId);
-        List<ModelDTO> GetAll(int brandId);
-        void Delete(int brandId,int modelId);
-        void Update(int id, UpdateModelDTO dto);
+        Task<int> Create(int brandId, CreateModelDTO dto);
+        Task<ModelDTO> GetById(int brandId,int modelId);
+        Task<List<ModelDTO>> GetAll(int brandId);
+        Task Delete(int brandId,int modelId);
+        Task Update(int id, UpdateModelDTO dto);
     }
 }

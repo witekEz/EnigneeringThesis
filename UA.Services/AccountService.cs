@@ -30,16 +30,12 @@ namespace UA.Services
             _authenticationSettings = authenticationSettings;
         }
 
-        public string GenerateJwt(LoginDTO dto)
+        public async Task<string> GenerateJwt(LoginDTO dto)
         {
-            var user=_dbContext.Users
+            var user = await _dbContext.Users
                 .Include(r=>r.Role)
-                .FirstOrDefault(u=>u.Email == dto.Email);
-            if (user == null)
-            {
-                throw new BadRequestException("Invalid email or password");
-            }
-            var result=_passwordHasher.VerifyHashedPassword(user,user.PasswordHash,dto.Password);
+                .FirstOrDefaultAsync(u=>u.Email == dto.Email) ?? throw new BadRequestException("Invalid email or password");
+            var result =_passwordHasher.VerifyHashedPassword(user,user.PasswordHash,dto.Password);
             if(result==PasswordVerificationResult.Failed)
             {
                 throw new BadRequestException("Invalid email or password");
@@ -61,10 +57,10 @@ namespace UA.Services
                 expires: expires,
                 signingCredentials: cred);
             var tokenHandler=new JwtSecurityTokenHandler();
-            return tokenHandler.WriteToken(token);
+            return  tokenHandler.WriteToken(token);
         }
 
-        public void RegisterUser(RegisterUserDTO dto)
+        public async Task RegisterUser(RegisterUserDTO dto)
         {
             var newUser = new User()
             {
@@ -73,10 +69,10 @@ namespace UA.Services
                 DateOfBirth = dto.DateOfBirth,
                 RoleId = dto.RoleId
             };
-            var hashedPassword=_passwordHasher.HashPassword(newUser,dto.Password);
+            var hashedPassword= _passwordHasher.HashPassword(newUser,dto.Password);
             newUser.PasswordHash= hashedPassword;
-            _dbContext.Users.Add(newUser);
-            _dbContext.SaveChanges();
+            await _dbContext.Users.AddAsync(newUser);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

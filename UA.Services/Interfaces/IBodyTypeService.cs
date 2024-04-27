@@ -9,6 +9,6 @@ namespace UA.Services.Interfaces
 {
     public interface IBodyTypeService
     {
-        List<BodyTypeDTO>GetAll();
+        Task<List<BodyTypeDTO>>GetAll();
     }
 }

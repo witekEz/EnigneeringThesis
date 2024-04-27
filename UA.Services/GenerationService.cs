@@ -28,31 +28,23 @@ namespace UA.Services
             _mapper = mapper;
             _logger = logger;
         }
-        public void Delete(int modelId, int generationId)
+        public async Task Delete(int modelId, int generationId)
         {
-            _logger.LogError($"Generation with ID: {generationId} DELETE action invoked");
-            var model = _dbContext
+            var model = await _dbContext
                 .Models
-                .FirstOrDefault(g => g.Id == modelId);
-            if (model == null)
-                throw new NotFoundException("Model not found");
-
-            var generation = _dbContext.Generations.FirstOrDefault(m => m.Id == generationId);
+                .FirstOrDefaultAsync(g => g.Id == modelId) ?? throw new NotFoundException("Model not found");
+            var generation = await _dbContext.Generations.FirstOrDefaultAsync(m => m.Id == generationId);
             if (generation == null || generation.Model.Id != modelId)
                 throw new NotFoundException("Generation not found");
 
             _dbContext.Generations.Remove(generation);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public GenerationDTO GetById(int modelId, int generationId)
+        public async Task<GenerationDTO> GetById(int modelId, int generationId)
         {
-            _logger.LogError($"Generation with ID:{generationId} GET action invoked");
-            var model = _dbContext.Models.FirstOrDefault(m => m.Id == modelId);
-            if (model is null)
-                throw new NotFoundException("Model not found");
-
-            var generation = _dbContext.Generations
-               .Include(b => b.GenerationImages)
+            var model = await _dbContext.Models.FirstOrDefaultAsync(m => m.Id == modelId) ?? throw new NotFoundException("Model not found");
+            var generation = await _dbContext.Generations
+               /*.Include(b => b.GenerationImages)
                .Include(b => b.AvgRateGeneration)
                .Include(b => b.Category)
                .Include(b => b.Bodies)
@@ -69,8 +61,8 @@ namespace UA.Services
                .Include(b => b.DetailedInfo.Brakes)
                .Include(b => b.OptionalEquipment)
                .Include(b => b.Model)
-               .Include(b => b.Model.Brand)
-               .FirstOrDefault(p => p.Id == generationId);
+               .Include(b => b.Model.Brand)*/
+               .FirstOrDefaultAsync(p => p.Id == generationId);
 
             if (generation == null|| generation.Model.Id != modelId) 
                 throw new NotFoundException("Generation not found");
@@ -97,50 +89,42 @@ namespace UA.Services
            
             return generationDTO;
         }
-        public List<GenerationDTO> GetAll(int modelId)
+        public async Task<List<GenerationDTO>> GetAll(int modelId)
         {
-            _logger.LogError($"Generations GET action invoked");
-            var model = _dbContext.Models
-                .Include(g=>g.Generations)
-                .FirstOrDefault(m => m.Id == modelId);
-            if (model == null)
-                throw new NotFoundException("Model not found");
-
+            var model = await _dbContext.Models
+                //.Include(g=>g.Generations)
+                .FirstOrDefaultAsync(m => m.Id == modelId) ?? throw new NotFoundException("Model not found");
             var generationsDTOs = _mapper.Map<List<GenerationDTO>>(model.Generations);
             return generationsDTOs;
         }
-        public int Create(int modelId, CreateGenerationDTO dto)
+        public async Task<int> Create(int modelId, CreateGenerationDTO dto)
         {
-            _logger.LogError($"Generation object: {dto} POST action invoked");
-            var model = _dbContext
+            var model = await _dbContext
                 .Models
-                .FirstOrDefault(n => n.Id == modelId);
-            if (model == null)
-                throw new NotFoundException("Model not found");
-
+                .FirstOrDefaultAsync(n => n.Id == modelId) ?? throw new NotFoundException("Model not found");
             var generationEntity = _mapper.Map<Generation>(dto);
 
             generationEntity.Model = model;
             if (dto.Drivetrains.Count > 0)
             {
-                var drivetrainsEntity = _dbContext.Drivetrains.Where(data => dto.Drivetrains.Contains(data.Id)).ToList();
+                var drivetrainsEntity = await _dbContext.Drivetrains.Where(data => dto.Drivetrains.Contains(data.Id)).ToListAsync();
                 generationEntity.Drivetrains= drivetrainsEntity;
             }
             if (dto.Engines.Count > 0)
             {
-                var enginesEntity = _dbContext.Engines.Where(data => dto.Engines.Contains(data.Id)).ToList();
+                var enginesEntity = await _dbContext.Engines.Where(data => dto.Engines.Contains(data.Id)).ToListAsync();
                 generationEntity.Engines = enginesEntity;
             }
             if (dto.Gearboxes.Count > 0)
             {
-                var gearboxesEntity = _dbContext.Gearboxes.Where(data => dto.Gearboxes.Contains(data.Id)).ToList();
+                var gearboxesEntity = await _dbContext.Gearboxes.Where(data => dto.Gearboxes.Contains(data.Id)).ToListAsync();
                 generationEntity.Gearboxes = gearboxesEntity;
             }
             if(dto.DetailedInfo!=null  )
             {
                 if(dto.DetailedInfo.Suspensions != null && dto.DetailedInfo.Suspensions.Count > 0)
                 {
-                    var suspensionsEntity = _dbContext.Suspensions.Where(data => dto.DetailedInfo.Suspensions.Contains(data.Id)).ToList();
+                    var suspensionsEntity = await _dbContext.Suspensions.Where(data => dto.DetailedInfo.Suspensions.Contains(data.Id)).ToListAsync();
                     if (generationEntity.DetailedInfo!=null)
                     {
                         generationEntity.DetailedInfo.Suspensions = suspensionsEntity;
@@ -148,7 +132,7 @@ namespace UA.Services
                 }
                 if (dto.DetailedInfo.BodyColours != null && dto.DetailedInfo.BodyColours.Count > 0)
                 {
-                    var bodyColoursEntity = _dbContext.BodyColours.Where(data => dto.DetailedInfo.BodyColours.Contains(data.Id)).ToList();
+                    var bodyColoursEntity = await _dbContext.BodyColours.Where(data => dto.DetailedInfo.BodyColours.Contains(data.Id)).ToListAsync();
                     if (generationEntity.DetailedInfo != null)
                     {
                         generationEntity.DetailedInfo.BodyColours = bodyColoursEntity;
@@ -156,7 +140,7 @@ namespace UA.Services
                 }
                 if (dto.DetailedInfo.Brakes != null && dto.DetailedInfo.Brakes.Count > 0)
                 {
-                    var brakesEntity = _dbContext.Brakes.Where(data => dto.DetailedInfo.Brakes.Contains(data.Id)).ToList();
+                    var brakesEntity = await _dbContext.Brakes.Where(data => dto.DetailedInfo.Brakes.Contains(data.Id)).ToListAsync();
                     if (generationEntity.DetailedInfo != null)
                     {
                         generationEntity.DetailedInfo.Brakes = brakesEntity;
@@ -165,24 +149,19 @@ namespace UA.Services
             }
             
             
-            _dbContext.Generations.Add(generationEntity);
-            _dbContext.SaveChanges();
+            await _dbContext.Generations.AddAsync(generationEntity);
+            await _dbContext.SaveChangesAsync();
             return generationEntity.Id;
         }
-        public void Update(UpdateGenerationDTO dto, int id)
+        public async Task Update(UpdateGenerationDTO dto, int id)
         {
-            _logger.LogError($"Generation with ID: {id} UPDATE action invoked");
-            var generation = _dbContext
+            var generation = await _dbContext
                 .Generations
-                .FirstOrDefault(g => g.Id == id);
-            if (generation == null) 
-                throw new NotFoundException("Generation not found");
-            
-            
+                .FirstOrDefaultAsync(g => g.Id == id) ?? throw new NotFoundException("Generation not found");
             generation.Name = dto.Name;
             generation.MinPrice = dto.MinPrice;
             generation.MaxPrice = dto.MaxPrice;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
         private byte[] GetImage(Guid name)
         {

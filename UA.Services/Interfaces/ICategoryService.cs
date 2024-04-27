@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface ICategoryService
     {
-        List<CategoryDTO> GetAll();
-        CategoryDTO GetById(int id);
-        int Create(CreateCategoryDTO dto);
-        void Update(int id, UpdateCategoryDTO dto);
-        void Delete(int id);
+        Task<List<CategoryDTO>> GetAll();
+        Task<CategoryDTO> GetById(int id);
+        Task<int> Create(CreateCategoryDTO dto);
+        Task Update(int id, UpdateCategoryDTO dto);
+        Task Delete(int id);
     }
 }

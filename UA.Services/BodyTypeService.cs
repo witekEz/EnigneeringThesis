@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,9 @@ namespace UA.Services
             _mapper=mapper;
         }
 
-        public List<BodyTypeDTO> GetAll()
+        public async Task<List<BodyTypeDTO>> GetAll()
         {
-            var bodyTypes=_dbContext.BodyTypes.ToList();
+            var bodyTypes=await _dbContext.BodyTypes.ToListAsync();
             if (bodyTypes == null)
                 throw new NotFoundException("Body types not found");
             var bodyTypeDTOs=_mapper.Map<List<BodyTypeDTO>>(bodyTypes);

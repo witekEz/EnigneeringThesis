@@ -24,43 +24,43 @@ namespace UA.WebAPI.Controllers
         
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute]int modelId,[FromRoute]int id)
+        public async Task<IActionResult> Delete([FromRoute]int modelId,[FromRoute]int id)
         {
-            _generationService.Delete(modelId, id);
+            await _generationService.Delete(modelId, id);
             return NoContent();
         }
 
         
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromRoute]int modelId,[FromBody]CreateGenerationDTO dto)
+        public async Task<IActionResult> Create([FromRoute]int modelId,[FromBody]CreateGenerationDTO dto)
         {
-            var id=_generationService.Create(modelId,dto);
+            var id=await _generationService.Create(modelId, dto);
             return Ok(id);
         }
         
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<GenerationDTO>> Get([FromRoute] int modelId)
+        public async Task<ActionResult<List<GenerationDTO>>> Get([FromRoute] int modelId)
         {
-            var generationsDTOs = _generationService.GetAll(modelId);
+            var generationsDTOs = await _generationService.GetAll(modelId);
             return Ok(generationsDTOs);
         }
         
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<GenerationDTO> Get([FromRoute] int modelId,[FromRoute]int id)
+        public async Task<ActionResult<GenerationDTO>> Get([FromRoute] int modelId,[FromRoute]int id)
         {
-            var generation = _generationService.GetById(modelId,id);
+            var generation = await _generationService.GetById(modelId,id);
 
             return Ok(generation);
         }
         
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromBody]UpdateGenerationDTO dto, [FromRoute]int id)
+        public async Task<IActionResult> Update([FromBody]UpdateGenerationDTO dto, [FromRoute]int id)
         {
-             _generationService.Update(dto,id);
+             await _generationService.Update(dto, id);
             
             return Ok();
         }

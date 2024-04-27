@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface ISuspensionService
     {
-        List<SuspensionDTO> GetAll();
-        SuspensionDTO GetById(int id);
-        int Create(CreateSuspensionDTO dto);
-        void Update(int id, UpdateSuspensionDTO dto);
-        void Delete(int id);
+        Task<List<SuspensionDTO>> GetAll();
+        Task<SuspensionDTO> GetById(int id);
+        Task<int> Create(CreateSuspensionDTO dto);
+        Task Update(int id, UpdateSuspensionDTO dto);
+        Task Delete(int id);
     }
 }

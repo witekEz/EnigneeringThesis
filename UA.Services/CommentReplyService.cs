@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,9 @@ namespace UA.Services
             _mapper = mapper;
             _authorizationService = authorizationService;
         }
-        public int Create(CreateCommentReplyDTO dto, int commentId, int authorId)
+        public async Task<int> Create(CreateCommentReplyDTO dto, int commentId, int authorId)
         {
-            var comment=_dbContext.Comments.FirstOrDefault(c => c.Id == commentId);
+            var comment=await _dbContext.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
             if (comment == null)
             {
                 throw new NotFoundException("Comment not found");
@@ -38,44 +39,28 @@ namespace UA.Services
             reply.AuthorId = authorId;
             reply.CreatedOn = DateTime.Now;
             reply.CommentId = commentId;
-            _dbContext.CommentReplies.Add(reply);
-            _dbContext.SaveChanges();
+            await _dbContext.CommentReplies.AddAsync(reply);
+            await _dbContext.SaveChangesAsync();
             return reply.Id;
         }
 
-        public void Delete(int commentId, int id, ClaimsPrincipal author)
+        public async Task Delete(int commentId, int id, ClaimsPrincipal author)
         {
-            var comment = _dbContext.Comments.FirstOrDefault(i => i.Id == commentId);
-            if (comment == null)
-            {
-                throw new NotFoundException("Comment not found");
-            }
-            var reply = _dbContext.CommentReplies.FirstOrDefault(i => i.Id == id);
-            if (reply == null)
-            {
-                throw new NotFoundException("Reply not found");
-            }
+            var comment = await _dbContext.Comments.FirstOrDefaultAsync(i => i.Id == commentId) ?? throw new NotFoundException("Comment not found");
+            var reply = await _dbContext.CommentReplies.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException("Reply not found");
             var authorizationResult = _authorizationService.AuthorizeAsync(author, reply, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
             _dbContext.CommentReplies.Remove(reply);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public void Update(UpdateCommentReplyDTO dto, int commentId, int id, ClaimsPrincipal author)
+        public async Task Update(UpdateCommentReplyDTO dto, int commentId, int id, ClaimsPrincipal author)
         {
-            var comment = _dbContext.Comments.FirstOrDefault(i => i.Id == commentId);
-            if (comment == null)
-            {
-                throw new NotFoundException("Comment not found");
-            }
-            var reply = _dbContext.CommentReplies.FirstOrDefault(i => i.Id == id);
-            if (reply == null)
-            {
-                throw new NotFoundException("Reply not found");
-            }
+            var comment = await _dbContext.Comments.FirstOrDefaultAsync(i => i.Id == commentId) ?? throw new NotFoundException("Comment not found");
+            var reply = await _dbContext.CommentReplies.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException("Reply not found");
             var authorizationResult = _authorizationService.AuthorizeAsync(author, reply, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
@@ -84,7 +69,7 @@ namespace UA.Services
             reply.Content = dto.Content;
             reply.CreatedOn = DateTime.Now;
             reply.IsModified = true;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

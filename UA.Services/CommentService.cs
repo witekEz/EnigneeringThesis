@@ -31,74 +31,46 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public int Create(CreateCommentDTO dto, int generationId, int authorId)
+        public async Task<int> Create(CreateCommentDTO dto, int generationId, int authorId)
         {
-            var generation=_dbContext.Generations.FirstOrDefault(i=>i.Id == generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found"); 
-            }
+            var generation=await _dbContext.Generations.FirstOrDefaultAsync(i=>i.Id == generationId) ?? throw new NotFoundException("Generation not found");
             var comment = _mapper.Map<Comment>(dto);
             comment.AuthorId = authorId;
             comment.CreatedOn = DateTime.Now;
             comment.GenerationId = generationId;
-            _dbContext.Comments.Add(comment);
-            _dbContext.SaveChanges();
+            await _dbContext.Comments.AddAsync(comment);
+            await _dbContext.SaveChangesAsync();
             return comment.Id;
         }
 
-        public void Delete(int generationId, int id, ClaimsPrincipal author)
+        public async Task Delete(int generationId, int id, ClaimsPrincipal author)
         {
-            var generation = _dbContext.Generations.FirstOrDefault(i => i.Id == generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-            var comment = _dbContext.Comments.FirstOrDefault(i => i.Id == id);
-            if (comment == null)
-            {
-                throw new NotFoundException("Comment not found");
-            }
+            var generation = await _dbContext.Generations.FirstOrDefaultAsync(i => i.Id == generationId) ?? throw new NotFoundException("Generation not found");
+            var comment = await _dbContext.Comments.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException("Comment not found");
             var authorizationResult = _authorizationService.AuthorizeAsync(author, comment, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
             _dbContext.Comments.Remove(comment);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<CommentDTO> GetAllComments(int generationId)
+        public async Task<List<CommentDTO>> GetAllComments(int generationId)
         {
-            var generation = _dbContext.Generations.FirstOrDefault(i => i.Id == generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-            var comments=_dbContext.Comments
-                .Include(i => i.Author)
-                .Include(c=>c.Replies)
-                .Where(i=>i.GenerationId==generationId).ToList();
-            if (comments == null)
-            {
-                throw new NotFoundException("Comments not found");
-            }
-            var commentDTOs=_mapper.Map<List<CommentDTO>>(comments);
+            var generation =await _dbContext.Generations.FirstOrDefaultAsync(i => i.Id == generationId) ?? throw new NotFoundException("Generation not found");
+            var comments =await _dbContext.Comments
+                //.Include(i => i.Author)
+                //.Include(c=>c.Replies)
+                .Where(i=>i.GenerationId==generationId).ToListAsync () ?? throw new NotFoundException("Comments not found");
+            var commentDTOs =_mapper.Map<List<CommentDTO>>(comments);
             return commentDTOs;
         }
 
-        public void Update(UpdateCommentDTO dto, int generationId, int id, ClaimsPrincipal author)
+        public async Task Update(UpdateCommentDTO dto, int generationId, int id, ClaimsPrincipal author)
         {
-            var generation = _dbContext.Generations.FirstOrDefault(i => i.Id == generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-            var comment=_dbContext.Comments.FirstOrDefault(i => i.Id == id);
-            if (comment == null)
-            {
-                throw new NotFoundException("Comment not found");
-            }
+            var generation = await _dbContext.Generations.FirstOrDefaultAsync(i => i.Id == generationId) ?? throw new NotFoundException("Generation not found");
+            var comment =await _dbContext.Comments.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException("Comment not found");
             var authorizationResult = _authorizationService.AuthorizeAsync(author, comment, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
@@ -107,7 +79,7 @@ namespace UA.Services
             comment.Content = dto.Content;
             comment.CreatedOn = DateTime.Now;
             comment.IsModified = true;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
        

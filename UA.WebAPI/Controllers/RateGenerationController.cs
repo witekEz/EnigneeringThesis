@@ -19,31 +19,31 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<AvgRateGenerationDTO> Get([FromRoute]int generationId) 
+        public async Task<ActionResult<AvgRateGenerationDTO>> Get([FromRoute]int generationId) 
         {
-            var avgRate=_rateGenerationService.Get(generationId);
+            var avgRate=await _rateGenerationService.Get(generationId);
             return Ok(avgRate);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody] CreateRateGenerationDTO dto, [FromRoute] int generationId)
+        public async Task<IActionResult> Create([FromBody] CreateRateGenerationDTO dto, [FromRoute] int generationId)
         {
             var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var rateId = _rateGenerationService.Create(dto,generationId,userId);
+            var rateId = await _rateGenerationService.Create(dto, generationId, userId);
             return Created($"api/generation/{generationId}/rate/{rateId}",null);
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromBody] UpdateRateGenerationDTO dto, [FromRoute] int id, [FromRoute] int generationId)
+        public async Task<IActionResult> Update([FromBody] UpdateRateGenerationDTO dto, [FromRoute] int id, [FromRoute] int generationId)
         {
-            _rateGenerationService.Update(dto,generationId, id, User);
+            await _rateGenerationService.Update(dto, generationId, id, User);
             return NoContent();
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Delete([FromRoute] int generationId, [FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int generationId, [FromRoute] int id)
         {
-            _rateGenerationService.Delete(generationId, id, User);
+            await _rateGenerationService.Delete(generationId, id, User);
             return NoContent();
         }
     }

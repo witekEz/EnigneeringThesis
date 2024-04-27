@@ -19,37 +19,37 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<SuspensionDTO>> Get()
+        public async Task<ActionResult<List<SuspensionDTO>>> Get()
         {
-            var suspension = _suspensionService.GetAll();
+            var suspension = await _suspensionService.GetAll();
             return Ok(suspension);
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<SuspensionDTO> Get([FromRoute] int id)
+        public async Task<ActionResult<SuspensionDTO>> Get([FromRoute] int id)
         {
-            var suspension = _suspensionService.GetById(id);
+            var suspension = await _suspensionService.GetById(id);
             return Ok(suspension);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody] CreateSuspensionDTO suspensionDTO)
+        public async Task<IActionResult> Create([FromBody] CreateSuspensionDTO suspensionDTO)
         {
-            var suspensionId = _suspensionService.Create(suspensionDTO);
+            var suspensionId = await _suspensionService.Create(suspensionDTO);
             return Created($"api/suspension/{suspensionId}", null);
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            _suspensionService.Delete(id);
+            await _suspensionService.Delete(id);
             return NoContent();
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int id, [FromBody] UpdateSuspensionDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateSuspensionDTO dto)
         {
-            _suspensionService.Update(id, dto);
+            await _suspensionService.Update(id, dto);
             return NoContent();
         }
     }

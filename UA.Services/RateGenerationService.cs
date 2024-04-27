@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,16 +32,11 @@ namespace UA.Services
             _authorizationService = authorizationService;
         }
 
-        public int Create(CreateRateGenerationDTO dto, int generationId, int userId)
+        public async Task<int> Create(CreateRateGenerationDTO dto, int generationId, int userId)
         {
-            var generation=_dbContext.Generations.FirstOrDefault(i=>i.Id==generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-
-            var ratesGeneration = _dbContext.RateGenerations.Where(g=>g.GenerationId==generationId).ToList();
-            var avgRateGeneration=_dbContext.AvgRateGenerations.FirstOrDefault(i=>i.GenerationId==generationId);
+            var generation=await _dbContext.Generations.FirstOrDefaultAsync(i=>i.Id==generationId) ?? throw new NotFoundException("Generation not found");
+            var ratesGeneration = await _dbContext.RateGenerations.Where(g=>g.GenerationId==generationId).ToListAsync();
+            var avgRateGeneration=await _dbContext.AvgRateGenerations.FirstOrDefaultAsync(i=>i.GenerationId==generationId);
 
             if (avgRateGeneration == null)
             {
@@ -51,10 +47,10 @@ namespace UA.Services
                     GenerationId=generationId,
                 };
                 var newAvgRateGeneration=_mapper.Map<AvgRateGeneration>(createAvgRateGeneration);
-                _dbContext.AvgRateGenerations.Add(newAvgRateGeneration);
-                _dbContext.SaveChanges();
+                await _dbContext.AvgRateGenerations.AddAsync(newAvgRateGeneration);
+                await _dbContext.SaveChangesAsync();
 
-                avgRateGeneration = _dbContext.AvgRateGenerations.FirstOrDefault(i => i.GenerationId == generationId);
+                avgRateGeneration = await _dbContext.AvgRateGenerations.FirstOrDefaultAsync(i => i.GenerationId == generationId);
             }
 
             if (ratesGeneration != null && avgRateGeneration != null)
@@ -79,66 +75,42 @@ namespace UA.Services
             var rateGeneration = _mapper.Map<RateGeneration>(dto);
             rateGeneration.UserID = userId;
             rateGeneration.GenerationId = generationId;
-            _dbContext.RateGenerations.Add(rateGeneration);
-            _dbContext.SaveChanges();
+            await _dbContext.RateGenerations.AddAsync(rateGeneration);
+            await _dbContext.SaveChangesAsync();
             return rateGeneration.Id;
         }
-        public void Delete(int id, int generationId, ClaimsPrincipal user)
+        public async Task Delete(int id, int generationId, ClaimsPrincipal user)
         {
-            var generation = _dbContext.Generations.FirstOrDefault(i => i.Id == generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-            var rateGeneration=_dbContext.RateGenerations.FirstOrDefault(i=>i.Id == id);
-            if (rateGeneration == null)
-            {
-                throw new NotFoundException("This rate does not exsist");
-            }
+            var generation = await _dbContext.Generations.FirstOrDefaultAsync(i => i.Id == generationId) ?? throw new NotFoundException("Generation not found");
+            var rateGeneration =await _dbContext.RateGenerations.FirstOrDefaultAsync(i=>i.Id == id) ?? throw new NotFoundException("This rate does not exsist");
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateGeneration, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
             _dbContext.RateGenerations.Remove(rateGeneration);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
-        public AvgRateGenerationDTO Get(int generationId)
+        public async Task<AvgRateGenerationDTO> Get(int generationId)
         {
-            var generation=_dbContext.Generations.FirstOrDefault(i=>i.Id==generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-            var avgRateGeneration = _dbContext.AvgRateGenerations.FirstOrDefault(i=>i.GenerationId==generationId);
-            if (avgRateGeneration == null)
-            {
-                throw new NotFoundException($"Average rate for generation with ID:{generation.Id} not found");
-            }
-            var avgRateGenerationDTO=_mapper.Map<AvgRateGenerationDTO>(avgRateGeneration);
+            var generation=await _dbContext.Generations.FirstOrDefaultAsync(i => i.Id == generationId) ?? throw new NotFoundException("Generation not found");
+            var avgRateGeneration = await _dbContext.AvgRateGenerations.FirstOrDefaultAsync(i=>i.GenerationId==generationId) ?? throw new NotFoundException($"Average rate for generation with ID:{generation.Id} not found");
+            var avgRateGenerationDTO =_mapper.Map<AvgRateGenerationDTO>(avgRateGeneration);
             return avgRateGenerationDTO;
         }
-        public void Update(UpdateRateGenerationDTO dto, int generationId, int id, ClaimsPrincipal user)
+        public async Task Update(UpdateRateGenerationDTO dto, int generationId, int id, ClaimsPrincipal user)
         {
             
-            var generation = _dbContext.Generations.FirstOrDefault(i => i.Id == generationId);
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-            var rateGeneration = _dbContext.RateGenerations.FirstOrDefault(i=>i.Id==id);
-            if(rateGeneration == null)
-            {
-                throw new NotFoundException($"Rate for generation with ID: {generation.Id} not found");
-            }
-            var authorizationResult=_authorizationService.AuthorizeAsync(user, rateGeneration, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
+            var generation = await _dbContext.Generations.FirstOrDefaultAsync(i => i.Id == generationId) ?? throw new NotFoundException("Generation not found");
+            var rateGeneration =await  _dbContext.RateGenerations.FirstOrDefaultAsync(i=>i.Id==id) ?? throw new NotFoundException($"Rate for generation with ID: {generation.Id} not found");
+            var authorizationResult =_authorizationService.AuthorizeAsync(user, rateGeneration, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
 
             rateGeneration.Value = dto.Value;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
         }
     }

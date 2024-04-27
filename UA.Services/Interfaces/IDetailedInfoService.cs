@@ -11,9 +11,9 @@ namespace UA.Services.Interfaces
 {
     public interface IDetailedInfoService
     {
-        DetailedInfoDTO GetById(int generationId);
-        int Create(int generationId, CreateDetailedInfoDTO dto);
-        void Update(UpdateDetailedInfoDTO dto, int generationId);
-        void Delete(int generationId);
+        Task<DetailedInfoDTO> GetById(int generationId);
+        Task<int> Create(int generationId, CreateDetailedInfoDTO dto);
+        Task Update(UpdateDetailedInfoDTO dto, int generationId);
+        Task Delete(int generationId);
     }
 }

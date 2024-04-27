@@ -25,25 +25,22 @@ namespace UA.Services
             _mapper = mapper;
         }
 
-        public int Create(int generationId, CreateDetailedInfoDTO dto)
+        public async Task<int> Create(int generationId, CreateDetailedInfoDTO dto)
         {
-            var generation=_dbContext
+            var generation=await _dbContext
                 .Generations
-                .FirstOrDefault(o=>o.Id == generationId);
-            if (generation == null)
-                throw new NotFoundException("Generation not found");
-
+                .FirstOrDefaultAsync(o=>o.Id == generationId) ?? throw new NotFoundException("Generation not found");
             var detailedInfo = _mapper.Map<DetailedInfo>(dto);
             detailedInfo.GenerationId= generationId;
 
             if (dto.BodyColours!=null)
             {
-                var bodyColoursEntity = _dbContext.BodyColours.Where(data => dto.BodyColours.Contains(data.Id)).ToList();
+                var bodyColoursEntity = await _dbContext.BodyColours.Where(data => dto.BodyColours.Contains(data.Id)).ToListAsync();
                 detailedInfo.BodyColours = bodyColoursEntity;
             }
             if (dto.Brakes != null)
             {
-                var brakesEntity = _dbContext.Brakes.Where(data => dto.Brakes.Contains(data.Id)).ToList();
+                var brakesEntity = await _dbContext.Brakes.Where(data => dto.Brakes.Contains(data.Id)).ToListAsync();
                 detailedInfo.Brakes = brakesEntity;
             }
             if (dto.Suspensions != null)
@@ -52,50 +49,47 @@ namespace UA.Services
                 detailedInfo.Suspensions = suspensionsEntity;
             }
 
-            _dbContext.DeatiledInfos.Add(detailedInfo);
-            _dbContext.SaveChanges();
+            await _dbContext.DeatiledInfos.AddAsync(detailedInfo);
+            await _dbContext.SaveChangesAsync();
             return detailedInfo.Id;
         }
 
-        public void Delete(int generationId)
+        public async Task Delete(int generationId)
         {
-            var detailedInfo=_dbContext
+            var detailedInfo=await _dbContext
                 .DeatiledInfos
-                .FirstOrDefault(o=>o.Id==generationId);
+                .FirstOrDefaultAsync(o=>o.Id==generationId);
             if (detailedInfo == null || detailedInfo.GenerationId != generationId)
                 throw new NotFoundException("DetailedInfo not found");
 
             _dbContext.DeatiledInfos.Remove(detailedInfo);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public DetailedInfoDTO GetById(int generationId)
+        public async Task<DetailedInfoDTO> GetById(int generationId)
         {
             var detailedInfo = _dbContext
                 .DeatiledInfos
-                .Include(o => o.Suspensions)
-                .Include(o => o.Brakes)
-                .Include(o => o.BodyColours)
-                .FirstOrDefault(o => o.Id == generationId);
-            if (detailedInfo == null)
-                throw new NotFoundException("DetailedInfo not found");
-
-            var detailedDTO=_mapper.Map<DetailedInfoDTO>(detailedInfo);
+                //.Include(o => o.Suspensions)
+                //.Include(o => o.Brakes)
+                //.Include(o => o.BodyColours)
+                .FirstOrDefaultAsync(o => o.Id == generationId) ?? throw new NotFoundException("DetailedInfo not found");
+            var detailedDTO =_mapper.Map<DetailedInfoDTO>(detailedInfo);
             return detailedDTO;
                 
         }
 
-        public void Update(UpdateDetailedInfoDTO dto, int generationId)
+        public async Task Update(UpdateDetailedInfoDTO dto, int generationId)
         {
-            var detailedInfo=_dbContext
+            var detailedInfo=await _dbContext
                 .DeatiledInfos
-                .FirstOrDefault(o => o.Id == generationId);
+                .FirstOrDefaultAsync(o => o.Id == generationId);
             if (detailedInfo == null)
                 throw new NotFoundException("DetailedInfo not found");
 
             detailedInfo.ProductionStartDate = dto.ProductionStartDate;
             detailedInfo.ProductionEndDate = dto.ProductionEndDate;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -18,37 +18,37 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<BodyColourDTO>> Get()
+        public async Task<ActionResult<List<BodyColourDTO>>> Get()
         {
-            var bodyColour = _bodyColourService.GetAll();
+            var bodyColour = await _bodyColourService.GetAll();
             return Ok(bodyColour);
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<BodyColourDTO> Get([FromRoute] int id)
+        public async Task<ActionResult<BodyColourDTO>> Get([FromRoute] int id)
         {
-            var bodyColour = _bodyColourService.GetById(id);
+            var bodyColour = await _bodyColourService.GetById(id);
             return Ok(bodyColour);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody] CreateBodyColourDTO dto)
+        public async Task<IActionResult> Create([FromBody] CreateBodyColourDTO dto)
         {
-            var bodyColourId = _bodyColourService.Create(dto);
+            var bodyColourId = await _bodyColourService.Create(dto);
             return Created($"api/bodycolour/{bodyColourId}", null);
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            _bodyColourService.Delete(id);
+            await _bodyColourService.Delete(id);
             return NoContent();
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int id, [FromBody] UpdateBodyColourDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBodyColourDTO dto)
         {
-            _bodyColourService.Update(id, dto);
+            await _bodyColourService.Update(id, dto);
             return NoContent();
         }
     }

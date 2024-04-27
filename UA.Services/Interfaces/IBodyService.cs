@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IBodyService
     {
-        List<BodyDTO> GetAll(int generationId);
-        BodyDTO GetById(int generationId, int id);
-        int Create(int generationId,CreateBodyDTO dto);
-        void Delete(int generationId, int id);
-        void Update(int id,UpdateBodyDTO bodyTypeDTO);
+        Task<List<BodyDTO>> GetAll(int generationId);
+        Task<BodyDTO> GetById(int generationId, int id);
+        Task<int> Create(int generationId,CreateBodyDTO dto);
+        Task Delete(int generationId, int id);
+        Task Update(int id,UpdateBodyDTO bodyTypeDTO);
     }
 }

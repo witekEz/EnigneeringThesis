@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,42 +24,38 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public int Create(CreateGearboxDTO dto)
+        public async Task<int> Create(CreateGearboxDTO dto)
         {
             var gearbox = _mapper.Map<Gearbox>(dto);
-            _dbContext.Add(gearbox);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(gearbox);
+            await _dbContext.SaveChangesAsync();
             return gearbox.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var gearbox = _dbContext.Gearboxes.FirstOrDefault(o => o.Id == id);
-            if (gearbox == null)
-                throw new NotFoundException("Gearbox not found");
+            var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Gearbox not found");
             _dbContext.Remove(gearbox);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<GearboxDTO> GetAll()
+        public async Task<List<GearboxDTO>> GetAll()
         {
-            var gearboxes = _dbContext.Gearboxes.ToList();
+            var gearboxes = await _dbContext.Gearboxes.ToListAsync();
             var gearboxDTOs = _mapper.Map<List<GearboxDTO>>(gearboxes);
             return gearboxDTOs;
         }
 
-        public GearboxDTO GetById(int id)
+        public async Task<GearboxDTO> GetById(int id)
         {
-            var gearbox = _dbContext.Gearboxes.FirstOrDefault(o => o.Id == id);
-            if (gearbox == null)
-                throw new NotFoundException("Gearbox not found");
+            var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Gearbox not found");
             var gearboxDTO = _mapper.Map<GearboxDTO>(gearbox);
             return gearboxDTO;
         }
 
-        public void Update(int id, UpdateGearboxDTO dto)
+        public async Task Update(int id, UpdateGearboxDTO dto)
         {
-            var gearbox = _dbContext.Gearboxes.FirstOrDefault(o => o.Id == id);
+            var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(o => o.Id == id);
             if (gearbox == null)
                 throw new NotFoundException("Gearbox not found");
 
@@ -66,7 +63,7 @@ namespace UA.Services
             gearbox.NumberOfGears = dto.NumberOfGears;
             gearbox.TypeOfGearbox = dto.TypeOfGearbox;
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

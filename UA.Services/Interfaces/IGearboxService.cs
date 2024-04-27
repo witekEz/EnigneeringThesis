@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IGearboxService
     {
-        List<GearboxDTO> GetAll();
-        GearboxDTO GetById(int id);
-        int Create(CreateGearboxDTO dto);
-        void Update(int id, UpdateGearboxDTO dto);
-        void Delete(int id);
+        Task<List<GearboxDTO>> GetAll();
+        Task<GearboxDTO> GetById(int id);
+        Task<int> Create(CreateGearboxDTO dto);
+        Task Update(int id, UpdateGearboxDTO dto);
+        Task Delete(int id);
     }
 }

@@ -20,31 +20,31 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<CommentDTO>> Get([FromRoute] int generationId)
+        public async Task<ActionResult<List<CommentDTO>>> Get([FromRoute] int generationId)
         {
-            var comments = _commentService.GetAllComments(generationId);
+            var comments = await _commentService.GetAllComments(generationId);
             return Ok(comments);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody]CreateCommentDTO dto, [FromRoute] int generationId)
+        public async Task<IActionResult> Create([FromBody]CreateCommentDTO dto, [FromRoute] int generationId)
         {
             var authorId= int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var commentId = _commentService.Create(dto, generationId, authorId);
+            var commentId = await _commentService.Create(dto, generationId, authorId);
             return Created($"api/generation/{generationId}/comment/{commentId}",null);
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Delete([FromRoute]int id,[FromRoute]int generationId) 
+        public async Task<IActionResult> Delete([FromRoute]int id,[FromRoute]int generationId) 
         {
-            _commentService.Delete(generationId, id, User);
+            await _commentService.Delete(generationId, id, User);
             return NoContent();
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromBody]UpdateCommentDTO dto,[FromRoute] int id, [FromRoute]int generationId)
+        public async Task<IActionResult> Update([FromBody]UpdateCommentDTO dto,[FromRoute] int id, [FromRoute]int generationId)
         {
-            _commentService.Update(dto,generationId,id, User);
+            await _commentService.Update(dto, generationId, id, User);
             return NoContent();
         }
         

@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IEngineService
     {
-        List<EngineDTO> GetAll();
-        EngineDTO GetById(int id);
-        int Create(CreateEngineDTO dto);
-        void Update(int id,UpdateEngineDTO dto);
-        void Delete(int id);
+        Task<List<EngineDTO>> GetAll();
+        Task<EngineDTO> GetById(int id);
+        Task<int> Create(CreateEngineDTO dto);
+        Task Update(int id,UpdateEngineDTO dto);
+        Task Delete(int id);
     }
 }

@@ -11,8 +11,8 @@ namespace UA.Services.Interfaces
 {
     public interface ICommentReplyService
     {
-        int Create(CreateCommentReplyDTO dto, int commentId, int authorId);
-        void Update(UpdateCommentReplyDTO dto, int commentId, int id, ClaimsPrincipal author);
-        void Delete(int commentId, int id, ClaimsPrincipal author);
+        Task<int> Create(CreateCommentReplyDTO dto, int commentId, int authorId);
+        Task Update(UpdateCommentReplyDTO dto, int commentId, int id, ClaimsPrincipal author);
+        Task Delete(int commentId, int id, ClaimsPrincipal author);
     }
 }

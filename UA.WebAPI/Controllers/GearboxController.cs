@@ -18,37 +18,37 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<GearboxDTO>> Get()
+        public async Task<ActionResult<List<GearboxDTO>>> Get()
         {
-            var gearboxes = _gearboxService.GetAll();
+            var gearboxes = await _gearboxService.GetAll();
             return Ok(gearboxes);
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<GearboxDTO> Get([FromRoute] int id)
+        public async Task<ActionResult<GearboxDTO>> Get([FromRoute] int id)
         {
-            var gearbox = _gearboxService.GetById(id);
+            var gearbox = await _gearboxService.GetById(id);
             return Ok(gearbox);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody] CreateGearboxDTO gearboxDTO)
+        public async Task<IActionResult> Create([FromBody] CreateGearboxDTO gearboxDTO)
         {
-            var gearboxId = _gearboxService.Create(gearboxDTO);
+            var gearboxId = await _gearboxService.Create(gearboxDTO);
             return Created($"api/gearbox/{gearboxId}", null);
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            _gearboxService.Delete(id);
+            await _gearboxService.Delete(id);
             return NoContent();
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int id, [FromBody] UpdateGearboxDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateGearboxDTO dto)
         {
-            _gearboxService.Update(id, dto);
+            await _gearboxService.Update(id, dto);
             return NoContent();
         }
     }

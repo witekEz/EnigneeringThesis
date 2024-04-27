@@ -14,27 +14,27 @@ namespace UA.WebAPI.Controllers
         private readonly IUserService _userService;
         public UserController(IUserService userService) { _userService = userService; }
         [HttpGet]
-        public ActionResult<List<UserDetailsDTO>> Get()
+        public async Task<ActionResult<List<UserDetailsDTO>>> Get()
         {
-            var users=_userService.GetAll();
+            var users=await _userService.GetAll();
             return Ok(users);
         }
         [HttpGet("{id}")]
-        public ActionResult<UserDetailsDTO> Get([FromRoute] int id)
+        public async Task<ActionResult<UserDetailsDTO>> Get([FromRoute] int id)
         {
-            var user = _userService.GetById(id);
+            var user = await _userService.GetById(id);
             return Ok(user);
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            _userService.Delete(id);
+            await _userService.Delete(id);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public ActionResult Update([FromRoute] int id, [FromBody] UpdateUserDetailsDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateUserDetailsDTO dto)
         {
-            _userService.Update(id,dto);
+            await _userService.Update(id, dto);
             return NoContent();
         }
     }

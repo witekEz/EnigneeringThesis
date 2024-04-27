@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IBrandService
     {
-        IEnumerable<BrandDTO> GetAll();
-        BrandDTO GetById(int id);
-        int Create(CreateBrandDTO brandDTO);
-        void Delete(int id);
-        void Update(int id,UpdateBrandDTO brandDTO);
+        Task<IEnumerable<BrandDTO>> GetAll();
+        Task<BrandDTO> GetById(int id);
+        Task<int> Create(CreateBrandDTO brandDTO);
+        Task Delete(int id);
+        Task Update(int id,UpdateBrandDTO brandDTO);
     }
 }

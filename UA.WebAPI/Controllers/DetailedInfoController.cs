@@ -20,30 +20,30 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<DetailedInfoDTO> Get([FromRoute]int generationId)
+        public async Task<ActionResult<DetailedInfoDTO>> Get([FromRoute]int generationId)
         {
-            var detailedInfo=_detailedInfoService.GetById(generationId);
+            var detailedInfo=await _detailedInfoService.GetById(generationId);
             return Ok(detailedInfo);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromRoute]int generationId,[FromBody] CreateDetailedInfoDTO dto)
+        public async Task<IActionResult> Create([FromRoute]int generationId,[FromBody] CreateDetailedInfoDTO dto)
         {
-            var id = _detailedInfoService.Create(generationId,dto);
+            var id = await _detailedInfoService.Create(generationId, dto);
             return Created($"api/generation/{generationId}/detailedinfo/{id}", null);
         }
         [HttpDelete]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute]int generationId)
+        public async Task<IActionResult> Delete([FromRoute]int generationId)
         {
-            _detailedInfoService.Delete(generationId);
+            await _detailedInfoService.Delete(generationId);
             return NoContent();
         }
         [HttpPut]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int generationId,[FromBody] UpdateDetailedInfoDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int generationId,[FromBody] UpdateDetailedInfoDTO dto)
         {
-            _detailedInfoService.Update(dto, generationId);
+            await _detailedInfoService.Update(dto, generationId);
             return Ok();
         }
     }

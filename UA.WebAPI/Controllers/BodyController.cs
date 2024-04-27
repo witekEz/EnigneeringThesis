@@ -19,37 +19,37 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<BodyDTO>> Get([FromRoute]int generationId)
+        public async Task<ActionResult<List<BodyDTO>>> Get([FromRoute]int generationId)
         {
-            var bodies = _bodyService.GetAll(generationId);
+            var bodies = await _bodyService.GetAll(generationId);
             return Ok(bodies);
         }
         [HttpGet("id")]
         [AllowAnonymous]
-        public ActionResult<BodyDTO> Get([FromRoute] int generationId, [FromRoute] int id)
+        public async Task<ActionResult<BodyDTO>> Get([FromRoute] int generationId, [FromRoute] int id)
         {
-            var body= _bodyService.GetById(generationId,id);
+            var body= await _bodyService.GetById(generationId,id);
             return Ok(body);
         }
         [HttpPost]
         [Authorize(Roles ="Admin,SuperUser,User")]
-        public ActionResult Create([FromRoute]int generationId, [FromBody]CreateBodyDTO dto)
+        public async Task<IActionResult> Create([FromRoute]int generationId, [FromBody]CreateBodyDTO dto)
         {
-            var id = _bodyService.Create(generationId, dto);
+            var id = await _bodyService.Create(generationId, dto);
             return Created($"api/generation/{generationId}/body/{id}",null);
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int id, [FromBody] UpdateBodyDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBodyDTO dto)
         {
-            _bodyService.Update(id, dto);
+            await _bodyService.Update(id, dto);
             return NoContent();
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute] int generationId, [FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int generationId, [FromRoute] int id)
         {
-            _bodyService.Delete(generationId, id);
+            await _bodyService.Delete(generationId, id);
             return Ok();
         }
     }

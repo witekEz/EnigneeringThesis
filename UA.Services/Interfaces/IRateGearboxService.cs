@@ -12,9 +12,9 @@ namespace UA.Services.Interfaces
 {
     public interface IRateGearboxService
     {
-        AvgRateGearboxDTO Get(int gearboxId);
-        int Create(CreateRateGearboxDTO dto,int gearboxId, int userId);
-        void Update(UpdateRateGearboxDTO dto, int gearboxId, int id, ClaimsPrincipal user);
-        void Delete(int gearboxId, int id, ClaimsPrincipal user);
+        Task<AvgRateGearboxDTO> Get(int gearboxId);
+        Task<int> Create(CreateRateGearboxDTO dto,int gearboxId, int userId);
+        Task Update(UpdateRateGearboxDTO dto, int gearboxId, int id, ClaimsPrincipal user);
+        Task Delete(int gearboxId, int id, ClaimsPrincipal user);
     }
 }

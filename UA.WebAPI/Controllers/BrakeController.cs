@@ -18,37 +18,37 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<EngineDTO>> Get()
+        public async Task<ActionResult<List<EngineDTO>>> Get()
         {
-            var engines = _brakeService.GetAll();
+            var engines = await _brakeService.GetAll();
             return Ok(engines);
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<EngineDTO> Get([FromRoute] int id)
+        public async Task<ActionResult<EngineDTO>> Get([FromRoute] int id)
         {
-            var engine = _brakeService.GetById(id);
+            var engine = await _brakeService.GetById(id);
             return Ok(engine);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody] CreateBrakeDTO brakeDTO)
+        public async Task<IActionResult> Create([FromBody] CreateBrakeDTO brakeDTO)
         {
-            var brakeId = _brakeService.Create(brakeDTO);
+            var brakeId = await _brakeService.Create(brakeDTO);
             return Created($"api/brake/{brakeId}", null);
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            _brakeService.Delete(id);
+            await _brakeService.Delete(id);
             return NoContent();
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int id, [FromBody] UpdateBrakeDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateBrakeDTO dto)
         {
-            _brakeService.Update(id, dto);
+            await _brakeService.Update(id, dto);
             return NoContent();
         }
     }

@@ -59,7 +59,6 @@ export default function Generation({ generation }) {
     };
     return (
         <>
-
             <Row className="container-fluid mainRow">
                 <Col xxl={6} xl={6} lg={6} md={6} xs={12} id="imageCol">
                     <ImageComponent generation={generation} />
@@ -108,11 +107,11 @@ export default function Generation({ generation }) {
 
                 </Col>
             </Row>
-            <Col className="detailsBorder detailsBorder-technicalData container-fluid" >
-                <p>DANE TECHNICZNE</p>
+            <Col className="detailsBorder-technicalData container-fluid" >
+                <p className="detailsBorder-head">DANE TECHNICZNE</p>
                 <Row className="detailsBorder-engines">
-                    <p>SILNIKI</p>
-                    {uniqueTypes.map(type => (
+                <p>SILNIKI</p>
+                {uniqueTypes.map(type => (
                         <Row className="detailsBorder-types" key={generateKey(type, "uniqueTypes")}>
                             <p>{type}</p>
                             <Table responsive className="detailsBorder-engines-table">

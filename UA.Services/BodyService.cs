@@ -24,71 +24,57 @@ namespace UA.Services
             _mapper = mapper;
         }
 
-        public int Create(int generationId, CreateBodyDTO dto)
+        public async Task<int> Create(int generationId, CreateBodyDTO dto)
         {
-            var generation=_dbContext
+            var generation=await _dbContext
                 .Generations
-                .FirstOrDefault(o=>o.Id == generationId);
-            if (generation == null)
-                throw new NotFoundException("Generation not found");
-
+                .FirstOrDefaultAsync(o=>o.Id == generationId) ?? throw new NotFoundException("Generation not found");
             var body = _mapper.Map<Body>(dto);
             body.GenerationId = generationId;
             if (dto.BodyTypeId != 0)
             {
-                var bodyTypeEntity = _dbContext.BodyTypes.FirstOrDefault(bt => bt.Id == dto.BodyTypeId);
+                var bodyTypeEntity = await _dbContext.BodyTypes.FirstOrDefaultAsync(bt => bt.Id == dto.BodyTypeId);
                 body.BodyType = bodyTypeEntity;
             }
-            _dbContext.Bodies.Add(body);
-            _dbContext.SaveChanges();
+            await _dbContext.Bodies.AddAsync(body);
+            await _dbContext.SaveChangesAsync();
             return body.Id;
         }
 
-        public void Delete(int generationId, int id)
+        public async Task Delete(int generationId, int id)
         {
-            var generation = _dbContext
+            var generation = await _dbContext
                 .Generations
-                .FirstOrDefault(o=>o.Id==generationId);
-            if (generation == null)
-                throw new NotFoundException("Generation not found");
-            var body=_dbContext
+                .FirstOrDefaultAsync(o=>o.Id==generationId) ?? throw new NotFoundException("Generation not found");
+            var body =await _dbContext
                 .Bodies
-                .FirstOrDefault(o=>o.Id==id);
+                .FirstOrDefaultAsync(o=>o.Id==id);
             if (body == null || body.GenerationId!=generationId)
                 throw new NotFoundException("Body not found");
             _dbContext.Bodies.Remove(body);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<BodyDTO> GetAll(int generationId)
+        public async Task<List<BodyDTO>> GetAll(int generationId)
         {
-            var generation = _dbContext
-                .Generations
-                .Include (x => x.Bodies)
-                
-                .FirstOrDefault(g=>g.Id == generationId);
-
-            if (generation == null)
-            {
-                throw new NotFoundException("Generation not found");
-            }
-
+            var generation = await _dbContext
+                .Generations            
+                .FirstOrDefaultAsync(g=>g.Id == generationId) ?? throw new NotFoundException("Generation not found");
             var bodyDTOs = _mapper.Map<List<BodyDTO>>(generation.Bodies);
             return bodyDTOs;
         }
 
-        public BodyDTO GetById(int generationId, int id)
+        public async Task<BodyDTO> GetById(int generationId, int id)
         {
-            var generation = _dbContext
+            var generation = await _dbContext
                 .Generations
-                .Include(o => o.Bodies)
-                .FirstOrDefault(o => o.Id == generationId);
+                .FirstOrDefaultAsync(o => o.Id == generationId);
             if (generation == null)
                 throw new NotFoundException("Generation not found");
 
-            var body=_dbContext
+            var body=await _dbContext
                 .Bodies
-                .FirstOrDefault(o=>o.Id == id);
+                .FirstOrDefaultAsync(o=>o.Id == id);
 
             if (body == null||body.GenerationId!=generationId)
                 throw new NotFoundException("Bodies not found");
@@ -97,17 +83,14 @@ namespace UA.Services
             return bodyDTO;
         }
 
-        public void Update(int id,UpdateBodyDTO bodyDTO)
+        public async Task Update(int id,UpdateBodyDTO bodyDTO)
         {
-            var body=_dbContext.Bodies.FirstOrDefault(o=>o.Id==id);
-            if (body == null)
-                throw new NotFoundException("Body type not found");
-
+            var body=await _dbContext.Bodies.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Body type not found");
             body.Segment = bodyDTO.Segment;
             body.NumberOfDoors= bodyDTO.NumberOfDoors;
             body.NumberOfSeats= bodyDTO.NumberOfSeats;
             body.TrunkCapacity= bodyDTO.TrunkCapacity;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

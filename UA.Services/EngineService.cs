@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,45 +24,39 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public int Create(CreateEngineDTO dto)
+        public async Task<int> Create(CreateEngineDTO dto)
         {
             var engine =_mapper.Map<Engine>(dto);
-            _dbContext.Add(engine);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(engine);
+            await _dbContext.SaveChangesAsync();
             return engine.Id;
             
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var engine = _dbContext.Engines.FirstOrDefault(o => o.Id == id);
-            if (engine == null)
-                throw new NotFoundException("Engine not found");
-            _dbContext.Remove(engine);
-            _dbContext.SaveChanges();
+            var engine = await _dbContext.Engines.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Engine not found");
+            _dbContext.Engines.Remove(engine);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<EngineDTO> GetAll()
+        public async Task<List<EngineDTO>> GetAll()
         {
-            var engines=_dbContext.Engines.ToList();
-            if (engines == null)
-                throw new NotFoundException("Suspensions not found");
-            var engineDTOs=_mapper.Map<List<EngineDTO>>(engines);
+            var engines=await _dbContext.Engines.ToListAsync() ?? throw new NotFoundException("Suspensions not found");
+            var engineDTOs =_mapper.Map<List<EngineDTO>>(engines);
             return engineDTOs;
         }
 
-        public EngineDTO GetById(int id)
+        public async Task<EngineDTO> GetById(int id)
         {
-            var engine = _dbContext.Engines.FirstOrDefault(o=>o.Id==id);
-            if (engine==null)
-                throw new NotFoundException("Engine not found");
-            var engineDTO=_mapper.Map<EngineDTO>(engine);
+            var engine = await _dbContext.Engines.FirstOrDefaultAsync(o=>o.Id==id) ?? throw new NotFoundException("Engine not found");
+            var engineDTO =_mapper.Map<EngineDTO>(engine);
             return engineDTO;
         }
 
-        public void Update(int id,UpdateEngineDTO dto)
+        public async Task Update(int id,UpdateEngineDTO dto)
         {
-            var engine=_dbContext.Engines.FirstOrDefault(o=>o.Id==id);
+            var engine=await _dbContext.Engines.FirstOrDefaultAsync(o=>o.Id==id);
             if (engine==null)
                 throw new NotFoundException("Engine not found");
 
@@ -72,7 +67,7 @@ namespace UA.Services
             engine.Type = dto.Type;
             engine.FuelConsumptionCity = dto.FuelConsumptionCity;
             engine.FuelConsumptionSuburban = dto.FuelConsumptionSuburban;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

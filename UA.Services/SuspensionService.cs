@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,49 +24,41 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public int Create(CreateSuspensionDTO dto)
+        public async Task<int> Create(CreateSuspensionDTO dto)
         {
             var suspension = _mapper.Map<Suspension>(dto);
-            _dbContext.Add(suspension);
-            _dbContext.SaveChanges();
+            await _dbContext.AddAsync(suspension);
+            await _dbContext.SaveChangesAsync();
             return suspension.Id;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var suspension = _dbContext.Suspensions.FirstOrDefault(o => o.Id == id);
-            if (suspension == null)
-                throw new NotFoundException("Engine not found");
+            var suspension = await _dbContext.Suspensions.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Engine not found");
             _dbContext.Remove(suspension);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<SuspensionDTO> GetAll()
+        public async Task<List<SuspensionDTO>> GetAll()
         {
-            var suspensions = _dbContext.Suspensions.ToList();
-            if (suspensions == null)
-                throw new NotFoundException("Suspensions not found");
+            var suspensions = await _dbContext.Suspensions.ToListAsync() ?? throw new NotFoundException("Suspensions not found");
             var suspensionDTOs = _mapper.Map<List<SuspensionDTO>>(suspensions);
             return suspensionDTOs;
         }
 
-        public SuspensionDTO GetById(int id)
+        public async Task<SuspensionDTO> GetById(int id)
         {
-            var suspension = _dbContext.Suspensions.FirstOrDefault(o => o.Id == id);
-            if (suspension == null)
-                throw new NotFoundException("Suspension not found");
+            var suspension = await _dbContext.Suspensions.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Suspension not found");
             var suspensionDTO = _mapper.Map<SuspensionDTO>(suspension);
             return suspensionDTO;
         }
 
-        public void Update(int id, UpdateSuspensionDTO dto)
+        public async Task Update(int id, UpdateSuspensionDTO dto)
         {
-            var suspension = _dbContext.Suspensions.FirstOrDefault(o => o.Id == id);
-            if (suspension == null)
-                throw new NotFoundException("Suspension not found");
-            if(dto.Type!=null)
+            var suspension = await _dbContext.Suspensions.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Suspension not found");
+            if (dto.Type!=null)
                 suspension.Type=dto.Type;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

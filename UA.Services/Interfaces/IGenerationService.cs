@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IGenerationService
     {
-        GenerationDTO GetById(int modelId,int generationId);
-        List<GenerationDTO> GetAll(int modelId);
-        int Create(int modelId,CreateGenerationDTO dto);
-        void Update(UpdateGenerationDTO dto, int id);
-        void Delete(int modelId,int generationId);
+        Task<GenerationDTO> GetById(int modelId,int generationId);
+        Task<List<GenerationDTO>> GetAll(int modelId);
+        Task<int> Create(int modelId,CreateGenerationDTO dto);
+        Task Update(UpdateGenerationDTO dto, int id);
+        Task Delete(int modelId,int generationId);
     }
 }

@@ -19,37 +19,37 @@ namespace UA.WebAPI.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<List<CategoryDTO>> Get()
+        public async Task<ActionResult<List<CategoryDTO>>> Get()
         {
-            var categories=_categoryService.GetAll();
+            var categories=await _categoryService.GetAll();
             return Ok(categories);
         }
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public ActionResult<CategoryDTO> Get([FromRoute]int id)
+        public async Task<ActionResult<CategoryDTO>> Get([FromRoute]int id)
         {
-            var category = _categoryService.GetById(id);
+            var category = await _categoryService.GetById(id);
             return Ok(category);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody]CreateCategoryDTO dto)
+        public async Task<IActionResult> Create([FromBody]CreateCategoryDTO dto)
         {
-            var categoryId = _categoryService.Create(dto);
+            var categoryId = await _categoryService.Create(dto);
             return Created($"category/{categoryId}",null);
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute]int id,[FromBody]UpdateCategoryDTO dto)
+        public async Task<IActionResult> Update([FromRoute]int id,[FromBody]UpdateCategoryDTO dto)
         {
-            _categoryService.Update(id,dto);
+            await _categoryService.Update(id, dto);
             return NoContent();
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            _categoryService.Delete(id);
+            await _categoryService.Delete(id);
             return NoContent();
         }
     }

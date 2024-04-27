@@ -19,24 +19,24 @@ namespace UA.WebAPI.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody] CreateCommentReplyDTO dto, [FromRoute] int commentId)
+        public async Task<ActionResult> Create([FromBody] CreateCommentReplyDTO dto, [FromRoute] int commentId)
         {
             var authorId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var replyId = _commentReplyService.Create(dto, commentId, authorId);
+            var replyId = await _commentReplyService.Create(dto, commentId, authorId);
             return Created($"api/comment/{commentId}/reply/{commentId}", null);
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Delete([FromRoute] int id, [FromRoute] int commentId)
+        public async Task<IActionResult> Delete([FromRoute] int id, [FromRoute] int commentId)
         {
-            _commentReplyService.Delete(commentId, id, User);
+            await _commentReplyService.Delete(commentId, id, User);
             return NoContent();
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromBody] UpdateCommentReplyDTO dto, [FromRoute] int id, [FromRoute] int commentId)
+        public async Task<IActionResult> Update([FromBody] UpdateCommentReplyDTO dto, [FromRoute] int id, [FromRoute] int commentId)
         {
-            _commentReplyService.Update(dto, commentId, id, User);
+            await _commentReplyService.Update(dto, commentId, id, User);
             return NoContent();
         }
     }

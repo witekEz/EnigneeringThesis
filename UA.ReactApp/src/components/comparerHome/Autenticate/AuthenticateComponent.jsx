@@ -47,6 +47,7 @@ export default function AuthenticateComponent({generation}) {
         dispatch(changeRole("User"))
         dispatch(changeName(""))
         sessionStorage.removeItem("token");
+        setAuthenticationHeader("nodata");
     }
 
     const handleFetchLogin = async (loginForm) => {

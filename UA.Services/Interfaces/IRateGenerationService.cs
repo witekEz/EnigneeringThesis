@@ -12,9 +12,9 @@ namespace UA.Services.Interfaces
 {
     public interface IRateGenerationService
     {
-        AvgRateGenerationDTO Get(int generationId);
-        int Create(CreateRateGenerationDTO dto, int generationId, int userId);
-        void Update(UpdateRateGenerationDTO dto, int generationId, int id, ClaimsPrincipal user);
-        void Delete(int generationId, int id, ClaimsPrincipal user);
+        Task<AvgRateGenerationDTO> Get(int generationId);
+        Task<int> Create(CreateRateGenerationDTO dto, int generationId, int userId);
+        Task Update(UpdateRateGenerationDTO dto, int generationId, int id, ClaimsPrincipal user);
+        Task Delete(int generationId, int id, ClaimsPrincipal user);
     }
 }

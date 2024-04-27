@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,27 +25,25 @@ namespace UA.Services
             _mapper = mapper;
         }
         
-        public int Create(CreateCategoryDTO dto)
+        public async Task<int> Create(CreateCategoryDTO dto)
         {
             var category = _mapper.Map<Category>(dto);
-            _dbContext.Categories.Add(category);
-            _dbContext.SaveChanges();
+            await _dbContext.Categories.AddAsync(category);
+            await _dbContext.SaveChangesAsync();
             return category.Id;
 
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var category = _dbContext.Categories.FirstOrDefault(o => o.Id == id);
-            if (category == null)
-                throw new NotFoundException("Category not found");
+            var category = await _dbContext.Categories.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Category not found");
             _dbContext.Categories.Remove(category);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public List<CategoryDTO> GetAll()
+        public async Task<List<CategoryDTO>> GetAll()
         {
-            var categories= _dbContext.Categories.ToList();
+            var categories= await _dbContext.Categories.ToListAsync();
             if (categories == null) {
                 throw new NotFoundException("Categories not found");
             }
@@ -52,24 +51,18 @@ namespace UA.Services
             return categoryDTOs;
         }
 
-        public CategoryDTO GetById(int id)
+        public async Task<CategoryDTO> GetById(int id)
         {
-            var category=_dbContext.Categories.FirstOrDefault(o=>o.Id==id);
-            if (category == null){
-                throw new NotFoundException("Category not found");
-            }
+            var category=await _dbContext.Categories.FirstOrDefaultAsync(o=>o.Id==id) ?? throw new NotFoundException("Category not found");
             var categoryDTO = _mapper.Map<CategoryDTO>(category);
             return categoryDTO;
         }
 
-        public void Update(int id, UpdateCategoryDTO dto)
+        public async Task Update(int id, UpdateCategoryDTO dto)
         {
-            var category = _dbContext.Categories.FirstOrDefault(o => o.Id == id);
-            if (category == null){
-                throw new NotFoundException("Category not found");
-            }
+            var category = await _dbContext.Categories.FirstOrDefaultAsync(o => o.Id == id) ?? throw new NotFoundException("Category not found");
             category.Name = dto.Name;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -12,9 +12,9 @@ namespace UA.WebAPI.Controllers
             _generationImageService = generationImageService;
         }
         [HttpPost("{id}")]
-        public ActionResult Upload([FromRoute]int id,[FromForm]IFormFile image)
+        public async Task<IActionResult> Upload([FromRoute]int id,[FromForm]IFormFile image)
         {
-            _generationImageService.Upload(id,image);
+            await _generationImageService.Upload(id, image);
             return Ok();
         }
     }

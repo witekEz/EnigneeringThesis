@@ -24,60 +24,51 @@ namespace UA.Services
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public int Create(int generationId, CreateOptionalEquipmentDTO dto)
+        public async Task<int> Create(int generationId, CreateOptionalEquipmentDTO dto)
         {
             var generation = _dbContext
                 .Generations
-                .FirstOrDefault(o => o.Id == generationId);
-            if (generation == null)
-                throw new NotFoundException("Generation not found");
-
+                .FirstOrDefault(o => o.Id == generationId) ?? throw new NotFoundException("Generation not found");
             var optionalEquipment = _mapper.Map<OptionalEquipment>(dto);
             optionalEquipment.GenerationId = generationId;
-            _dbContext.OptionalEquipments.Add(optionalEquipment);
-            _dbContext.SaveChanges();
+            await _dbContext.OptionalEquipments.AddAsync(optionalEquipment);
+            await _dbContext.SaveChangesAsync();
             return optionalEquipment.Id;
         }
 
-        public void Delete(int generationId)
+        public async Task Delete(int generationId)
         {
-            var optionalEquipment = _dbContext
+            var optionalEquipment = await _dbContext
                 .OptionalEquipments
-                .FirstOrDefault(o => o.Id == generationId);
+                .FirstOrDefaultAsync(o => o.Id == generationId);
             if (optionalEquipment == null || optionalEquipment.GenerationId != generationId)
                 throw new NotFoundException("Optional equipment not found");
 
             _dbContext.OptionalEquipments.Remove(optionalEquipment);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public OptionalEquipmentDTO GetById(int generationId)
+        public async Task<OptionalEquipmentDTO> GetById(int generationId)
         {
-            var optionalEquipment = _dbContext
+            var optionalEquipment = await _dbContext
                 .OptionalEquipments
-                .FirstOrDefault(o => o.Id == generationId);
-            if (optionalEquipment == null)
-                throw new NotFoundException("Optional equipment not found");
-
+                .FirstOrDefaultAsync(o => o.Id == generationId) ?? throw new NotFoundException("Optional equipment not found");
             var optionalEquipmentDTO = _mapper.Map<OptionalEquipmentDTO>(optionalEquipment);
             return optionalEquipmentDTO;
         }
 
-        public void Update(UpdateOptionalEquipmentDTO dto, int generationId)
+        public async Task Update(UpdateOptionalEquipmentDTO dto, int generationId)
         {
-            var optionalEquipment = _dbContext
+            var optionalEquipment = await _dbContext
                 .OptionalEquipments
-                .FirstOrDefault(o => o.Id == generationId);
-            if (optionalEquipment == null)
-                throw new NotFoundException("Optional equipment not found");
-
+                .FirstOrDefaultAsync(o => o.Id == generationId) ?? throw new NotFoundException("Optional equipment not found");
             optionalEquipment.RearAxleSteering = dto.RearAxleSteering;
             optionalEquipment.StandardTailPipes = dto.StandardTailPipes;
             optionalEquipment.Rooftop= dto.Rooftop;
             optionalEquipment.ABS= dto.ABS;
             optionalEquipment.ESP= dto.ESP;
             optionalEquipment.ASR= dto.ASR;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

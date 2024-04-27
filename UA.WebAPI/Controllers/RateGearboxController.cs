@@ -21,31 +21,31 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<AvgRateGearboxDTO> Get([FromRoute] int gearboxId)
+        public async Task<ActionResult<AvgRateGearboxDTO>> Get([FromRoute] int gearboxId)
         {
-            var avgRate = _rateGearboxService.Get(gearboxId);
+            var avgRate = await _rateGearboxService.Get(gearboxId);
             return Ok(avgRate);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromBody] CreateRateGearboxDTO dto, [FromRoute] int gearboxId)
+        public async Task<IActionResult> Create([FromBody] CreateRateGearboxDTO dto, [FromRoute] int gearboxId)
         {
             var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var rateId = _rateGearboxService.Create(dto, gearboxId, userId);
+            var rateId = await _rateGearboxService.Create(dto, gearboxId, userId);
             return Created($"api/geatbox/{gearboxId}/rate/{rateId}", null);
         }
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromBody] UpdateRateGearboxDTO dto, [FromRoute] int id, [FromRoute] int gearboxId)
+        public async Task<IActionResult> Update([FromBody] UpdateRateGearboxDTO dto, [FromRoute] int id, [FromRoute] int gearboxId)
         {
-            _rateGearboxService.Update(dto, gearboxId, id, User);
+            await _rateGearboxService.Update(dto, gearboxId, id, User);
             return NoContent();
         }
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Delete([FromRoute] int gearboxId, [FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int gearboxId, [FromRoute] int id)
         {
-            _rateGearboxService.Delete(gearboxId, id, User);
+            await _rateGearboxService.Delete(gearboxId, id, User);
             return NoContent();
         }
     }

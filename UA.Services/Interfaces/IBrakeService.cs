@@ -11,10 +11,10 @@ namespace UA.Services.Interfaces
 {
     public interface IBrakeService
     {
-        List<BrakeDTO> GetAll();
-        BrakeDTO GetById(int id);
-        int Create(CreateBrakeDTO dto);
-        void Update(int id, UpdateBrakeDTO dto);
-        void Delete(int id);
+        Task<List<BrakeDTO>> GetAll();
+        Task<BrakeDTO> GetById(int id);
+        Task<int> Create(CreateBrakeDTO dto);
+        Task Update(int id, UpdateBrakeDTO dto);
+        Task Delete(int id);
     }
 }

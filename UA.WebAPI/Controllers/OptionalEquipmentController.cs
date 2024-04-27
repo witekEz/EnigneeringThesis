@@ -19,30 +19,30 @@ namespace UA.WebAPI.Controllers
         }
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<OptionalEquipmentDTO> Get([FromRoute] int generationId)
+        public async Task<ActionResult<OptionalEquipmentDTO>> Get([FromRoute] int generationId)
         {
-            var optionalEquipment = _optionalEquipmentService.GetById(generationId);
+            var optionalEquipment = await _optionalEquipmentService.GetById(generationId);
             return Ok(optionalEquipment);
         }
         [HttpPost]
         [Authorize(Roles = "Admin,SuperUser,User")]
-        public ActionResult Create([FromRoute] int generationId, [FromBody] CreateOptionalEquipmentDTO dto)
+        public async Task<IActionResult> Create([FromRoute] int generationId, [FromBody] CreateOptionalEquipmentDTO dto)
         {
-            var id = _optionalEquipmentService.Create(generationId, dto);
+            var id = await _optionalEquipmentService.Create(generationId, dto);
             return Created($"api/generation/{generationId}/optionalequipment/{id}", null);
         }
         [HttpDelete]
         [Authorize(Roles = "Admin")]
-        public ActionResult Delete([FromRoute] int generationId)
+        public async Task<IActionResult> Delete([FromRoute] int generationId)
         {
-            _optionalEquipmentService.Delete(generationId);
+            await _optionalEquipmentService.Delete(generationId);
             return NoContent();
         }
         [HttpPut]
         [Authorize(Roles = "Admin,SuperUser")]
-        public ActionResult Update([FromRoute] int generationId, [FromBody] UpdateOptionalEquipmentDTO dto)
+        public async Task<IActionResult> Update([FromRoute] int generationId, [FromBody] UpdateOptionalEquipmentDTO dto)
         {
-            _optionalEquipmentService.Update(dto, generationId);
+            await _optionalEquipmentService.Update(dto, generationId);
             return Ok();
         }
     }

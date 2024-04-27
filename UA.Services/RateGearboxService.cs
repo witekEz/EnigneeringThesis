@@ -15,6 +15,7 @@ using UA.Model.Entities;
 using UA.Services.Interfaces;
 using UA.Services.Middleware.Exceptions;
 using UA.Services.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace UA.Services
 {
@@ -30,16 +31,11 @@ namespace UA.Services
             _authorizationService = authorizationService;
         }
 
-        public int Create(CreateRateGearboxDTO dto, int gearboxId, int userId)
+        public async Task<int> Create(CreateRateGearboxDTO dto, int gearboxId, int userId)
         {
-            var gearbox = _dbContext.Gearboxes.FirstOrDefault(i => i.Id == gearboxId);
-            if (gearbox == null)
-            {
-                throw new NotFoundException("Gearbox not found");
-            }
-
-            var ratesGearbox = _dbContext.RateGearboxes.Where(e => e.GearboxId == gearboxId).ToList();
-            var avgRateGearbox = _dbContext.AvgRateGearboxes.FirstOrDefault(i => i.GearboxId == gearboxId);
+            var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(i => i.Id == gearboxId) ?? throw new NotFoundException("Gearbox not found");
+            var ratesGearbox = await _dbContext.RateGearboxes.Where(e => e.GearboxId == gearboxId).ToListAsync();
+            var avgRateGearbox = await _dbContext.AvgRateGearboxes.FirstOrDefaultAsync(i => i.GearboxId == gearboxId);
 
             if (avgRateGearbox == null)
             {
@@ -50,10 +46,10 @@ namespace UA.Services
                     GearboxId = gearboxId,
                 };
                 var newAvgRateGearbox = _mapper.Map<AvgRateGearbox>(createAvgRateGearbox);
-                _dbContext.AvgRateGearboxes.Add(newAvgRateGearbox);
-                _dbContext.SaveChanges();
+                await _dbContext.AvgRateGearboxes.AddAsync(newAvgRateGearbox);
+                await _dbContext.SaveChangesAsync();
 
-                avgRateGearbox = _dbContext.AvgRateGearboxes.FirstOrDefault(i => i.GearboxId == gearboxId);
+                avgRateGearbox = await _dbContext.AvgRateGearboxes.FirstOrDefaultAsync(i => i.GearboxId == gearboxId);
             }
 
             if (ratesGearbox != null && avgRateGearbox != null)
@@ -78,68 +74,43 @@ namespace UA.Services
             var rateGearbox = _mapper.Map<RateGearbox>(dto);
             rateGearbox.UserID = userId;
             rateGearbox.GearboxId = gearboxId;
-            _dbContext.RateGearboxes.Add(rateGearbox);
-            _dbContext.SaveChanges();
+            await _dbContext.RateGearboxes.AddAsync(rateGearbox);
+            await _dbContext.SaveChangesAsync();
             return rateGearbox.Id;
         }
 
-        public void Delete(int gearboxId, int id, ClaimsPrincipal user)
+        public async Task Delete(int gearboxId, int id, ClaimsPrincipal user)
         {
-            var gearbox = _dbContext.Gearboxes.FirstOrDefault(i => i.Id == gearboxId);
-            if (gearbox == null)
-            {
-                throw new NotFoundException("Gearbox not found");
-            }
-            var rateGearbox = _dbContext.RateGearboxes.FirstOrDefault(i => i.Id == id);
-            if (rateGearbox == null)
-            {
-                throw new NotFoundException("This rate does not exsist");
-            }
+            var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(i => i.Id == gearboxId) ?? throw new NotFoundException("Gearbox not found");
+            var rateGearbox = await _dbContext.RateGearboxes.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException("This rate does not exsist");
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateGearbox, new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
             _dbContext.RateGearboxes.Remove(rateGearbox);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
-        public AvgRateGearboxDTO Get(int gearboxId)
+        public async Task<AvgRateGearboxDTO> Get(int gearboxId)
         {
-            var gearbox = _dbContext.Gearboxes.FirstOrDefault(i => i.Id == gearboxId);
-            if (gearbox == null)
-            {
-                throw new NotFoundException("Gearbox not found");
-            }
-            var avgRateGearbox = _dbContext.AvgRateGearboxes.FirstOrDefault(i=>i.GearboxId==gearboxId);
-            if (avgRateGearbox == null)
-            {
-                throw new NotFoundException($"Average rate for gearbox with ID:{gearbox.Id} not found");
-            }
+            var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(i => i.Id == gearboxId) ?? throw new NotFoundException("Gearbox not found");
+            var avgRateGearbox = await _dbContext.AvgRateGearboxes.FirstOrDefaultAsync(i=>i.GearboxId==gearboxId) ?? throw new NotFoundException($"Average rate for gearbox with ID:{gearbox.Id} not found");
             var avgRateGearboxDTO = _mapper.Map<AvgRateGearboxDTO>(avgRateGearbox);
             return avgRateGearboxDTO;
         }
 
-        public void Update(UpdateRateGearboxDTO dto, int gearboxId, int id, ClaimsPrincipal user)
+        public async Task Update(UpdateRateGearboxDTO dto, int gearboxId, int id, ClaimsPrincipal user)
         {
-            var gearbox = _dbContext.Gearboxes.FirstOrDefault(i => i.Id == gearboxId);
-            if (gearbox == null)
-            {
-                throw new NotFoundException("Gearbox not found");
-            }
-            var rateGearbox = _dbContext.RateGearboxes.FirstOrDefault(i => i.Id == id);
-            if (rateGearbox == null)
-            {
-                throw new NotFoundException($"Rate for gearbox with ID: {gearbox.Id} not found");
-            }
+            var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(i => i.Id == gearboxId) ?? throw new NotFoundException("Gearbox not found");
+            var rateGearbox = await _dbContext.RateGearboxes.FirstOrDefaultAsync(i => i.Id == id) ?? throw new NotFoundException($"Rate for gearbox with ID: {gearbox.Id} not found");
             var authorizationResult = _authorizationService.AuthorizeAsync(user, rateGearbox, new ResourceOperationRequirement(ResourceOperation.Update)).Result;
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbidException("You cant do that!");
             }
-
             rateGearbox.Value = dto.Value;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
