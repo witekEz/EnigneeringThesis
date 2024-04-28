@@ -254,7 +254,7 @@ input::-webkit-inner-spin-button {
   text-align: center;
   margin-top: 1rem;
 }
-#comparer-details-main .detailsBorder-head{
+#comparer-details-main .details-head{
   text-align: center;
   border: 2px;
   border-style:solid;
@@ -267,8 +267,8 @@ input::-webkit-inner-spin-button {
   color: #3264fe;
 }
 
-#comparer-details-main .detailsBorder-engines{
-  margin-bottom: 1%;
+#comparer-details-main .details-engines{
+  margin: 0rem;
   padding: 1rem;
   border: 2px;
   border-style:solid;
@@ -276,35 +276,36 @@ input::-webkit-inner-spin-button {
   color:black;
   font-family: "Roboto Mono", monospace;
 }
-
-#comparer-details-main .detailsBorder-types{
-  margin: 1rem;
-  padding: 1rem;
-  border: 2px;
-  border-style:solid;
-  border-radius: 1rem;
-  color:black;
-  font-family: "Roboto Mono", monospace;
-}
-#comparer-details-main .detailsBorder-engines-table{
-  margin: 0%;
-  padding: 1rem;
-  border: 2px;
-  border-style:solid;
-  color:black;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+#comparer-details-main .details-p{
   text-align: center;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#comparer-details-main .details-type-p{
+  text-align: center;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+
+  padding-top: 1rem;
+  border-top: 2px;
+  border-bottom: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  border-style: solid;
+  color:black;
 }
 
-#comparer-details-main .detailsBorder-engines-table td .row-container{
+#comparer-details-main .details-table {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif
+}
+#comparer-details-main .details-table td .row-container{
   display:inline-block;
 }
-#comparer-details-main .detailsBorder-gearboxes-table td .row-container{
-  display:inline-block;
-}
-#comparer-details-main .detailsBorder-gearboxes{
+
+#comparer-details-main .details-gearboxes{
   margin: 0%;
+  margin-top: 1rem;
   padding: 1rem;
   border: 2px;
   border-style:solid;
@@ -329,7 +330,7 @@ input::-webkit-inner-spin-button {
   border-style:solid;
   border-radius: 1rem;
   color:black;
-  font-family: "Roboto Mono", monospace;
+  font-family: Arial, Helvetica, sans-serif;
   text-align: center;
 }
 #comparer-details-main .detailsBorder-bodyTypes{
@@ -341,7 +342,7 @@ input::-webkit-inner-spin-button {
   border-style:solid;
   border-radius: 1rem;
   color:black;
-  font-family: "Roboto Mono", monospace;
+  font-family: Arial, Helvetica, sans-serif;
 }
 #comparer-details-main #addCommentButton{
   margin-bottom: 1rem;
@@ -350,7 +351,7 @@ input::-webkit-inner-spin-button {
 #comparer-details-main .detailsBorder-details{
   margin-top: 1%;
   margin-bottom: 1%;
-  font-family: "Roboto Mono", monospace;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #comparer-details-main .detailsBorder-comments{

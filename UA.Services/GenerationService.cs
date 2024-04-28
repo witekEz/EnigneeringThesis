@@ -92,7 +92,6 @@ namespace UA.Services
         public async Task<List<GenerationDTO>> GetAll(int modelId)
         {
             var model = await _dbContext.Models
-                //.Include(g=>g.Generations)
                 .FirstOrDefaultAsync(m => m.Id == modelId) ?? throw new NotFoundException("Model not found");
             var generationsDTOs = _mapper.Map<List<GenerationDTO>>(model.Generations);
             return generationsDTOs;

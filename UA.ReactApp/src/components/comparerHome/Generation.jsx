@@ -20,8 +20,8 @@ export default function Generation({ generation }) {
     const id = generation.id;
     const { isLoggedIn } = useSelector(state => state.authenticate)
 
-    const [engineId,setEngineId]=useState(0);
-    const [gearboxId,setGearboxId]=useState(0);
+    const [engineId, setEngineId] = useState(0);
+    const [gearboxId, setGearboxId] = useState(0);
     const [rating, setRating] = useState({})
     const [engineRating, setEngineRating] = useState({})
     const [gearboxRating, setGearboxRating] = useState({})
@@ -36,12 +36,12 @@ export default function Generation({ generation }) {
         try {
             await axios.post(`${BASE_URL}/generation/${id}/rate`, { value: rate });
             setRating(rate);
-            
+
         } catch (error) {
             setError(error.message);
         }
     };
-    const handleEngineRate = async (rate,engineId) => {
+    const handleEngineRate = async (rate, engineId) => {
         try {
             await axios.post(`${BASE_URL}/engine/${engineId}/rate`, { value: rate });
             toast.info("Oceniłeś silnik")
@@ -49,7 +49,7 @@ export default function Generation({ generation }) {
             setError(error.message);
         }
     };
-    const handleGearboxRate = async (rate,gearboxId) => {
+    const handleGearboxRate = async (rate, gearboxId) => {
         try {
             await axios.post(`${BASE_URL}/gearbox/${gearboxId}/rate`, { value: rate });
             toast.info("Oceniłeś skrzynię biegów")
@@ -107,14 +107,14 @@ export default function Generation({ generation }) {
 
                 </Col>
             </Row>
-            <Col className="detailsBorder-technicalData container-fluid" >
-                <p className="detailsBorder-head">DANE TECHNICZNE</p>
-                <Row className="detailsBorder-engines">
-                <p>SILNIKI</p>
-                {uniqueTypes.map(type => (
-                        <Row className="detailsBorder-types" key={generateKey(type, "uniqueTypes")}>
-                            <p>{type}</p>
-                            <Table responsive className="detailsBorder-engines-table">
+            <Col className="details-technicalData container-fluid" >
+                <p className="details-head">DANE TECHNICZNE</p>
+                <Row className="details-engines">
+                    <p className="details-p">SILNIKI</p>
+                    {uniqueTypes.map(type => (
+                        <div className="details-type" key={generateKey(type, "uniqueTypes")}>
+                            <p className="details-type-p">{type}</p>
+                            <Table responsive className="details-table">
                                 <thead>
                                     <tr>
                                         <td>Wersja</td>
@@ -143,29 +143,29 @@ export default function Generation({ generation }) {
                                                 <td>
                                                     <div className="row-container">
                                                         {isLoggedIn ? <Rating
-                                                        style={{ maxWidth: 120 }}
-                                                        value={engineRating}
-                                                        onChange={(e)=>handleEngineRate(e,engine.id)}
+                                                            style={{ maxWidth: 120 }}
+                                                            value={engineRating}
+                                                            onChange={(e) => handleEngineRate(e, engine.id)}
 
-                                                    /> : <Rating
-                                                        style={{ maxWidth: 120 }}
-                                                        value={engineRating}
-                                                        isDisabled={true}
-                                                    />}
+                                                        /> : <Rating
+                                                            style={{ maxWidth: 120 }}
+                                                            value={engineRating}
+                                                            isDisabled={true}
+                                                        />}
                                                     </div>
                                                 </td>
                                             </tr> : null
                                     ))}
                                 </tbody>
                             </Table>
-                        </Row>
+                        </div>
                     ))}
                 </Row>
-                <Row className="detailsBorder-gearboxes">
-                    <p>SKRZYNIE BIEGÓW</p>
-                    <Row className="detailsBorder-types">
-                        <p>MANUALNA</p>
-                        <Table responsive className="detailsBorder-gearboxes-table">
+                <Row className="details-gearboxes">
+                    <p className="details-p">SKRZYNIE BIEGÓW</p>
+                    <div className="details-type">
+                        <p className="details-type-p">MANUALNA</p>
+                        <Table responsive className="details-table">
                             <thead>
                                 <tr>
                                     <td>Nazwa</td>
@@ -186,7 +186,7 @@ export default function Generation({ generation }) {
                                             <td><div className="row-container">{isLoggedIn ? <Rating
                                                 style={{ maxWidth: 120 }}
                                                 value={gearboxRating}
-                                                onChange={(e)=>handleGearboxRate(e,gearbox.id)}
+                                                onChange={(e) => handleGearboxRate(e, gearbox.id)}
                                             /> : <Rating
                                                 style={{ maxWidth: 120 }}
                                                 value={gearboxRating}
@@ -198,10 +198,10 @@ export default function Generation({ generation }) {
                                 ))}
                             </tbody>
                         </Table>
-                    </Row>
-                    <Row className="detailsBorder-types">
-                        <p>AUTOMATYCZNA</p>
-                        <Table responsive className="detailsBorder-gearboxes-table">
+                    </div>
+                    <div className="details-type">
+                        <p className="details-type-p">AUTOMATYCZNA</p>
+                        <Table responsive className="details-table">
                             <thead>
                                 <tr>
                                     <td>Nazwa</td>
@@ -223,7 +223,7 @@ export default function Generation({ generation }) {
                                                 <div className="row-container">{isLoggedIn ? <Rating
                                                     style={{ maxWidth: 120 }}
                                                     value={gearboxRating}
-                                                    onChange={(e)=>handleGearboxRate(e,gearbox.id)}
+                                                    onChange={(e) => handleGearboxRate(e, gearbox.id)}
 
 
                                                 /> : <Rating
@@ -237,7 +237,7 @@ export default function Generation({ generation }) {
                                 ))}
                             </tbody>
                         </Table>
-                    </Row>
+                    </div>
                 </Row>
                 <Row className="">
                     <Col className="detailsBorder-drivetrains" >
