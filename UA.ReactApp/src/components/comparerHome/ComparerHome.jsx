@@ -6,6 +6,7 @@ import PageSizeComponent from "./PageSizeComponent"
 import FilterComponent from "./FilterComponent"
 import { Row, Col, Container } from "react-bootstrap";
 import AuthenticateComponent from "./Autenticate/AuthenticateComponent"
+
 export default function ComparerHome({ fetchedCars, errorWhileFetch, onChangeFilters, paginationFetched, onChangePage, onChangePageSize, onChangeSearch }) {
 
     const [cars, setCars] = useState(fetchedCars)

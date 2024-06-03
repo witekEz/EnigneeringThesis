@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import ComparerDetails from "./ComparerDetails";
 import { Spinner } from "react-bootstrap";
 import axios from 'axios';
+import React from "react";
 
 export default function FetchGenerationComponent() {
     const BASE_URL = 'https://localhost:7092/api';
@@ -29,16 +30,6 @@ export default function FetchGenerationComponent() {
             {error && <p>Error: {error}</p>}
             {isPending &&  <Spinner className="spinnerLoading" animation="grow" />}
             {generation && <ComparerDetails generation={generation}/>}
-
-            <div>
-
-                {generation && (
-                    <div>
-                        <h1>Data from API:</h1>
-                        <pre>{JSON.stringify(generation, null, 2)}</pre>
-                    </div>
-                )}
-            </div>
         </>
     )
 }

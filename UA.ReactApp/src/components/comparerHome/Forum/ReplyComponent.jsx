@@ -3,6 +3,7 @@ import { Button, Stack } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
+import React from "react";
 
 export default function ReplyComponent({ reply, commentId, onSelectTrigger }) {
 

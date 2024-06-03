@@ -1,0 +1,57 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\0a83f10c-b4dc-4646-818d-af42b0620484.jpg",
+      "PackagePath": "staticwebassets\\images\\0a83f10c-b4dc-4646-818d-af42b0620484.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\609d41f0-efef-40e6-a9b4-66ef6f2aead6.jpg",
+      "PackagePath": "staticwebassets\\images\\609d41f0-efef-40e6-a9b4-66ef6f2aead6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\9eabdb48-8dc2-4053-b9c4-6f670de25857.jpg",
+      "PackagePath": "staticwebassets\\images\\9eabdb48-8dc2-4053-b9c4-6f670de25857.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\cfd1b10f-8ed0-4835-af1b-e99ad9cbe31d.jpg",
+      "PackagePath": "staticwebassets\\images\\cfd1b10f-8ed0-4835-af1b-e99ad9cbe31d.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\d3111e38-7f73-4bc2-aa2f-09bf094bc85b.jpg",
+      "PackagePath": "staticwebassets\\images\\d3111e38-7f73-4bc2-aa2f-09bf094bc85b.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\d7a6b375-a9bd-433c-8849-bcd7700b4a2d.jpg",
+      "PackagePath": "staticwebassets\\images\\d7a6b375-a9bd-433c-8849-bcd7700b4a2d.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\df869d60-8c1a-49b8-bd3a-3ce7e9fa5100.jpg",
+      "PackagePath": "staticwebassets\\images\\df869d60-8c1a-49b8-bd3a-3ce7e9fa5100.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\e625d691-4f9d-43a3-80cf-64b064efde11.jpg",
+      "PackagePath": "staticwebassets\\images\\e625d691-4f9d-43a3-80cf-64b064efde11.jpg"
+    },
+    {
+      "Id": "C:\\Users\\MrRobot\\Desktop\\Praca Inżynierska\\WebApplication\\UA.WebAPI\\wwwroot\\images\\faae7327-4774-49c9-ab8f-65d2af502680.jpg",
+      "PackagePath": "staticwebassets\\images\\faae7327-4774-49c9-ab8f-65d2af502680.jpg"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.UA.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.build.UA.WebAPI.props",
+      "PackagePath": "build\\UA.WebAPI.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.UA.WebAPI.props",
+      "PackagePath": "buildMultiTargeting\\UA.WebAPI.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildTransitive.UA.WebAPI.props",
+      "PackagePath": "buildTransitive\\UA.WebAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

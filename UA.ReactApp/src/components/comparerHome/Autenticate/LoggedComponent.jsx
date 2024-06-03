@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import UpdateGenerationModal from "../Modals/UpdateGenerationModal";
+import React from "react";
 
 
 export default function LoggedComponent({ generation }) {

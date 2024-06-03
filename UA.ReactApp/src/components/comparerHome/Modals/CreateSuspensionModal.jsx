@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import React from "react";
 
 export default function CreateSuspensionModal({onSuspensionCreate}) {
     const BASE_URL = 'https://localhost:7092/api';

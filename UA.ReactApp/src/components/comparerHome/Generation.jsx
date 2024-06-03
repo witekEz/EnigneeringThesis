@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import Comments from "./Forum/CommentsComponent";
 import { toast } from 'react-toastify';
+import React from "react";
 
 const BASE_URL = 'https://localhost:7092/api';
 
@@ -36,9 +37,10 @@ export default function Generation({ generation }) {
         try {
             await axios.post(`${BASE_URL}/generation/${id}/rate`, { value: rate });
             setRating(rate);
-
+            toast.info("Oceniłeś generację")
         } catch (error) {
             setError(error.message);
+            toast.error("Już oceniłeś tą generację!")
         }
     };
     const handleEngineRate = async (rate, engineId) => {
@@ -47,6 +49,7 @@ export default function Generation({ generation }) {
             toast.info("Oceniłeś silnik")
         } catch (error) {
             setError(error.message);
+            toast.error("Już oceniłeś ten silnik!")
         }
     };
     const handleGearboxRate = async (rate, gearboxId) => {
@@ -55,6 +58,7 @@ export default function Generation({ generation }) {
             toast.info("Oceniłeś skrzynię biegów")
         } catch (error) {
             setError(error.message);
+            toast.error("Już oceniłeś tą skrzynię biegów!")
         }
     };
     return (

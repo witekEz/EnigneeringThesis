@@ -12,6 +12,7 @@ import setAuthenticationHeader from '../Utilities/DefaultAuthHeaderComponent';
 import { useDispatch, useSelector } from 'react-redux'
 import { changeState, changeRole, changeName } from '../Utilities/Redux/authentication';
 import { jwtDecode } from "jwt-decode";
+import React from "react";
 
 const BASE_URL = 'https://localhost:7092/api';
 

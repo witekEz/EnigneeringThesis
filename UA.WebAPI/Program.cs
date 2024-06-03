@@ -115,7 +115,7 @@ try
             builder.AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
-            .WithOrigins("https://localhost:5173")
+            .WithOrigins("http://localhost:5173")
         );
     });
     
@@ -133,11 +133,11 @@ try
     app.UseMiddleware<RequestTimeMiddleware>();
     app.UseAuthentication();
 
-    if (app.Environment.IsDevelopment())
-    {
+    //if (app.Environment.IsDevelopment())
+    //{
         app.UseSwagger();
         app.UseSwaggerUI();
-    }
+    //}
 
     app.UseHttpsRedirection();
     

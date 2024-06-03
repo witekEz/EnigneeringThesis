@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import ReplyComponent from "./ReplyComponent";
 import Form from 'react-bootstrap/Form';
+import React from "react";
 
 
 export default function CommentComponent({ comment, generationId, onSelectTrigger, onChangeReply, onChangeComment }) {

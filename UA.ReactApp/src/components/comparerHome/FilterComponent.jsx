@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Col, Row, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import React from "react";
 
 
 function FilterComponent({ onChangeFilters }) {

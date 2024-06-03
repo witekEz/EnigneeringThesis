@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table';
 import ImageComponent from '../ImageComponent';
 import "./modal.css"
 import Image from 'react-bootstrap/Image';
+import React from "react";
 
 export default function DisplayGenerationModal({ generations }) {
 

@@ -3,6 +3,7 @@ import Generation from "./Generation";
 import AuthenticateComponent from "./Autenticate/AuthenticateComponent"
 import { useDispatch, useSelector } from 'react-redux'
 import LoggedComponent from "./Autenticate/LoggedComponent";
+import React from "react";
 
 export default function ComparerDetails({ generation }) {
     const {isLoggedIn}=useSelector(state=>state.authenticate);

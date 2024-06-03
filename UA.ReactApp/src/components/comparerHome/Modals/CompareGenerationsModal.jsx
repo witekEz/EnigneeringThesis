@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import "./modal.css"
 import DisplayGenerationModal from './DisplayGenerationModal';
+import React from "react";
 
 
 export default function CompareGenerationsModal({ onShowChange, generationsToCompare }) {

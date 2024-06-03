@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ComapreGenerationsModal from './Modals/CompareGenerationsModal'
 import { Rating, ThinStar } from "@smastrom/react-rating";
 import { useEffect, useState } from 'react';
+import React from "react";
 
 const GenerationList = ({ generations }) => {
 
@@ -53,9 +54,6 @@ const GenerationList = ({ generations }) => {
         }
 
     };
-    const checksmth = () => {
-        console.log(checked);
-    }
     return (
         <>
             <Row>

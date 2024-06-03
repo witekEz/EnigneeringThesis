@@ -36,7 +36,13 @@ namespace UA.Services
             var gearbox = await _dbContext.Gearboxes.FirstOrDefaultAsync(i => i.Id == gearboxId) ?? throw new NotFoundException("Gearbox not found");
             var ratesGearbox = await _dbContext.RateGearboxes.Where(e => e.GearboxId == gearboxId).ToListAsync();
             var avgRateGearbox = await _dbContext.AvgRateGearboxes.FirstOrDefaultAsync(i => i.GearboxId == gearboxId);
-
+            foreach (var rateGeraboxLocal in ratesGearbox)
+            {
+                if (rateGeraboxLocal.GearboxId == gearboxId)
+                {
+                    throw new ForbidException("This user already set a rate!");
+                }
+            }
             if (avgRateGearbox == null)
             {
                 var createAvgRateGearbox = new CreateAvgRateGearboxDTO()

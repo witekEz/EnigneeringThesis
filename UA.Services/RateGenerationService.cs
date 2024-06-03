@@ -12,6 +12,7 @@ using UA.DAL.EF;
 using UA.Model.DTOs.Create.Rate;
 using UA.Model.DTOs.Read.Rate;
 using UA.Model.DTOs.Update.Rate;
+using UA.Model.Entities;
 using UA.Model.Entities.Authentication;
 using UA.Model.Entities.Rate;
 using UA.Services.Authorization;
@@ -37,7 +38,13 @@ namespace UA.Services
             var generation=await _dbContext.Generations.FirstOrDefaultAsync(i=>i.Id==generationId) ?? throw new NotFoundException("Generation not found");
             var ratesGeneration = await _dbContext.RateGenerations.Where(g=>g.GenerationId==generationId).ToListAsync();
             var avgRateGeneration=await _dbContext.AvgRateGenerations.FirstOrDefaultAsync(i=>i.GenerationId==generationId);
-
+            foreach (var rateGenerationLocal in ratesGeneration)
+            {
+                if (rateGenerationLocal.GenerationId == generationId)
+                {
+                    throw new ForbidException("This user already set a rate!");
+                }
+            }
             if (avgRateGeneration == null)
             {
                 var createAvgRateGeneration=new CreateAvgRateGenerationDTO() 

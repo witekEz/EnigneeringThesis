@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import ComparerHome from "./ComparerHome";
 import { Spinner } from "react-bootstrap";
 import axios from "axios";
+import React from "react";
 
 export default function FetchGenerationsComponent() {
     const BASE_URL = 'https://localhost:7092/api';

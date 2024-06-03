@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button, FormCheck, Table } from "react-bootstrap";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import React from "react";
 
 
 export default function SettingsComponent() {

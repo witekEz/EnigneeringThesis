@@ -1,4 +1,5 @@
 import Pagination from 'react-bootstrap/Pagination';
+import React from "react";
 
 function PaginationComponent({pagination, onChangePage}) {
     let totalPages = pagination.totalPages;

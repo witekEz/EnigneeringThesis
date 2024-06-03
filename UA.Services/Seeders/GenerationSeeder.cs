@@ -30,6 +30,11 @@ namespace UA.Services.Seeders
         {
             if (_dbContext.Database.CanConnect())
             {
+                var pendingMigrations = _dbContext.Database.GetPendingMigrations();
+                if(pendingMigrations !=null && pendingMigrations.Any())
+                {
+                    _dbContext.Database.Migrate();
+                }
                 if(!_dbContext.Roles.Any())
                 {
                     var roles = GetRoles();
@@ -56,9 +61,6 @@ namespace UA.Services.Seeders
 
                     var modelGenerations = GetModelGenerations(bodies, drivetrains, engines, gearboxes, suspensions, bodyColours, brakes, categories, models);
 
-                    var rateGenerations = GetRateGenerations(modelGenerations, user);
-                    var rateEngines = GetRateEngines(engines, user);
-                    var rateGearboxes = GetRateGearboxes(gearboxes, user);
 
                     _dbContext.AddRange(bodyTypes);
                     _dbContext.AddRange(bodies);
@@ -72,10 +74,6 @@ namespace UA.Services.Seeders
                     _dbContext.AddRange(models);
                     _dbContext.AddRange(categories);
                     _dbContext.AddRange(modelGenerations);
-
-                    _dbContext.AddRange(rateGenerations);
-                    _dbContext.AddRange(rateEngines);
-                    _dbContext.AddRange(rateGearboxes);
 
                     _dbContext.SaveChanges();                   
                 }
@@ -720,135 +718,7 @@ namespace UA.Services.Seeders
             };
             return categories;
         }
-        private IEnumerable<RateGeneration> GetRateGenerations(IEnumerable<Generation>generations,User user)
-        {
-            var rates = new List<RateGeneration>()
-            {
-                new RateGeneration()
-                {
-                    Value=5,
-                    Generation=generations.First(),
-                    User=user
-                },
-                new RateGeneration()
-                {
-                    Value=4.5,
-                    Generation =generations.Skip(1).First(),
-                    User=user
-                },
-                new RateGeneration()
-                {
-                    Value=5,
-                    Generation =generations.Skip(2).First(),
-                    User=user
-                },
-                new RateGeneration()
-                {
-                    Value=3,
-                    Generation =generations.Skip(3).First(),
-                    User=user,
-                },
-                new RateGeneration()
-                {
-                    Value=4.1,
-                    Generation =generations.Skip(4).First(),
-                    User=user
-                },
-                new RateGeneration()
-                {
-                    Value=2.2,
-                    Generation =generations.Skip(5).First(),
-                    User=user
-                },
-                new RateGeneration()
-                {
-                    Value=5.0,
-                    Generation =generations.Skip(6).First(),
-                    User=user
-                }
-            };
-            return rates;
-        }
-        private IEnumerable<RateEngine> GetRateEngines(IEnumerable<Engine> engines, User user)
-        {
-            var rates = new List<RateEngine>()
-            {
-                new RateEngine()
-                {
-                    Value=5,
-                    Engine=engines.First(),
-                    User=user
-                },
-                new RateEngine()
-                {
-                    Value=4.5,
-                    Engine=engines.Skip(1).First(),
-                    User=user
-                },
-                new RateEngine()
-                {
-                    Value=5,
-                    Engine=engines.Skip(2).First(),
-                    User=user
-                },
-                new RateEngine()
-                {
-                    Value=3,
-                    Engine=engines.Skip(3).First(),
-                    User=user
-                },
-                new RateEngine()
-                {
-                    Value=4.1,
-                    Engine=engines.Skip(4).First(),
-                    User=user
-                }          
-            };
-            return rates;
-        }
-        private IEnumerable<RateGearbox> GetRateGearboxes(IEnumerable<Gearbox> gearboxes, User user)
-        {
-            var rates = new List<RateGearbox>()
-            {
-                new RateGearbox()
-                {
-                    Value=5,
-                    Gearbox=gearboxes.First(),
-                    User=user
-                },
-                new RateGearbox()
-                {
-                    Value=4.5,
-                    Gearbox=gearboxes.Skip(1).First(),
-                    User=user
-                },
-                new RateGearbox()
-                {
-                    Value=5,
-                    Gearbox=gearboxes.Last(),
-                    User=user
-                },
-                new RateGearbox()
-                {
-                    Value=3,
-                    Gearbox=gearboxes.First(),
-                    User = user
-                },
-                new RateGearbox()
-                {
-                    Value=4.1,
-                    Gearbox=gearboxes.Skip(1).First(),
-                    User = user
-                },
-                new RateGearbox()
-                {
-                    Value=2.2,
-                    Gearbox=gearboxes.Last(),
-                    User = user
-                } 
-            };
-            return rates;
-        }
+   
         private IEnumerable<Generation> GetModelGenerations( IEnumerable<Body>bodies,
              IEnumerable<Drivetrain> drivetrains,
              IEnumerable<Engine> engines, 

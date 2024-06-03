@@ -36,7 +36,13 @@ namespace UA.Services
             var engine = await _dbContext.Engines.FirstOrDefaultAsync(i => i.Id == engineId) ?? throw new NotFoundException("Engine not found");
             var ratesEngine = await _dbContext.RateEngines.Where(e => e.EngineId == engineId).ToListAsync();
             var avgRateEngine = await _dbContext.AvgRateEngines.FirstOrDefaultAsync(i => i.EngineId == engineId);
-
+            foreach(var rateEngineLocal in ratesEngine)
+            {
+                if(rateEngineLocal.EngineId == engineId)
+                {
+                    throw new ForbidException("This user already set a rate!");
+                }
+            }
             if (avgRateEngine == null)
             {
                 var createAvgRateEngine = new CreateAvgRateEngineDTO()

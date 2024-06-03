@@ -4,6 +4,7 @@ import { Button, Stack } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Form from 'react-bootstrap/Form';
 import CommentComponent from "./CommentComponent";
+import React from "react";
 
 export default function Comments({ generationId }) {
     const BASE_URL = 'https://localhost:7092/api';
