@@ -1,0 +1,1 @@
+It is my engineering thesis. Web application created with ASP.NET Core, React.js and MSSQL Server. Application allows users compare vehicles to each other, add those vehicles to database and share opinion about them in a huge shortcut.
